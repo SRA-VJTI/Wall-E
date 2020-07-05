@@ -14,10 +14,10 @@
 
 **1. Branches & Workflow**
 
-After the project is tracked (after `git init`) and the initial commit had been made, create the following branches.
-    1. `master`
-    2. `testing`
-    3. `development`
+After the project is tracked (after `git init`) and the initial commit had been made, create the following branches.        
+    1. `master`     
+    2. `testing`        
+    3. `development`        
 
 * All commits must be initially made to the `development` branch. Once a feature or a fix is committed **then and then only** will it move the `testing` branch. Once the code has been tested properly it can be merged with the `master` branch.
 

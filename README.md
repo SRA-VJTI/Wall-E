@@ -15,7 +15,6 @@
 **1. Branches & Workflow**
 
 After the project is tracked (after `git init`) and the initial commit had been made, create the following branches.
-
     1. `master`
     2. `testing`
     3. `development`

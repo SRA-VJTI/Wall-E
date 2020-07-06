@@ -8,6 +8,10 @@
 #include "mpu.h"
 #include "tuning.h"
 
+#ifdef CONFIG_UDP_LOGGER_ENABLE
+    #include "wifi_logger.h"
+#endif
+
 
 //Limiting Parameters
 #define MAX_PITCH_CORRECTION 90
@@ -274,6 +278,9 @@ void app_main()
 {
     initialise_wifi();
     //wait_till_wifi_connects();
+#ifdef CONFIG_UDP_LOGGER_ENABLE
+    start_wifi_logger();
+#endif
 
     xTaskCreate(&http_server,"server",10000,NULL,5,NULL);
     xTaskCreate(&balance_with_line_follow_task,"self_balancing with line_following",100000,NULL,1,NULL);

@@ -98,14 +98,14 @@ int pressed_switch(int button_num)
     pwm_config.cmpr_b = 0;    //duty cycle of PWMxb = 0
     pwm_config.counter_mode = MCPWM_UP_COUNTER;
     pwm_config.duty_mode = MCPWM_DUTY_MODE_0;
-    logI(TAG_SRA, "%s", "Configuring pwm_config...\n");
+    logI(TAG_SRA, "%s", "Configuring pwm_config...");
     mcpwm_init(MCPWM_UNIT_0, MCPWM_TIMER_0, &pwm_config);    //Configure PWM0A & PWM0B with above settings
-    logI(TAG_SRA, "%s", "Initialize pwm_init...\n");
+    logI(TAG_SRA, "%s", "Initialize pwm_init...");
     gpio_set_direction(GPIO_NUM0, GPIO_MODE_OUTPUT);
     gpio_set_direction(GPIO_NUM1, GPIO_MODE_OUTPUT);
     gpio_set_direction(GPIO_NUM2, GPIO_MODE_OUTPUT);
     gpio_set_direction(GPIO_NUM3, GPIO_MODE_OUTPUT);
-    logI(TAG_SRA, "%s", "Set direction to GPIO pins...\n");
+    logI(TAG_SRA, "%s", "Set direction to GPIO pins...");
 }
 
 //Functions to control bot motion

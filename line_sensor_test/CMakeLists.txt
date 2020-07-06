@@ -3,7 +3,7 @@
 
 cmake_minimum_required(VERSION 3.5)
 
-set(EXTRA_COMPONENT_DIRS $ENV{HOME}/Wall-E_v2.1/components)
-include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+set(EXTRA_COMPONENT_DIRS "C:/Users/dhruva/Desktop/esp/Walletest/components")
+include(C:/Users/dhruva/Desktop/esp/esp-idf/tools/cmake/project.cmake)
 
 project(line_sensor_test)

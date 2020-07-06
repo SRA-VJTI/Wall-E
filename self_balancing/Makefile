@@ -5,5 +5,5 @@
 
 PROJECT_NAME := self_balancing
 
-include $(IDF_PATH)/make/project.mk
+include C:/Users/dhruva/Desktop/esp/esp-idf/make/project.mk
 

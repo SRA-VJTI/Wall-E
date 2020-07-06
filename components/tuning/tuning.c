@@ -52,7 +52,6 @@ esp_err_t event_handler(void *ctx, system_event_t *event)
 
 //Intialise WIFI for ESP32
 void initialise_wifi(void)
-
 {
     esp_err_t ret = nvs_flash_init();
     if (ret != ESP_OK) 
@@ -77,7 +76,6 @@ void initialise_wifi(void)
     ESP_ERROR_CHECK( esp_wifi_set_mode(WIFI_MODE_STA) );
     ESP_ERROR_CHECK( esp_wifi_set_config(WIFI_IF_STA, &wifi_config) );
     ESP_ERROR_CHECK( esp_wifi_start() );
-
 }
 
 //Display the webserver, and change values as set on the webpage

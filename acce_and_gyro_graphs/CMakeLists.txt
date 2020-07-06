@@ -3,7 +3,7 @@
 
 cmake_minimum_required(VERSION 3.5)
 
-set(EXTRA_COMPONENT_DIRS $ENV{HOME}/Wall-E_v2.1/components)
+set(EXTRA_COMPONENT_DIRS ../components)
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 
 project(acce_and_gyro_graphs)

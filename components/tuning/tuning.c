@@ -24,6 +24,8 @@ SOFTWARE.
 
 #include "tuning.h"
 
+static const char *TAG_TUNING = "tuning";
+
 static EventGroupHandle_t wifi_event_group;
 
 const int CONNECTED_BIT = BIT0;

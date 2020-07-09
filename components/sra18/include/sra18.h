@@ -93,10 +93,10 @@ int pressed_switch(int button_num);
 void adc1_init();
 
 //Initialise GPIOs for MCPWM
-void mcpwm_gpio_initialize(CONFIG_PARALLEL_MODE);
+void mcpwm_gpio_initialize(int PARALLEL_MODE);
 
 //Intialise MCPWM 
-void mcpwm_initialize(CONFIG_PARALLEL_MODE);
+void mcpwm_initialize(int PARALLEL_MODE);
 
 //Functions to control motor motion
 void motor_forward(mcpwm_unit_t mcpwm_num, mcpwm_timer_t timer_num , float duty_cycle);

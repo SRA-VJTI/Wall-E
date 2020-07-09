@@ -7,13 +7,15 @@
 
 //Components
 #include "sra18.h"
-#define PARALLEL_MODE 1
+
+#define PARALLEL_MODE CONFIG_PARALLEL_MODE
+
 void drive_task_normal(void *arg)
 {
 
 	enable_buttons();  //Enable the buttons connected to GPIO 39, 36 35 and 34 respectively
-	mcpwm_gpio_initialize(CONFIG_PARALLEL_MODE);  //Initialise GPIOs for MCPWM
-    mcpwm_initialize(CONFIG_PARALLEL_MODE);	//Initialize PWM to control speed of motors
+	mcpwm_gpio_initialize(PARALLEL_MODE);  //Initialise GPIOs for MCPWM
+    mcpwm_initialize(PARALLEL_MODE);	//Initialize PWM to control speed of motors
 
 	while(1)
 	{
@@ -87,7 +89,7 @@ void drive_task_parallel(void *arg)
 {
 
 	enable_buttons();	//Enable the buttons connected to GPIO 39, 36 35 and 34 respectively
-	mcpwm_initialize(CONFIG_PARALLEL_MODE);	//Initialize PWM to control speed of motors
+	mcpwm_initialize(PARALLEL_MODE);	//Initialize PWM to control speed of motors
 
 	while(1)
 	{
@@ -157,7 +159,7 @@ void app_main()
 	/*
 		Basic Function for task creation
 	*/
-    if(CONFIG_PARALLEL_MODE)
+    if(PARALLEL_MODE)
     {
         xTaskCreate(&drive_task_parallel,"drive_task_parallel",4096,NULL,1,NULL);
     }

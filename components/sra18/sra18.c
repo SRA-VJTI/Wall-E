@@ -83,9 +83,9 @@ int pressed_switch(int button_num)
 
 
 //Initialise GPIOs for MCPWM
- void mcpwm_gpio_initialize(CONFIG_PARALLEL_MODE)
+ void mcpwm_gpio_initialize(int PARALLEL_MODE)
 {
-    if(!CONFIG_PARALLEL_MODE)
+    if(!PARALLEL_MODE)
     {
         mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0A, GPIO_UNIT0_PWM0A_OUT);
         mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0B, GPIO_UNIT0_PWM0B_OUT);
@@ -99,7 +99,7 @@ int pressed_switch(int button_num)
 }
 
 //Intialise MCPWM 
- void mcpwm_initialize(CONFIG_PARALLEL_MODE)
+ void mcpwm_initialize(int PARALLEL_MODE)
 {
     printf("Configuring Initial Parameters of mcpwm...\n");
     mcpwm_config_t pwm_config;
@@ -109,7 +109,7 @@ int pressed_switch(int button_num)
     pwm_config.counter_mode = MCPWM_UP_COUNTER;
     pwm_config.duty_mode = MCPWM_DUTY_MODE_0;
     printf("Configuring pwm_config...\n");
-    if(!CONFIG_PARALLEL_MODE)
+    if(!PARALLEL_MODE)
     {
         mcpwm_init(MCPWM_UNIT_0, MCPWM_TIMER_0, &pwm_config);    //Configure UNIT0 PWM0A & PWM0B with above settings
         mcpwm_init(MCPWM_UNIT_0, MCPWM_TIMER_2, &pwm_config);    //Configure UNIT0 PWM2A & PWM2B with above settings

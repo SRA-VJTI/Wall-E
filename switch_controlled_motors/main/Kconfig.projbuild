@@ -1,7 +1,7 @@
 menu "Tuning parameters"		
 	config PARALLEL_MODE
-		bool "Parallel mode"
-		default True
+		int "Parallel mode"
+		default 1 
 		help
 			Change the mode of motor driver	
 	config ESP_WIFI_SSID

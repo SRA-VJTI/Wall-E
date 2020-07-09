@@ -7,7 +7,7 @@
 
 //Components
 #include "sra18.h"
-
+#define PARALLEL_MODE 1
 void drive_task_normal(void *arg)
 {
 

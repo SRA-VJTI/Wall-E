@@ -51,13 +51,17 @@ float absolute(float number)
     return number;
 }
 
-//Assign GPIO 2 and 15 to buttons
+//Assign GPIO 39, 36 35 and 34 to buttons
 void enable_buttons()
 {
     gpio_set_direction(BUTTON_1,GPIO_MODE_INPUT);
     gpio_set_pull_mode(BUTTON_1,GPIO_PULLUP_ONLY);
     gpio_set_direction(BUTTON_2,GPIO_MODE_INPUT);
     gpio_set_pull_mode(BUTTON_2,GPIO_PULLUP_ONLY);
+    gpio_set_direction(BUTTON_3,GPIO_MODE_INPUT);
+    gpio_set_pull_mode(BUTTON_3,GPIO_PULLUP_ONLY);
+    gpio_set_direction(BUTTON_4,GPIO_MODE_INPUT);
+    gpio_set_pull_mode(BUTTON_4,GPIO_PULLUP_ONLY);
 }
 
 //Check if the specified button is pressed, returns 1 if pressed
@@ -79,16 +83,24 @@ int pressed_switch(int button_num)
 
 
 //Initialise GPIOs for MCPWM
- void mcpwm_gpio_initialize()
+ void mcpwm_gpio_initialize(CONFIG_PARALLEL_MODE)
 {
-    mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0A, GPIO_PWM0A_OUT);
-    mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0B, GPIO_PWM0B_OUT);
+    if(!CONFIG_PARALLEL_MODE)
+    {
+        mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0A, GPIO_UNIT0_PWM0A_OUT);
+        mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0B, GPIO_UNIT0_PWM0B_OUT);
+        mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM2A, GPIO_UNIT0_PWM2A_OUT);
+        mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM2B, GPIO_UNIT0_PWM2B_OUT);
+    }
+    mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM1A, GPIO_UNIT0_PWM1A_OUT);
+    mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM1B, GPIO_UNIT0_PWM1B_OUT);
+    mcpwm_gpio_init(MCPWM_UNIT_1, MCPWM0A, GPIO_UNIT1_PWM0A_OUT);
+    mcpwm_gpio_init(MCPWM_UNIT_1, MCPWM0B, GPIO_UNIT1_PWM0B_OUT);
 }
 
 //Intialise MCPWM 
- void mcpwm_initialize()
+ void mcpwm_initialize(CONFIG_PARALLEL_MODE)
 {
-    mcpwm_gpio_initialize();
     printf("Configuring Initial Parameters of mcpwm...\n");
     mcpwm_config_t pwm_config;
     pwm_config.frequency = 20000;    //frequency = 500Hz,
@@ -97,66 +109,34 @@ int pressed_switch(int button_num)
     pwm_config.counter_mode = MCPWM_UP_COUNTER;
     pwm_config.duty_mode = MCPWM_DUTY_MODE_0;
     printf("Configuring pwm_config...\n");
-    mcpwm_init(MCPWM_UNIT_0, MCPWM_TIMER_0, &pwm_config);    //Configure PWM0A & PWM0B with above settings
+    if(!CONFIG_PARALLEL_MODE)
+    {
+        mcpwm_init(MCPWM_UNIT_0, MCPWM_TIMER_0, &pwm_config);    //Configure UNIT0 PWM0A & PWM0B with above settings
+        mcpwm_init(MCPWM_UNIT_0, MCPWM_TIMER_2, &pwm_config);    //Configure UNIT0 PWM2A & PWM2B with above settings
+    }
+    mcpwm_init(MCPWM_UNIT_0, MCPWM_TIMER_1, &pwm_config);    //Configure UNIT0 PWM1A & PWM1B with above settings
+    mcpwm_init(MCPWM_UNIT_1, MCPWM_TIMER_0, &pwm_config);    //Configure UNIT1 PWM0A & PWM0B with above settings
     printf("Initialize pwm_init...\n");
-    gpio_set_direction(GPIO_NUM0, GPIO_MODE_OUTPUT);
-    gpio_set_direction(GPIO_NUM1, GPIO_MODE_OUTPUT);
-    gpio_set_direction(GPIO_NUM2, GPIO_MODE_OUTPUT);
-    gpio_set_direction(GPIO_NUM3, GPIO_MODE_OUTPUT);
-    printf("Set direction to GPIO pins...\n");
 }
-
-//Functions to control bot motion
- void bot_forward(mcpwm_unit_t mcpwm_num, mcpwm_timer_t timer_num , float duty_cycle1, float duty_cycle2)
+// Functions to control motors
+void motor_forward(mcpwm_unit_t mcpwm_num, mcpwm_timer_t timer_num , float duty_cycle)
 {
-    mcpwm_set_duty(mcpwm_num, timer_num, MCPWM_OPR_A, duty_cycle1);
-    mcpwm_set_duty(mcpwm_num, timer_num, MCPWM_OPR_B, duty_cycle2);
-    gpio_set_level(GPIO_NUM0,0);
-    gpio_set_level(GPIO_NUM1,1);
-    gpio_set_level(GPIO_NUM2,0);
-    gpio_set_level(GPIO_NUM3,1);
+    mcpwm_set_duty(mcpwm_num, timer_num, MCPWM_OPR_A, 0);
     mcpwm_set_duty_type(mcpwm_num, timer_num, MCPWM_OPR_A, MCPWM_DUTY_MODE_0); 
+    mcpwm_set_duty(mcpwm_num, timer_num, MCPWM_OPR_B, duty_cycle);
     mcpwm_set_duty_type(mcpwm_num, timer_num, MCPWM_OPR_B, MCPWM_DUTY_MODE_0); 
 }
-
- void bot_backward(mcpwm_unit_t mcpwm_num, mcpwm_timer_t timer_num , float duty_cycle1, float duty_cycle2)
+void motor_backward(mcpwm_unit_t mcpwm_num, mcpwm_timer_t timer_num , float duty_cycle)
 {
-    mcpwm_set_duty(mcpwm_num, timer_num, MCPWM_OPR_A, duty_cycle1);
-    mcpwm_set_duty(mcpwm_num, timer_num, MCPWM_OPR_B, duty_cycle2);
-    gpio_set_level(GPIO_NUM0,1);
-    gpio_set_level(GPIO_NUM1,0);
-    gpio_set_level(GPIO_NUM2,1);
-    gpio_set_level(GPIO_NUM3,0);
+    mcpwm_set_duty(mcpwm_num, timer_num, MCPWM_OPR_A, duty_cycle);
     mcpwm_set_duty_type(mcpwm_num, timer_num, MCPWM_OPR_A, MCPWM_DUTY_MODE_0); 
+    mcpwm_set_duty(mcpwm_num, timer_num, MCPWM_OPR_B, 0);
     mcpwm_set_duty_type(mcpwm_num, timer_num, MCPWM_OPR_B, MCPWM_DUTY_MODE_0); 
 }
-
- void bot_spot_left(mcpwm_unit_t mcpwm_num, mcpwm_timer_t timer_num , float duty_cycle1, float duty_cycle2)
+void motor_stop(mcpwm_unit_t mcpwm_num, mcpwm_timer_t timer_num)
 {
-    mcpwm_set_duty(mcpwm_num, timer_num, MCPWM_OPR_A, duty_cycle1);
-    mcpwm_set_duty(mcpwm_num, timer_num, MCPWM_OPR_B, duty_cycle2);
-    gpio_set_level(GPIO_NUM0,1);
-    gpio_set_level(GPIO_NUM1,0);
-    gpio_set_level(GPIO_NUM2,0);
-    gpio_set_level(GPIO_NUM3,1);
-    mcpwm_set_duty_type(mcpwm_num, timer_num, MCPWM_OPR_A, MCPWM_DUTY_MODE_0);
-    mcpwm_set_duty_type(mcpwm_num, timer_num, MCPWM_OPR_B, MCPWM_DUTY_MODE_0);
-}
-
- void bot_spot_right(mcpwm_unit_t mcpwm_num, mcpwm_timer_t timer_num , float duty_cycle1, float duty_cycle2)
-{
-    mcpwm_set_duty(mcpwm_num, timer_num, MCPWM_OPR_A, duty_cycle1);
-    mcpwm_set_duty(mcpwm_num, timer_num, MCPWM_OPR_B, duty_cycle2);
-    gpio_set_level(GPIO_NUM0,0);
-    gpio_set_level(GPIO_NUM1,1);
-    gpio_set_level(GPIO_NUM2,1);
-    gpio_set_level(GPIO_NUM3,0);
-    mcpwm_set_duty_type(mcpwm_num, timer_num, MCPWM_OPR_A, MCPWM_DUTY_MODE_0);
-    mcpwm_set_duty_type(mcpwm_num, timer_num, MCPWM_OPR_B, MCPWM_DUTY_MODE_0);
-}
-
- void bot_stop(mcpwm_unit_t mcpwm_num, mcpwm_timer_t timer_num)
-{
-    mcpwm_set_signal_low(mcpwm_num, timer_num, MCPWM_OPR_A);
-    mcpwm_set_signal_low(mcpwm_num, timer_num, MCPWM_OPR_B);
+    mcpwm_set_duty(mcpwm_num, timer_num, MCPWM_OPR_A, 0);
+    mcpwm_set_duty_type(mcpwm_num, timer_num, MCPWM_OPR_A, MCPWM_DUTY_MODE_0); 
+    mcpwm_set_duty(mcpwm_num, timer_num, MCPWM_OPR_B, 0);
+    mcpwm_set_duty_type(mcpwm_num, timer_num, MCPWM_OPR_B, MCPWM_DUTY_MODE_0); 
 }

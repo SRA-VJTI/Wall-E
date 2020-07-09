@@ -1,5 +1,4 @@
-menu "Tuning parameters"
-
+menu "Tuning parameters"		
 	config ESP_WIFI_SSID
 		string "WiFi SSID"
 		default "myssid"

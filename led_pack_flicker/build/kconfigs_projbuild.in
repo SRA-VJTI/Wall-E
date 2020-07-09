@@ -1,0 +1,5 @@
+source "/home/lukesh/esp/esp-idf/components/app_update/Kconfig.projbuild"
+source "/home/lukesh/esp/esp-idf/components/bootloader/Kconfig.projbuild"
+source "/home/lukesh/esp/esp-idf/components/esptool_py/Kconfig.projbuild"
+source "/home/lukesh/esp/esp-idf/components/partition_table/Kconfig.projbuild"
+source "/home/lukesh/Wall-E_v2.2-beta/led_blink_1/main/Kconfig.projbuild"

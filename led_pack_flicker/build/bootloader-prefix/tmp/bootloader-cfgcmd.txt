@@ -1,0 +1,1 @@
+cmd='/usr/local/bin/cmake;-DSDKCONFIG=/home/lukesh/Wall-E_v2.2-beta/led_blink_1/sdkconfig;-DIDF_PATH=/home/lukesh/esp/esp-idf;-DIDF_TARGET=esp32;-DPYTHON_DEPS_CHECKED=1;-DPYTHON=/home/lukesh/.espressif/python_env/idf4.2_py3.7_env/bin/python;-DEXTRA_COMPONENT_DIRS=/home/lukesh/esp/esp-idf/components/bootloader;-DLEGACY_INCLUDE_COMMON_HEADERS=;-GNinja;<SOURCE_DIR><SOURCE_SUBDIR>'

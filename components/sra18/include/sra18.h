@@ -55,16 +55,31 @@ SOFTWARE.
 #include "soc/mcpwm_reg.h"
 #include "soc/mcpwm_struct.h"
 
-#define GPIO_PWM0A_OUT 27   //Set GPIO 15 as PWM0A - Enable
-#define GPIO_PWM0B_OUT 14   //Set GPIO 16 as PWM0B 
-#define GPIO_NUM0 25  //GPIO to input pin of motor driver
-#define GPIO_NUM1 26  //GPIO to input pin of motor driver
-#define GPIO_NUM2 16
-#define GPIO_NUM3 17
-#define BUTTON_1 2
-#define BUTTON_2 15
+#define GPIO_UNIT0_PWM0A_OUT 32   //Set GPIO 32 as UNIT0_PWM0A 
+#define GPIO_UNIT0_PWM0B_OUT 33   //Set GPIO 33 as UNIT0_PWM0A
+#define GPIO_UNIT0_PWM1A_OUT 25   //Set GPIO 25 as UNIT0_PWM0B 
+#define GPIO_UNIT0_PWM1B_OUT 26   //Set GPIO 26 as UNIT0_PWM0B 
+#define GPIO_UNIT0_PWM2A_OUT 27   //Set GPIO 27 as UNIT0_PWM1A 
+#define GPIO_UNIT0_PWM2B_OUT 14   //Set GPIO 14 as UNIT0_PWM1A 
+#define GPIO_UNIT1_PWM0A_OUT 12   //Set GPIO 12 as UNIT1_PWM0A 
+#define GPIO_UNIT1_PWM0B_OUT 13   //Set GPIO 13 as UNIT1_PWM0B
+#define BUTTON_1 39  //GPIO for switches  
+#define BUTTON_2 36  //GPIO for switches
+#define BUTTON_3 35  //GPIO for switches
+#define BUTTON_4 34  //GPIO for switches
 #define LED_1 0
 #define LED_2 5
+#define led_pack_1 32 
+#define led_pack_2 33
+#define led_pack_3 25
+#define led_pack_4 26
+#define led_pack_5 27
+#define led_pack_6 14
+#define led_pack_7 12
+#define led_pack_8 13
+
+
+
 
 //Functions for custom adjustments
 float map(float x, float min_in, float max_in, float min_out, float max_out);
@@ -89,14 +104,10 @@ void mcpwm_gpio_initialize();
 void mcpwm_initialize();
 
 //Functions to control bot motion
-void bot_forward(mcpwm_unit_t mcpwm_num, mcpwm_timer_t timer_num , float duty_cycle1, float duty_cycle2);
+void motor_forward(mcpwm_unit_t mcpwm_num, mcpwm_timer_t timer_num , float duty_cycle);
 
-void bot_backward(mcpwm_unit_t mcpwm_num, mcpwm_timer_t timer_num , float duty_cycle1, float duty_cycle2);
+void motor_backward(mcpwm_unit_t mcpwm_num, mcpwm_timer_t timer_num , float duty_cycle);
 
-void bot_spot_left(mcpwm_unit_t mcpwm_num, mcpwm_timer_t timer_num , float duty_cycle1, float duty_cycle2);
-
-void bot_spot_right(mcpwm_unit_t mcpwm_num, mcpwm_timer_t timer_num , float duty_cycle1, float duty_cycle2);
-
-void bot_stop(mcpwm_unit_t mcpwm_num, mcpwm_timer_t timer_num);
+void motor_stop(mcpwm_unit_t mcpwm_num, mcpwm_timer_t timer_num);
 
 #endif

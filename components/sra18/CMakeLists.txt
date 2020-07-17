@@ -1,7 +1,7 @@
 idf_component_register(SRCS "sra18.c"
                        INCLUDE_DIRS "include"
                        REQUIRES app_trace app_update asio bootloader bootloader_support
-                                bt cbor coap console cxx driver efuse esp32 esp_adc_cal
+                                bt coap console cxx driver efuse esp32 esp_adc_cal
                                 esp_common espcoredump esp_eth esp_event esp_gdbstub
                                 esp_http_client esp_http_server esp_https_ota esp_https_server
                                 esp_local_ctrl esp_ringbuf esp_rom esp-tls esptool_py

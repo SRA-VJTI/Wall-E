@@ -5,7 +5,7 @@
 
 PROJECT_NAME := mpu6050_raw
 
-if (win32)
+if (WIN32)
   include %IDF_PATH%/make/project.mk
 else()
   include $(IDF_PATH)/make/project.mk

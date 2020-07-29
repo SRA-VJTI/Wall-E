@@ -5,5 +5,10 @@
 
 PROJECT_NAME := line_sensor_test
 
-include C:/Users/dhruva/Desktop/esp/esp-idf/make/project.mk
+if (win32)
+  include %IDF_PATH%/make/project.mk
+else()
+  include $(IDF_PATH)/make/project.mk
+endif()
+
 

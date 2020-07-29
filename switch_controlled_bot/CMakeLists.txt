@@ -3,7 +3,13 @@
 
 cmake_minimum_required(VERSION 3.5)
 
-set(EXTRA_COMPONENT_DIRS "C:/Users/dhruva/Desktop/esp/Walletest/components")
-include(C:/Users/dhruva/Desktop/esp/esp-idf/tools/cmake/project.cmake)
+set(EXTRA_COMPONENT_DIRS ../components)
+
+if (WIN32)
+    include(C:/esp/esp-idf/tools/cmake/project.cmake)
+else()
+    include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+endif()
+
 
 project(switch_controlled_bot)

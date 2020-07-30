@@ -5,5 +5,8 @@
 
 PROJECT_NAME := hello-world
 
-include $(IDF_PATH)/make/project.mk
-
+if (win32)
+  include %IDF_PATH%/make/project.mk
+else()
+  include $(IDF_PATH)/make/project.mk
+endif()

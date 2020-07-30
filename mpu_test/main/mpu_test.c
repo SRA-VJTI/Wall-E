@@ -21,7 +21,8 @@ void mpu_task(void *arg)
 
       //Calculate yaw and pitch angles
       calculate_angle(acce_rd,gyro_rd,acce_raw_value,gyro_raw_value,initial_acce_angle,&roll_angle,&pitch_angle);  //Function to calculate pitch angle based on intial accelerometer angle
-      logD(TAG_MPU, "ROLL ANGLE %f\tPITCH ANGLE %f", roll_angle, pitch_angle);
+      printf("ROLL ANGLE %f\t", roll_angle);
+      printf("PITCH ANGLE %f\n",pitch_angle);
        
     }   
 

@@ -8,8 +8,6 @@
 //Components
 #include "sra18.h"
 
-static const char *TAG_SWITCH_BOT = "switch_controlled_bot"
-
 void drive_task(void *arg)
 {
 
@@ -25,7 +23,7 @@ void drive_task(void *arg)
 		if(pressed_switch(BUTTON_1))
 		{
 			
-			logD(TAG_SWITCH_BOT, "%s", "BOT FORWARD");
+			printf("%s\n","BOT FORWARD");
 
 			bot_forward(MCPWM_UNIT_0, MCPWM_TIMER_0, 80, 80);	
 		}
@@ -36,7 +34,7 @@ void drive_task(void *arg)
 		else if(pressed_switch(BUTTON_2))
 		{
 			
-			logD(TAG_SWITCH_BOT, "%s", "BOT BACKWARD");  
+			printf("%s\n","BOT BACKWARD");  
 
 			bot_backward(MCPWM_UNIT_0, MCPWM_TIMER_0, 80, 80);	//Make the Bot go backward, at a PWM of 80 if button 2 is pressed
 		}
@@ -48,7 +46,7 @@ void drive_task(void *arg)
 	   	else 
 		{
 			bot_stop(MCPWM_UNIT_0, MCPWM_TIMER_0);
-			logD(TAG_SWITCH_BOT, "%s", "BOT STOPPED");
+			printf("%s\n","BOT STOPPED");
 		}
 
 		vTaskDelay(100 / 10);

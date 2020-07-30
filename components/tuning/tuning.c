@@ -24,6 +24,8 @@ SOFTWARE.
 
 #include "tuning.h"
 
+static const char *TAG_TUNING = "tuning";
+
 static EventGroupHandle_t wifi_event_group;
 
 const int CONNECTED_BIT = BIT0;
@@ -38,7 +40,7 @@ esp_err_t event_handler(void *ctx, system_event_t *event)
         break;
     case SYSTEM_EVENT_STA_GOT_IP:
         xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
-        printf("%s\n",ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
+        logI(TAG_TUNING, "%s", ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
         break;
     case SYSTEM_EVENT_STA_DISCONNECTED:
         esp_wifi_connect();

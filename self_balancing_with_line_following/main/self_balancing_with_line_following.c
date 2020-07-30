@@ -18,6 +18,8 @@
 
 #define MAX_PITCH_ERROR -2.5
 
+static const char *TAG_BALANCE_PLUS_FOLLOW = "self_balance_with_line_follow";
+
 //ADC Channels
 adc1_channel_t channel[4] = {ADC_CHANNEL_7,ADC_CHANNEL_6,ADC_CHANNEL_0,ADC_CHANNEL_3};
 
@@ -150,7 +152,7 @@ void calculate_pitch_error()
 //Create an HTTP server to tune variables wirelessly 
 void http_server(void *arg)
 {
-    printf("%s\n", "http task");
+    logI(TAG_BALANCE_PLUS_FOLLOW, "%s", "http task");
     struct netconn *conn, *newconn;
     err_t err;
     conn = netconn_new(NETCONN_TCP);

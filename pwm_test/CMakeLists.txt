@@ -11,5 +11,4 @@ else()
     include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 endif()
 
-
 project(pwm_test)

@@ -11,12 +11,5 @@ menu "Tuning parameters"
 		default "mypassword"
 		help
 			WiFi password (WPA or WPA2) for the example to use.
-
-	config UDP_LOGGER_ENABLE
-		bool "Enable udp logger"
-		default n
-		help
-			Enable WiFi UDP logger.
-
 endmenu
 

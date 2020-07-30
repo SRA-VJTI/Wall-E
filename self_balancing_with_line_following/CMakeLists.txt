@@ -11,5 +11,4 @@ else()
     include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 endif()
 
-
 project(self_balancing_with_line_following)

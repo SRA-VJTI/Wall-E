@@ -11,6 +11,4 @@ else()
     include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 endif()
 
-
-
 project(line_sensor_test)

@@ -4,6 +4,11 @@
 cmake_minimum_required(VERSION 3.5)
 
 set(EXTRA_COMPONENT_DIRS ../components)
-include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+
+if (WIN32)
+    include(C:/esp/esp-idf/tools/cmake/project.cmake)
+else()
+    include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+endif()
 
 project(mpu_test)

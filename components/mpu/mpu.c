@@ -24,8 +24,6 @@ SOFTWARE.
 
 #include "mpu.h"
 
-static const char* TAG_MPU = "mpu";
-
 static float counter = 0;
 static uint32_t timer = 0;
 static float dt = 0;
@@ -114,9 +112,9 @@ void disp_buf(int16_t* buf, int len)
 {
     int i;
     for(i = 0; i < len; i++) {
-        logD(TAG_MPU, "%d \t", buf[i]);
+        printf("%d ", buf[i]);
     }
-    logD(TAG_MPU, "%s", "\n");
+    printf("\n");
 }
 
 //Shift 8-bit values to 16-bit variable
@@ -158,8 +156,8 @@ esp_err_t complimentary_filter(int16_t* acce_raw_value, int16_t* gyro_raw_value,
     acce_angle[1] = acce_angle[1] - initial_acce_angle;
     for( i = 0; i < 2; i++) 
     {
-        // logD(TAG_MPU, "gyro:%f", gyro_angle[i] );
-        // logD(TAG_MPU, "acce:%f", acce_angle[i] );
+        // printf("gyro:%f\n",gyro_angle[i] );
+        // printf("acce:%f\n",acce_angle[i] );
         gyro_rate[i] = gyro_raw_value[i]/131;
         gyro_angle[i] = gyro_rate[i] * dt;
         complimentary_angle[i] = (ALPHA * (complimentary_angle[i] + gyro_angle[i])) + ((1-ALPHA) * acce_angle[i]);    
@@ -177,11 +175,11 @@ void start_mpu()
     //CHECK IF MPU IS ACTIVE
     while(ret != ESP_OK) 
     {
-        logE(TAG_MPU, "INIT FAILED... Retry: errno %d", errno);
+        printf("INIT FAILED... Retry\n");
         vTaskDelay(100/ portTICK_RATE_MS);
         ret = mpu6050_init(I2C_MASTER_NUM);
     }
-    logI(TAG_MPU, "%s", "INIT SUCESS...");
+    printf("INIT SUCESS...\n"); 
 }
 
 

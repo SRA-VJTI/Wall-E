@@ -24,8 +24,6 @@ SOFTWARE.
 
 #include "sra18.h"
 
-static const char* TAG_SRA = "sra";
-
 //Functions for custom adjustments
 float map(float x, float min_in, float max_in, float min_out, float max_out)
 {
@@ -91,21 +89,21 @@ int pressed_switch(int button_num)
  void mcpwm_initialize()
 {
     mcpwm_gpio_initialize();
-    logI(TAG_SRA, "%s", "Configuring Initial Parameters of mcpwm...");
+    printf("Configuring Initial Parameters of mcpwm...\n");
     mcpwm_config_t pwm_config;
     pwm_config.frequency = 20000;    //frequency = 500Hz,
     pwm_config.cmpr_a = 0;    //duty cycle of PWMxA = 0
     pwm_config.cmpr_b = 0;    //duty cycle of PWMxb = 0
     pwm_config.counter_mode = MCPWM_UP_COUNTER;
     pwm_config.duty_mode = MCPWM_DUTY_MODE_0;
-    logI(TAG_SRA, "%s", "Configuring pwm_config...");
+    printf("Configuring pwm_config...\n");
     mcpwm_init(MCPWM_UNIT_0, MCPWM_TIMER_0, &pwm_config);    //Configure PWM0A & PWM0B with above settings
-    logI(TAG_SRA, "%s", "Initialize pwm_init...");
+    printf("Initialize pwm_init...\n");
     gpio_set_direction(GPIO_NUM0, GPIO_MODE_OUTPUT);
     gpio_set_direction(GPIO_NUM1, GPIO_MODE_OUTPUT);
     gpio_set_direction(GPIO_NUM2, GPIO_MODE_OUTPUT);
     gpio_set_direction(GPIO_NUM3, GPIO_MODE_OUTPUT);
-    logI(TAG_SRA, "%s", "Set direction to GPIO pins...");
+    printf("Set direction to GPIO pins...\n");
 }
 
 //Functions to control bot motion

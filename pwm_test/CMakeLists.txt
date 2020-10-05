@@ -3,7 +3,12 @@
 
 cmake_minimum_required(VERSION 3.5)
 
-set(EXTRA_COMPONENT_DIRS $ENV{HOME}/Wall-E_v2.1/components)
-include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+set(EXTRA_COMPONENT_DIRS ../components)
+
+if (WIN32)
+    include(C:/esp/esp-idf/tools/cmake/project.cmake)
+else()
+    include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+endif()
 
 project(pwm_test)

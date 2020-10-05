@@ -55,6 +55,7 @@ SOFTWARE.
 #include "soc/mcpwm_reg.h"
 #include "soc/mcpwm_struct.h"
 
+<<<<<<< HEAD
 #define GPIO_UNIT0_PWM0A_OUT 32   //Set GPIO 32 as UNIT0_PWM0A 
 #define GPIO_UNIT0_PWM0B_OUT 33   //Set GPIO 33 as UNIT0_PWM0A
 #define GPIO_UNIT0_PWM1A_OUT 25   //Set GPIO 25 as UNIT0_PWM0B 
@@ -75,6 +76,20 @@ SOFTWARE.
 #define led_pack_6 14
 #define led_pack_7 12
 #define led_pack_8 13
+=======
+#include "logger.h"
+
+#define GPIO_PWM0A_OUT 27   //Set GPIO 15 as PWM0A - Enable
+#define GPIO_PWM0B_OUT 14   //Set GPIO 16 as PWM0B 
+#define GPIO_NUM0 25  //GPIO to input pin of motor driver
+#define GPIO_NUM1 26  //GPIO to input pin of motor driver
+#define GPIO_NUM2 16
+#define GPIO_NUM3 17
+#define BUTTON_1 2
+#define BUTTON_2 15
+#define LED_1 0
+#define LED_2 5
+>>>>>>> origin/dev
 
 //Functions for custom adjustments
 float map(float x, float min_in, float max_in, float min_out, float max_out);

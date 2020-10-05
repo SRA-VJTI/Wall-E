@@ -8,6 +8,10 @@
 #include "mpu.h"
 #include "tuning.h"
 
+#ifdef CONFIG_UDP_LOGGER_ENABLE
+    #include "wifi_logger.h"
+#endif
+
 
 //Limiting Parameters
 #define MAX_PITCH_CORRECTION 90
@@ -17,6 +21,8 @@
 #define MIN_PWM 60
 
 #define MAX_PITCH_ERROR -2.5
+
+static const char *TAG_BALANCE_PLUS_FOLLOW = "self_balance_with_line_follow";
 
 //ADC Channels
 adc1_channel_t channel[4] = {ADC_CHANNEL_7,ADC_CHANNEL_6,ADC_CHANNEL_0,ADC_CHANNEL_3};
@@ -150,7 +156,7 @@ void calculate_pitch_error()
 //Create an HTTP server to tune variables wirelessly 
 void http_server(void *arg)
 {
-    printf("%s\n", "http task");
+    logI(TAG_BALANCE_PLUS_FOLLOW, "%s", "http task");
     struct netconn *conn, *newconn;
     err_t err;
     conn = netconn_new(NETCONN_TCP);
@@ -274,6 +280,9 @@ void app_main()
 {
     initialise_wifi();
     //wait_till_wifi_connects();
+#ifdef CONFIG_UDP_LOGGER_ENABLE
+    start_wifi_logger();
+#endif
 
     xTaskCreate(&http_server,"server",10000,NULL,5,NULL);
     xTaskCreate(&balance_with_line_follow_task,"self_balancing with line_following",100000,NULL,1,NULL);

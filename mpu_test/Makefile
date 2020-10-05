@@ -5,5 +5,11 @@
 
 PROJECT_NAME := mpu_test
 
-include $(IDF_PATH)/make/project.mk
+if (win32)
+  include %IDF_PATH%/make/project.mk
+else()
+  include $(IDF_PATH)/make/project.mk
+endif()
+
+
 

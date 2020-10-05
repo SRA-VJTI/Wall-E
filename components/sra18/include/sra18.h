@@ -67,14 +67,14 @@ SOFTWARE.
 #define BUTTON_2 36
 #define BUTTON_3 35
 #define BUTTON_4 34
-#define LED_0 32
-#define LED_1 33
-#define LED_2 25
-#define LED_3 26
-#define LED_4 27
-#define LED_5 14
-#define LED_6 12
-#define LED_7 13
+#define led_pack_1 32 
+#define led_pack_2 33
+#define led_pack_3 25
+#define led_pack_4 26
+#define led_pack_5 27
+#define led_pack_6 14
+#define led_pack_7 12
+#define led_pack_8 13
 
 //Functions for custom adjustments
 float map(float x, float min_in, float max_in, float min_out, float max_out);

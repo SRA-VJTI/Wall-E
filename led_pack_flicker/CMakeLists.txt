@@ -11,4 +11,4 @@ else()
     include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 endif()
 
-project(switch_controlled_bot)
+project(led_pack_flicker)

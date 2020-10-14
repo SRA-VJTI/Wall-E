@@ -11,8 +11,8 @@
 void drive_task(void *arg)
 {
 
-	enable_motor_driver_a(1); // Enable motor driver A in Parallel Mode
-	enable_motor_driver_b(1); // Enable motor driver B in Parallel Mode
+	enable_motor_driver_a(PARALLEL_MODE); // Enable motor driver A in Parallel Mode
+	enable_motor_driver_b(PARALLEL_MODE); // Enable motor driver B in Parallel Mode
 
 	while(1)
 	{

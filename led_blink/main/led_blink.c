@@ -15,16 +15,18 @@ void blink_task(void *arg)
 	{
 		
 		set_bar_graph(0xFF);
-		vTaskDelay(100 / 10);
+		vTaskDelay(100 / portTICK_PERIOD_MS);
 		set_bar_graph(0x00);
+		vTaskDelay(100 / portTICK_PERIOD_MS);
 	}
 }
 
 void app_main()
 {
-	/*
-		Basic Function for task creation
-	*/
+	/**
+	 * @brief Basic Function for task creation
+	 * 
+	 */
 
 	xTaskCreate(&blink_task,"blink task",4096,NULL,1,NULL);
 }

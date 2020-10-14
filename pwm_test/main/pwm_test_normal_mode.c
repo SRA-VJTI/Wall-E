@@ -12,7 +12,6 @@ void drive_task(void *arg)
 {
 
 	enable_motor_driver_a(NORMAL_MODE); // Enable motor driver A in Normal Mode
-	enable_motor_driver_b(NORMAL_MODE); // Enable motor driver B in Normal Mode
 
 	while(1)
 	{
@@ -25,30 +24,22 @@ void drive_task(void *arg)
 		{
 			set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, duty_cycle);
 			set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, duty_cycle);
-			set_motor_speed(MOTOR_B_0, MOTOR_FORWARD, duty_cycle);
-			set_motor_speed(MOTOR_B_1, MOTOR_FORWARD, duty_cycle);
 			vTaskDelay(100 / 10);
 		}
 
 		set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
 		set_motor_speed(MOTOR_A_1, MOTOR_STOP, 0);
-		set_motor_speed(MOTOR_B_0, MOTOR_STOP, 0);
-		set_motor_speed(MOTOR_B_1, MOTOR_STOP, 0);
 		vTaskDelay(100 / 10);
 		
 		for(int duty_cycle = 60; duty_cycle <= 100; duty_cycle++)
 		{
 			set_motor_speed(MOTOR_A_0, MOTOR_BACKWARD, duty_cycle);
 			set_motor_speed(MOTOR_A_1, MOTOR_BACKWARD, duty_cycle);
-			set_motor_speed(MOTOR_B_0, MOTOR_BACKWARD, duty_cycle);
-			set_motor_speed(MOTOR_B_1, MOTOR_BACKWARD, duty_cycle);
 			vTaskDelay(100 / 10);
 		}
 
 		set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
 		set_motor_speed(MOTOR_A_1, MOTOR_STOP, 0);
-		set_motor_speed(MOTOR_B_0, MOTOR_STOP, 0);
-		set_motor_speed(MOTOR_B_1, MOTOR_STOP, 0);
 		vTaskDelay(100 / 10);
 	}
 	

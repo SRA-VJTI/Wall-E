@@ -89,6 +89,7 @@ _deps
 *-prefix/
 
 ### vscode ###
+.vscode/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

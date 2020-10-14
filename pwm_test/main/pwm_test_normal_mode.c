@@ -11,8 +11,8 @@
 void drive_task(void *arg)
 {
 
-	enable_motor_driver_a(2); // Enable motor driver A in Normal Mode
-	enable_motor_driver_b(2); // Enable motor driver B in Normal Mode
+	enable_motor_driver_a(NORMAL_MODE); // Enable motor driver A in Normal Mode
+	enable_motor_driver_b(NORMAL_MODE); // Enable motor driver B in Normal Mode
 
 	while(1)
 	{

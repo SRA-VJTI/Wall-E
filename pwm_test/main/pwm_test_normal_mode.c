@@ -8,7 +8,7 @@
 //Components
 #include "motor_driver.h"
 
-void drive_task(void *arg)
+void pwm_task(void *arg)
 {
 
 	enable_motor_driver_a(NORMAL_MODE); // Enable motor driver A in Normal Mode

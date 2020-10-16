@@ -7,7 +7,7 @@
 
 
 //Components
-#include "motor_driver.h"
+#include "sra_board.h"
 
 // Select the mode needed by uncommenting its definition
 #define MODE NORMAL_MODE
@@ -47,7 +47,7 @@ void pwm_task(void *arg)
 		}
 	}
 
-	else if (mode == PARALLEL_MODE)
+	else if (MODE == PARALLEL_MODE)
 	{
 		enable_motor_driver(a, PARALLEL_MODE); // Enable motor driver A in Parallel Mode
 

@@ -55,19 +55,11 @@ int map(int val, int input_lower_limit, int input_higher_limit, int output_lower
 
 void calculate_correction()
 {
-    error = error*10;
+    error = error*10;  // we need the error correction in range 0-100 so that we can send it directly as duty cycle paramete
     difference = error - prev_error;
     cumulative_error += error;
 
-    if(cumulative_error > 30)
-    {
-        cumulative_error = 30;
-    }
-    
-    else if(cumulative_error < -30)
-    {
-        cumulative_error = -30;
-    }
+    cumulative_error = constrain(cumulative_error, -30, 30);
 
     correction = kP*error + kI*cumulative_error + kD*difference;
     prev_error = error;

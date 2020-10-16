@@ -16,7 +16,7 @@ void drive_task(void *arg)
 		else if(read_switch(SWITCH_2))
 		{
 			set_motor_speed(MOTOR_A_0, MOTOR_BACKWARD, 80);
-			ESP_LOGI(TAG_SWITCH_CONTROL_MOTOR, "MOTOR_A_1 BACKWARD");
+			ESP_LOGI(TAG_SWITCH_CONTROL_MOTOR, "MOTOR_A_0 BACKWARD");
 		}
 		else
 		{
@@ -26,18 +26,18 @@ void drive_task(void *arg)
 		if(read_switch(SWITCH_3))
 		{
 			set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, 80);
-			ESP_LOGI(TAG_SWITCH_CONTROL_MOTOR, "MOTOR_B_0 FORWARD");
+			ESP_LOGI(TAG_SWITCH_CONTROL_MOTOR, "MOTOR_A_1 FORWARD");
 		}
 		else if(read_switch(SWITCH_4))
 		{
 			set_motor_speed(MOTOR_A_1, MOTOR_BACKWARD, 80);
-			ESP_LOGI(TAG_SWITCH_CONTROL_MOTOR, "MOTOR_B_1 BACKWARD");
+			ESP_LOGI(TAG_SWITCH_CONTROL_MOTOR, "MOTOR_A_1 BACKWARD");
 		}
 		else
 		{
 			set_motor_speed(MOTOR_A_1, MOTOR_STOP, 0);
 		}
-			
+		vTaskDelay(100 / portTICK_PERIOD_MS);
 	}
 }
 void app_main()

@@ -37,7 +37,7 @@ line_sensor_array line_sensor_readings;
 
 int constrain(int val, int lower_limit, int higher_limit)
 {
-    if(val < lower_limit)
+    return val < lower_limit ? lower_limit : (val > higher_limit ?  higher_limit : val);
     {
         val = lower_limit;
     }
@@ -107,7 +107,7 @@ void calculate_error()
 
 void line_follow_task(void* arg)
 {
-    ESP_ERROR_CHECK(enable_motor_driver_a(MODE));
+    ESP_ERROR_CHECK(enable_motor_driver(a, NORMAL));
     ESP_ERROR_CHECK(init_line_sensor());
 
     while(true)

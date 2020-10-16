@@ -37,7 +37,8 @@ void drive_task(void *arg)
 		{
 			set_motor_speed(MOTOR_A_1, MOTOR_STOP, 0);
 		}
-		vTaskDelay(100 / portTICK_PERIOD_MS);
+
+    vTaskDelay(100 / portTICK_PERIOD_MS);
 	}
 }
 void app_main()

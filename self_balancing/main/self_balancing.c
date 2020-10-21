@@ -9,64 +9,77 @@
 #include "tuning.h"
 
 //Limiting Variables
-#define MAX_PITCH_CORRECTION 90
-#define MAX_PITCH_CUMULATIVE_ERROR 850
+#define MAX_PITCH_CORRECTION        (90.0)
+#define MAX_PITCH_CUMULATIVE_ERROR (850.0)
 
-#define MAX_PWM 100
-#define MIN_PWM 60
+#define MAX_PWM (100.0)
+#define MIN_PWM (60.0)
 
 //Array to store channels of ADC
 adc1_channel_t channel[4] = {ADC_CHANNEL_7, ADC_CHANNEL_6, ADC_CHANNEL_0, ADC_CHANNEL_3};
 
 //Line Following Tuning Parameters
-float yaw_kP= 5.1;
-float yaw_kI= 0;
-float yaw_kD= 1.5;
+float yaw_kP = 5.1;
+float yaw_kI = 0.0;
+float yaw_kD = 1.5;
 
 //Self Balancing Tuning Parameters
-float pitch_kP=  15.1;//5.85;       
-float pitch_kI=  0.075;//95;          
-float pitch_kD=  9;
+float pitch_kP = 15.1; //5.85;       
+float pitch_kI = 0.075; //95;          
+float pitch_kD = 9.0;
 
-float setpoint = 0;
-float initial_acce_angle = 0;
-float forward_angle = 0;
+float setpoint = 0.0;
+float initial_acce_angle = 0.0;
 
 float forward_offset = 2.51;
 float forward_buffer = 3.1;
 
 //Error and correction values
-float absolute_pitch_correction = 0,absolute_pitch_angle = 0,pitch_angle = 0,roll_angle = 0,pitch_error=0, prevpitch_error=0, pitchDifference=0, pitch_cumulative_error=0, pitch_correction=0,integral_term=0;
 
-float left_pwm = 0, right_pwm = 0;
+float left_pwm = 0.0, right_pwm = 0.0;
 
 //Pitch and Roll angles
-float complimentary_angle[2] = {0,0};
+float complimentary_angle[2] = {0.0, 0.0};
 
+float pitch_angle = 0.0;
+float roll_angle = 0.0;
 
 /*
   Calculate the motor inputs according to angle of the MPU
 */
-void calculate_pitch_error()
+void calculate_motor_command(const float pitch_cmd, const float pitch, float *motor_cmd)
 {
-    pitch_error = pitch_angle; 
-    pitchDifference = (pitch_error - prevpitch_error);
-    pitch_cumulative_error += pitch_error;
+    static float pitch_error = 0.0;
+    static float pitch_error_difference = 0.0;
+    static float pitch_error_cummulative = 0.0;
 
-    if(pitch_cumulative_error>MAX_PITCH_CUMULATIVE_ERROR)
+    static float prevpitch_error = 0.0;
+
+    static float pitch_correction = 0.0;
+    static float absolute_pitch_correction = 0.0;
+
+    pitch_error              = pitch_cmd - pitch;
+    pitch_error_difference   = pitch_error - prevpitch_error;
+    pitch_error_cummulative += pitch_error;
+
+    // integral term bounding, prevent windup
+    if(pitch_error_cummulative > MAX_PITCH_CUMULATIVE_ERROR)
     {
-      pitch_cumulative_error = MAX_PITCH_CUMULATIVE_ERROR;
+      pitch_error_cummulative = MAX_PITCH_CUMULATIVE_ERROR;
     }
-    else if(pitch_cumulative_error<-MAX_PITCH_CUMULATIVE_ERROR)
+    else if(pitch_error_cummulative < -MAX_PITCH_CUMULATIVE_ERROR)
     {
-      pitch_cumulative_error = -MAX_PITCH_CUMULATIVE_ERROR;
+      pitch_error_cummulative = -MAX_PITCH_CUMULATIVE_ERROR;
     }
     
-    pitch_correction = pitch_kP * pitch_error + pitch_kI*pitch_cumulative_error + pitch_kD * pitchDifference;
-    prevpitch_error = pitch_error;
-
+    // PID loop, I term for trim, D term for modulating rate of control action
+    pitch_correction = pitch_kP * pitch_error + pitch_kI * pitch_error_cummulative + pitch_kD * pitch_error_difference;
+    
     absolute_pitch_correction = absolute(pitch_correction);
-    absolute_pitch_correction = constrain(absolute_pitch_correction,0,MAX_PITCH_CORRECTION);
+    *motor_cmd = constrain(absolute_pitch_correction, 0, MAX_PITCH_CORRECTION);
+
+    // t = (t - 1)
+    prevpitch_error = pitch_error;
 }
 
 //Create an HTTP server to tune variables wirelessly 
@@ -108,12 +121,15 @@ void balance_task(void *arg)
     {
       initial_acce_angle = setpoint;
       
-      calculate_angle(acce_rd,gyro_rd,acce_raw_value,gyro_raw_value,initial_acce_angle,&roll_angle,&pitch_angle);  //Function to calculate pitch angle based on intial accelerometer angle
-      calculate_pitch_error();
+      calculate_angle(acce_rd, gyro_rd, acce_raw_value, gyro_raw_value, initial_acce_angle, &roll_angle, &pitch_angle);  //Function to calculate pitch angle based on intial accelerometer angle
+      
+      float pitch_cmd = 0.0;
+      float motor_cmd = 0.0;
+      calculate_motor_command(pitch_cmd, pitch_angle, &motor_cmd);
       
       //constrain PWM values between max and min
-      left_pwm = constrain((absolute_pitch_correction), MIN_PWM, MAX_PWM);
-      right_pwm = constrain((absolute_pitch_correction), MIN_PWM, MAX_PWM);
+      left_pwm  = constrain(motor_cmd, MIN_PWM, MAX_PWM);
+      right_pwm = constrain(motor_cmd, MIN_PWM, MAX_PWM);
 
       if (pitch_error > 1)
       {

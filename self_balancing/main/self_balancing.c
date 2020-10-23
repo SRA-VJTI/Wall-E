@@ -93,7 +93,7 @@ void balance_task(void *arg)
 			{
 
 				calculate_pitch_error();
-				enable_motor_driver(a, 2);
+				enable_motor_driver(a, NORMAL_MODE);
 
 				//constrain PWM values between max and min
 				motor_pwm = constrain((absolute_pitch_correction), MIN_PWM, MAX_PWM);

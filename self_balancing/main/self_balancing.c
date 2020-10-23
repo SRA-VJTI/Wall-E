@@ -82,6 +82,7 @@ void balance_task(void *arg)
 			if (read_mpu6050(euler_angle) == ESP_OK)
 			{
 
+				pitch_angle = euler_angle[1];
 				calculate_pitch_error();
 				enable_motor_driver(a, NORMAL_MODE);
 

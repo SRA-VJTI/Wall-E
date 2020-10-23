@@ -15,21 +15,21 @@
 #define MIN_PWM 60
 
 //Self Balancing Tuning Parameters
-float pitch_kP = 15.1;	//5.85;
-float pitch_kI = 0.075; //95;
-float pitch_kD = 9;
+float pitch_kP = 15.1f;	
+float pitch_kI = 0.075f; 
+float pitch_kD = 9.0f;
 
-float setpoint = 0;
-float initial_acce_angle = 0;
-float forward_angle = 0;
+float setpoint = 0.0f;
+float initial_acce_angle = 0.0f;
+float forward_angle = 0.0f;
 
-float forward_offset = 2.51;
-float forward_buffer = 3.1;
+float forward_offset = 2.51f;
+float forward_buffer = 3.1f;
 
 //Error and correction values
-float absolute_pitch_correction = 0, absolute_pitch_angle = 0, pitch_angle = 0, roll_angle = 0, pitch_error = 0, prevpitch_error = 0, pitchDifference = 0, pitch_cumulative_error = 0, pitch_correction = 0, integral_term = 0;
+float absolute_pitch_correction = 0.0f, absolute_pitch_angle = 0.0f, pitch_angle = 0.0f, roll_angle = 0.0f, pitch_error = 0.0f, prevpitch_error = 0.0f, pitchDifference = 0.0f, pitch_cumulative_error = 0.0f, pitch_correction = 0.0f, integral_term = 0.0f;
 
-float motor_pwm = 0;
+float motor_pwm = 0.0f;
 
 int constrain(int val, int lower_limit, int higher_limit)
 {
@@ -76,7 +76,7 @@ void balance_task(void *arg)
 	{
 
 		while (1)
-		{
+		{	
 			initial_acce_angle = setpoint;
 
 			if (read_mpu6050(euler_angle) == ESP_OK)

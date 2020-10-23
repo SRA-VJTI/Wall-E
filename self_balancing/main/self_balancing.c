@@ -45,16 +45,6 @@ int constrain(int val, int lower_limit, int higher_limit)
 	return val;
 }
 
-float absolute(float number)
-{
-	if (number < 0)
-	{
-		return (-1) * number;
-	}
-
-	return number;
-}
-
 // Calculate the motor inputs according to angle of the MPU
 void calculate_pitch_error()
 {
@@ -74,7 +64,7 @@ void calculate_pitch_error()
 	pitch_correction = pitch_kP * pitch_error + pitch_kI * pitch_cumulative_error + pitch_kD * pitchDifference;
 	prevpitch_error = pitch_error;
 
-	absolute_pitch_correction = absolute(pitch_correction);
+	absolute_pitch_correction = fabs(pitch_correction);
 	absolute_pitch_correction = constrain(absolute_pitch_correction, 0, MAX_PITCH_CORRECTION);
 }
 

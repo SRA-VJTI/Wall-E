@@ -58,7 +58,7 @@ void calculate_motor_command(const float pitch_cmd, const float pitch_angle, flo
 
 	pitch_correction = ( pitch_kP * pitch_error + (pitch_kI * (pitch_error_cummulative*dt)) + (pitch_kD * (pitch_error_difference / dt)));
 
-	absolute_pitch_correction = fabs(pitch_correction);
+	absolute_pitch_correction = fabsf(pitch_correction);
 	*motor_cmd = bound(absolute_pitch_correction, 0, MAX_PITCH_CORRECTION);
 
 	prevpitch_error = pitch_error;

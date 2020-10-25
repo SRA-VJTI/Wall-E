@@ -35,11 +35,22 @@ void calculate_motor_command(const float pitch_cmd, const float pitch_angle, flo
 	static float pitch_error = 0.0f;
 	static float pitch_error_difference = 0.0f;
     static float pitch_error_cummulative = 0.0f;
+	
+	static bool is_first_command = true;
+	static float dt = 1.0f;
+	static unit32_t timer;
 
 	static float prevpitch_error = 0.0f;
-
     static float pitch_correction = 0.0f;
     static float absolute_pitch_correction = 0.0f;
+
+	if (is_first_command)
+	{
+		is_first_command = false;
+		timer = esp_timer_get_time();
+	}
+	dt = (float)(esp_timer_get_time() - timer)/1000000;
+	timer = esp_timer_get_time();
 
 	pitch_error = pitch_cmd - pitch_angle;
 	pitch_error_difference = pitch_error - prevpitch_error;
@@ -48,7 +59,7 @@ void calculate_motor_command(const float pitch_cmd, const float pitch_angle, flo
 	// integral term bounding, prevent windup
 	pitch_error_cummulative = bound(pitch_error_cummulative, -MAX_PITCH_CUMULATIVE_ERROR, MAX_PITCH_CUMULATIVE_ERROR)
 
-	pitch_correction = pitch_kP * pitch_error + pitch_kI * pitch_error_cummulative + pitch_kD * pitch_error_difference;
+	pitch_correction = ( pitch_kP * pitch_error + (pitch_kI * (pitch_error_cummulative*dt)) + (pitch_kD * (pitch_error_difference / dt)));
 
 	absolute_pitch_correction = fabs(pitch_correction);
 	*motor_cmd = bound(absolute_pitch_correction, 0, MAX_PITCH_CORRECTION);

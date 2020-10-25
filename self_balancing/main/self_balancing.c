@@ -29,20 +29,6 @@ float forward_buffer = 3.1f;
 float pitch_angle = 0.0f, roll_angle = 0.0f;
 float motor_pwm = 0.0f;
 
-int bound(int val, int lower_limit, int higher_limit)
-{
-	if (val < lower_limit)
-	{
-		val = lower_limit;
-	}
-	else if (val > higher_limit)
-	{
-		val = higher_limit;
-	}
-
-	return val;
-}
-
 // Calculate the motor inputs according to angle of the MPU
 void calculate_motor_command(const float pitch_cmd, const float pitch_angle, float *motor_cmd)
 {

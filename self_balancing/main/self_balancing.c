@@ -7,11 +7,11 @@
 #include <math.h>
 
 //Limiting Variables
-#define MAX_PITCH_CORRECTION (90)
-#define MAX_PITCH_CUMULATIVE_ERROR (850)
+#define MAX_PITCH_CORRECTION (90.0f)
+#define MAX_PITCH_CUMULATIVE_ERROR (850.0f)
 
-#define MAX_PWM (100)
-#define MIN_PWM (60)
+#define MAX_PWM (100.0f)
+#define MIN_PWM (60.0f)
 
 //Self Balancing Tuning Parameters
 float pitch_kP = 15.1f;	

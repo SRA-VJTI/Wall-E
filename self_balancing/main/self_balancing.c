@@ -5,7 +5,6 @@
 // C Headers
 #include <stdio.h>
 #include <math.h>
-#include <time.h>
 
 //Limiting Variables
 #define MAX_PITCH_CORRECTION (90)

@@ -8,7 +8,8 @@
 
 //Limiting Variables
 #define MAX_PITCH_CORRECTION (90.0f)
-#define MAX_PITCH_CUMULATIVE_ERROR (850.0f)
+#define MAX_PITCH_AREA (850.0f)
+#define MAX_PITCH_RATE (850.0f)
 
 #define MAX_PWM (100.0f)
 #define MIN_PWM (60.0f)
@@ -41,6 +42,13 @@ void calculate_motor_command(const float pitch_cmd, const float pitch_angle, flo
     static float pitch_correction = 0.0f;
     static float absolute_pitch_correction = 0.0f;
 
+	static float P_term = 0.0f;
+	static float I_term = 0.0f;
+	static float D_term = 0.0f;
+
+	static float pitch_rate = 0.0f;
+	static float pitch_area = 0.0f;
+
 	if (is_first_command)
 	{
 		is_first_command = false;
@@ -53,10 +61,18 @@ void calculate_motor_command(const float pitch_cmd, const float pitch_angle, flo
 	pitch_error_difference = pitch_error - prevpitch_error;
 	pitch_error_cummulative += pitch_error;
 
-	// integral term bounding, prevent windup
-	pitch_error_cummulative = bound(pitch_error_cummulative, -MAX_PITCH_CUMULATIVE_ERROR, MAX_PITCH_CUMULATIVE_ERROR)
+	pitch_area = pitch_error_cummulative*dt;
+	pitch_rate = pitch_error_difference / dt;
+	
+	/**
+	 * Intergral term is bounded to prevent windup
+	 * Bounding also helps, when dt is jumpy when the schedulers are warming up the threads
+	 */
+	P_term = pitch_kP * pitch_error;
+	I_term = pitch_kI * bound(pitch_area, -MAX_PITCH_AREA, MAX_PITCH_AREA); 
+	D_term = pitch_kD * bound(pitch_rate, -MAX_PITCH_RATE, MAX_PITCH_RATE);
 
-	pitch_correction = ( pitch_kP * pitch_error + (pitch_kI * (pitch_error_cummulative*dt)) + (pitch_kD * (pitch_error_difference / dt)));
+	pitch_correction = P_term + I_term + D_term;
 
 	absolute_pitch_correction = fabsf(pitch_correction);
 	*motor_cmd = bound(absolute_pitch_correction, 0, MAX_PITCH_CORRECTION);

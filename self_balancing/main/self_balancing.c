@@ -19,8 +19,6 @@ float pitch_kI = 0.075f;
 float pitch_kD = 9.0f;
 
 float setpoint = 0.0f;
-float initial_acce_angle = 0.0f;
-float forward_angle = 0.0f;
 
 float forward_offset = 2.51f;
 float forward_buffer = 3.1f;
@@ -75,7 +73,7 @@ void balance_task(void *arg)
 
 		while (1)
 		{	
-			initial_acce_angle = setpoint;
+			PITCH_ANGLE_OFFSET = setpoint;
 
 			if (read_mpu6050(euler_angle) == ESP_OK)
 			{

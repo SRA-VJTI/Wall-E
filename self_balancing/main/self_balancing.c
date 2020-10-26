@@ -36,7 +36,7 @@ void calculate_motor_command(const float pitch_cmd, const float pitch_angle, flo
 	
 	static bool is_first_command = true;
 	static float dt = 1.0f;
-	static unit32_t timer;
+	static uint32_t timer = 0.0f;
 
 	static float prevpitch_error = 0.0f;
     static float pitch_correction = 0.0f;

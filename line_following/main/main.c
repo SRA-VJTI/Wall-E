@@ -3,7 +3,12 @@
 #include "freertos/task.h"
 #include "sra_board.h"
 
-#define MODE NORMAL_MODE/*
+#define MODE NORMAL_MODE
+#define BLACK_MARGIN 400
+#define WHITE_MARGIN 2000
+#define CONSTRAIN_LSA_LOW 0
+#define CONSTRAIN_LSA_HIGH 1000
+/*
  * Line Following PID Constants
  */
 #define kP 1.3
@@ -13,7 +18,7 @@
 /*
  * weights given to respective line sensor
  */
-const int weights[4] = {3,1,-1,-3};
+const int weights[4] = {1,3,-3,-1};
 
 /*
  * Motor value constraints
@@ -37,21 +42,12 @@ line_sensor_array line_sensor_readings;
 
 int constrain(int val, int lower_limit, int higher_limit)
 {
-    if (val < lower_limit)
-    {
-        val = lower_limit;
-    }
-    else if (val > higher_limit)
-    {
-        val = higher_limit;
-    }
-
-    return val;
+    return val < lower_limit ? lower_limit : (val > higher_limit ?  higher_limit : val);
 }
 
 int map(int val, int input_lower_limit, int input_higher_limit, int output_lower_limit, int output_higher_limit)
 {
-    return (output_lower_limit + ((output_higher_limit - output_lower_limit)/(input_higher_limit - input_lower_limit))*(val-input_lower_limit));
+    return (output_lower_limit + ((float)(val-input_lower_limit)*((float)(output_higher_limit - output_lower_limit)/(float)(input_higher_limit - input_lower_limit))));
 }
 
 void calculate_correction()
@@ -75,11 +71,11 @@ void calculate_error()
 
     for(int i = 0; i < 4; i++)
     {
-        if(line_sensor_readings.adc_reading[i] > 400)
+        if(line_sensor_readings.adc_reading[i] < BLACK_MARGIN)
         {
             all_black_flag = 0;
         }
-        weighted_sum = weights[i] * line_sensor_readings.adc_reading[i];
+        weighted_sum += weights[i] * line_sensor_readings.adc_reading[i];
         sum = sum + line_sensor_readings.adc_reading[i];
     }
 
@@ -116,10 +112,10 @@ void line_follow_task(void* arg)
         line_sensor_readings = read_line_sensor();
         for(int i = 0; i < 4; i++)
         {
-            line_sensor_readings.adc_reading[i] = constrain(line_sensor_readings.adc_reading[i], 400, 2200);
-            line_sensor_readings.adc_reading[i] = map(line_sensor_readings.adc_reading[i], 400, 2200, 0, 1000);
+            line_sensor_readings.adc_reading[i] = constrain(line_sensor_readings.adc_reading[i], BLACK_MARGIN, WHITE_MARGIN);
+            line_sensor_readings.adc_reading[i] = map(line_sensor_readings.adc_reading[i], BLACK_MARGIN, WHITE_MARGIN, CONSTRAIN_LSA_LOW, CONSTRAIN_LSA_HIGH);
         }
-
+        
         calculate_error();
         calculate_correction();
 

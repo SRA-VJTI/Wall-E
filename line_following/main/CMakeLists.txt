@@ -2,7 +2,9 @@
 set(COMPONENT_REQUIRES )
 set(COMPONENT_PRIV_REQUIRES )
 
-set(COMPONENT_SRCS "main.c")
+set(COMPONENT_SRCS "main.c" "tuning_http_server.c")
 set(COMPONENT_ADD_INCLUDEDIRS "")
 
 register_component()
+
+spiffs_create_partition_image(www "${CMAKE_CURRENT_SOURCE_DIR}/../frontend" FLASH_IN_PROJECT)

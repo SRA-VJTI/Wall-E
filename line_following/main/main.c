@@ -106,7 +106,9 @@ void line_follow_task(void* arg)
         set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, left_duty_cycle);
         set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, right_duty_cycle);
 
-        vTaskDelay(1 / portTICK_PERIOD_MS);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+
+        ESP_LOGI("debug", "%f %f %f", read_pid_const().kp, read_pid_const().ki, read_pid_const().kd);
     }
 
     vTaskDelete(NULL);
@@ -114,6 +116,6 @@ void line_follow_task(void* arg)
 
 void app_main()
 {
-    start_tuning_http_server();
     xTaskCreate(&line_follow_task, "line_follow_task", 4096, NULL, 1, NULL);
+    start_tuning_http_server();
 }

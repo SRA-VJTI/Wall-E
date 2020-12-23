@@ -13,7 +13,7 @@
 #include "esp_log.h"
 #include "mdns.h"
 #include "lwip/apps/netbiosns.h"
-// #include "protocol_examples_common.h"
+#include "protocol_examples_common.h"
 #include "esp_http_server.h"
 #include "esp_system.h"
 #include "esp_vfs.h"

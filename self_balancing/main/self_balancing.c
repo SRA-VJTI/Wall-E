@@ -24,13 +24,13 @@ float setpoint = 0.0f;
 float forward_offset = 2.51f;
 float forward_buffer = 3.1f;
 
+float pitch_error = 0.0f;
 float pitch_angle = 0.0f, roll_angle = 0.0f;
 float motor_pwm = 0.0f;
 
 // Calculate the motor inputs according to angle of the MPU
 void calculate_motor_command(const float pitch_cmd, const float pitch_angle, float *motor_cmd)
 {
-	static float pitch_error = 0.0f;
 	static float pitch_error_difference = 0.0f;
     static float pitch_error_cummulative = 0.0f;
 	
@@ -84,14 +84,14 @@ void calculate_motor_command(const float pitch_cmd, const float pitch_angle, flo
 void balance_task(void *arg)
 {
 	float euler_angle[2];
+	float mpu_offset[2];
 	if (i2c_master_init() == ESP_OK && enable_mpu6050() == ESP_OK)
 	{
 
 		while (1)
 		{	
-			PITCH_ANGLE_OFFSET = setpoint;
 
-			if (read_mpu6050(euler_angle) == ESP_OK)
+			if (read_mpu6050(euler_angle, mpu_offset) == ESP_OK)
 			{
 
 				pitch_angle = euler_angle[1];

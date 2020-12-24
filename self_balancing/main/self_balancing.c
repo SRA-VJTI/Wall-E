@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <math.h>
 
+#include "tuning_http_server.h"
+
 //Limiting Variables
 #define MAX_PITCH_CORRECTION (90.0f)
 #define MAX_PITCH_AREA (850.0f)
@@ -15,12 +17,10 @@
 #define MIN_PWM (60.0f)
 
 //Self Balancing Tuning Parameters
-float pitch_kP = 15.1f;	
-float pitch_kI = 0.075f; 
-float pitch_kD = 9.0f;
-
+// use read_pid_const().setpoint to read value of setpoint
 float setpoint = 0.0f;
 
+// use read_pid_const().offset to read value of offset
 float forward_offset = 2.51f;
 float forward_buffer = 3.1f;
 
@@ -68,9 +68,9 @@ void calculate_motor_command(const float pitch_cmd, const float pitch_angle, flo
 	 * Intergral term is bounded to prevent windup
 	 * Bounding also helps, when dt is jumpy when the schedulers are warming up the threads
 	 */
-	P_term = pitch_kP * pitch_error;
-	I_term = pitch_kI * bound(pitch_area, -MAX_PITCH_AREA, MAX_PITCH_AREA); 
-	D_term = pitch_kD * bound(pitch_rate, -MAX_PITCH_RATE, MAX_PITCH_RATE);
+	P_term = read_pid_const().kp * pitch_error;
+	I_term = read_pid_const().ki * bound(pitch_area, -MAX_PITCH_AREA, MAX_PITCH_AREA); 
+	D_term = read_pid_const().kd * bound(pitch_rate, -MAX_PITCH_RATE, MAX_PITCH_RATE);
 
 	pitch_correction = P_term + I_term + D_term;
 
@@ -87,13 +87,10 @@ void balance_task(void *arg)
 	float mpu_offset[2];
 	if (i2c_master_init() == ESP_OK && enable_mpu6050() == ESP_OK)
 	{
-
 		while (1)
 		{	
-
 			if (read_mpu6050(euler_angle, mpu_offset) == ESP_OK)
 			{
-
 				pitch_angle = euler_angle[1];
 				
 				float pitch_cmd = 0.0f;
@@ -123,10 +120,18 @@ void balance_task(void *arg)
 			}
 		} 
 	}
-
+	
+// remove this it is only for debugging
+	while(1)
+	{
+		vTaskDelay(100 / portTICK_PERIOD_MS);
+        ESP_LOGI("debug", "%f %f %f %f %f", read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, read_pid_const().setpoint, read_pid_const().offset);
+	}
+	vTaskDelete(NULL);
 } 
 
 void app_main()
 {
-	xTaskCreate(&balance_task, "balance task", 100000, NULL, 1, NULL);
+	xTaskCreate(&balance_task, "balance task", 4096, NULL, 1, NULL);
+    start_tuning_http_server();
 }

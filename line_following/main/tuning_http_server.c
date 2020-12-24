@@ -223,7 +223,7 @@ void start_tuning_http_server()
     netbiosns_init();
     netbiosns_set_name(MDNS_HOST_NAME);
 
-    ESP_ERROR_CHECK(example_connect());
+    connect_to_wifi();
     ESP_ERROR_CHECK(init_fs());
     ESP_ERROR_CHECK(start_tuning_http_server_private());
     

@@ -77,7 +77,7 @@
 	</head>
 	<body>
 		<main>
-			<h1>Line Following</h1>
+			<h1>Self Balancing</h1>
 			<div class="button-group">
 				<h3>Kp</h3>
 				<button>&lt;</button>
@@ -96,6 +96,18 @@
 				<input type="number" value="0.000" id="kd" />
 				<button>&gt;</button>
 			</div>
+			<div class="button-group">
+				<h3>Setpoint (Pitch)</h3>
+				<button>&lt;</button>
+				<input type="number" value="0.000" id="setpoint" />
+				<button>&gt;</button>
+			</div>
+			<div class="button-group">
+				<h3>Offset (Pitch)</h3>
+				<button>&lt;</button>
+				<input type="number" value="0.000" id="offset" />
+				<button>&gt;</button>
+			</div>
 		</main>
 		<script>
 			let inpArray = document.querySelectorAll("input[type='number']");
@@ -104,8 +116,12 @@
 				data["kp"] = parseFloat(document.getElementById("kp").value);
 				data["ki"] = parseFloat(document.getElementById("ki").value);
 				data["kd"] = parseFloat(document.getElementById("kd").value);
+				data["setpoint"] = parseFloat(
+					document.getElementById("setpoint").value
+				);
+				data["offset"] = parseFloat(document.getElementById("offset").value);
 				let finaldata = JSON.stringify(data);
-				console.log(finaldata);
+				// console.log(finaldata);
 
 				let xhr = new XMLHttpRequest();
 

@@ -13,14 +13,14 @@
 /*
  * weights given to respective line sensor
  */
-const int weights[4] = {1,3,-3,-1};
+const int weights[4] = {3,1,-1,-3};
 
 /*
  * Motor value boundts
  */
-int optimum_duty_cycle = 70;
-int lower_duty_cycle = 60;
-int higher_duty_cycle = 80;
+int optimum_duty_cycle = 63;
+int lower_duty_cycle = 50;
+int higher_duty_cycle = 76;
 float left_duty_cycle = 0, right_duty_cycle = 0;
 
 /*
@@ -32,6 +32,19 @@ float error=0, prev_error=0, difference, cumulative_error, correction;
  * Union containing line sensor readings
  */
 line_sensor_array line_sensor_readings;
+
+
+void lsa_to_bar()
+{   
+    uint8_t var = 0x00;                     
+    bool number[8] = {0,0,0,0,0,0,0,0};
+    for(int i = 0; i < 4; i++)
+    {
+        number[7-i] = (line_sensor_readings.adc_reading[i] < BLACK_MARGIN) ? 0 : 1; //If adc value is less than black margin, then set that bit to 0 otherwise 1. 
+        var = bool_to_uint8(number);  //A helper function to convert bool array to unsigned int.
+        ESP_ERROR_CHECK(set_bar_graph(var)); //Setting bar graph led with unsigned int value.
+    }
+}
 
 void calculate_correction()
 {
@@ -47,17 +60,17 @@ void calculate_correction()
 
 void calculate_error()
 {
-    int all_black_flag = 0; // assuming initially all black condition
-    int weighted_sum = 0, sum = 0; 
+    int all_black_flag = 1; // assuming initially all black condition
+    float weighted_sum = 0, sum = 0; 
     float pos = 0;
-
+    
     for(int i = 0; i < 4; i++)
     {
-        if(line_sensor_readings.adc_reading[i] < BLACK_MARGIN)
+        if(line_sensor_readings.adc_reading[i] > BLACK_MARGIN)
         {
             all_black_flag = 0;
         }
-        weighted_sum += weights[i] * line_sensor_readings.adc_reading[i];
+        weighted_sum += (float)(weights[i]) * (line_sensor_readings.adc_reading[i]);
         sum = sum + line_sensor_readings.adc_reading[i];
     }
 
@@ -87,7 +100,8 @@ void line_follow_task(void* arg)
 {
     ESP_ERROR_CHECK(enable_motor_driver(a, NORMAL_MODE));
     ESP_ERROR_CHECK(enable_line_sensor());
-
+    ESP_ERROR_CHECK(enable_bar_graph());
+    
     while(true)
     {
         line_sensor_readings = read_line_sensor();
@@ -99,16 +113,19 @@ void line_follow_task(void* arg)
         
         calculate_error();
         calculate_correction();
-
+        lsa_to_bar();
+        
         left_duty_cycle = bound((optimum_duty_cycle - correction), lower_duty_cycle, higher_duty_cycle);
         right_duty_cycle = bound((optimum_duty_cycle + correction), lower_duty_cycle, higher_duty_cycle);
 
         set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, left_duty_cycle);
         set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, right_duty_cycle);
 
-        vTaskDelay(100 / portTICK_PERIOD_MS);
+        
+        //ESP_LOGI("debug","left_duty_cycle:  %f    ::  right_duty_cycle :  %f  :: error :  %f  correction  :  %f  \n",left_duty_cycle, right_duty_cycle, error, correction);
+        ESP_LOGI("debug", "KP: %f ::  KI: %f  :: KD: %f", read_pid_const().kp, read_pid_const().ki, read_pid_const().kd);
 
-        ESP_LOGI("debug", "%f %f %f", read_pid_const().kp, read_pid_const().ki, read_pid_const().kd);
+        vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 
     vTaskDelete(NULL);

@@ -29,7 +29,8 @@ void calculate_motor_command(const float pitch_error, float *motor_cmd)
 	float dt = 0.005f;
 
 	static float prev_pitch_error = 0.0f;
-	float pitch_error_difference = 0.0f, pitch_error_cumulative = 0.0f;
+	static float pitch_error_cumulative = 0.0f;
+	float pitch_error_difference = 0.0f, 
 
 	float pitch_correction = 0.0f, absolute_pitch_correction = 0.0f;
 	float pitch_rate = 0.0f, pitch_area = 0.0f;
@@ -71,20 +72,21 @@ void calculate_motor_command(const float pitch_error, float *motor_cmd)
 void balance_task(void *arg)
 {
 	// mpu_offsets are the initial accelerometer angles at rest position
-	float euler_angle[2], mpu_offset[2];
+	float euler_angle[2], mpu_offset[2] = {0.0f, 0.0f};
 	float pitch_angle, pitch_error;
 	float motor_cmd, motor_pwm = 0.0f;
 
 	// Pitch angle where you want to go - pitch_cmd, setpoint and mpu_offsets are linked to one another
 	float pitch_cmd = 0.0f;
-	
+
 	if (enable_mpu6050() == ESP_OK)
 	{
+		enable_motor_driver(a, NORMAL_MODE);
 		while (1)
 		{
-			mpu_offset[1] = read_pid_const().setpoint;
 			if (read_mpu6050(euler_angle, mpu_offset) == ESP_OK)
 			{
+				pitch_cmd = read_pid_const().setpoint;
 				pitch_angle = euler_angle[1];
 				pitch_error = pitch_cmd - pitch_angle;
 
@@ -93,7 +95,6 @@ void balance_task(void *arg)
 				//bound PWM values between max and min
 				motor_pwm = bound((motor_cmd), MIN_PWM, MAX_PWM);
 
-				enable_motor_driver(a, NORMAL_MODE);
 				if (pitch_error > 1)
 				{
 					set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, motor_pwm);
@@ -120,7 +121,7 @@ void balance_task(void *arg)
 		vTaskDelay(100 / portTICK_PERIOD_MS);
 		ESP_LOGI("debug", "%f %f %f %f %f", read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, read_pid_const().setpoint, read_pid_const().offset);
 	}
-	
+
 	vTaskDelete(NULL);
 }
 

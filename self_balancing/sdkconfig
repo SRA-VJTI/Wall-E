@@ -946,42 +946,6 @@ CONFIG_MAXIMUM_RETRY=5
 CONFIG_MDNS_HOST_NAME="walle-tuning"
 # end of mDNS Config
 # end of Wall-E Configuration
-
-#
-# SRA Board Component Config
-#
-
-#
-# Servo motor configuration
-#
-
-#
-# Servo A
-#
-CONFIG_SERVO_A_MIN_PULSEWIDTH=500
-CONFIG_SERVO_A_MAX_PULSEWIDTH=3000
-CONFIG_SERVO_A_MAX_DEGREE=180
-# end of Servo A
-
-#
-# Servo B
-#
-CONFIG_SERVO_B_MIN_PULSEWIDTH=500
-CONFIG_SERVO_B_MAX_PULSEWIDTH=3000
-CONFIG_SERVO_B_MAX_DEGREE=180
-# end of Servo B
-
-#
-# Servo C
-#
-CONFIG_SERVO_C_MIN_PULSEWIDTH=500
-CONFIG_SERVO_C_MAX_PULSEWIDTH=3000
-CONFIG_SERVO_C_MAX_DEGREE=180
-# end of Servo C
-# end of Servo motor configuration
-
-CONFIG_NUMBER_OF_SAMPLES=64
-# end of SRA Board Component Config
 # end of Component config
 
 #

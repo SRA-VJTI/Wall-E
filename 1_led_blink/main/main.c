@@ -38,7 +38,7 @@ void app_main()
             
             {
                 var = 0x01;
-             //setting var to  0x01(8th led is on)
+           //setting var to  0x01(8th led is on)
             }            
             ESP_ERROR_CHECK(set_bar_graph(var));
             //setting the value of the function to that of the var 

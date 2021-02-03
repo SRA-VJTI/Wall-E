@@ -30,7 +30,7 @@ void app_main()
         //0x01 = 0000 0001(only 8th led is on)
         // setting variable var to 0x01 
 
-        while(1)
+        while(1)//blinking the leds one by one from right hand side to left hand side
         {
             if (var == 0x00)
             //if variable var is  0x00(i.e, all leds are off)

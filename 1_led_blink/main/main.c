@@ -12,7 +12,8 @@ void app_main()
 
     while(1)
     {
-        for (int i = 0; i < 5; i++)//blinks all the 8 leds 5 times
+        //blinks all the 8 leds 5 times
+        for (int i = 0; i < 5; i++)
         {
             ESP_ERROR_CHECK(set_bar_graph(0xFF));
             //0xFF = 1111 1111(all leds are on)

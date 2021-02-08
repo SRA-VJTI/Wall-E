@@ -28,10 +28,12 @@ void calculate_motor_command(const float pitch_error, float *motor_cmd)
 	static uint32_t timer = 0;
 	float dt = 0.005f;
 
+	// Error values
 	static float prev_pitch_error = 0.0f;
 	static float pitch_area = 0.0f;
 	float pitch_error_difference = 0.0f; 
 
+	// Correction values
 	float pitch_correction = 0.0f, absolute_pitch_correction = 0.0f;
 	float pitch_rate = 0.0f, pitch_area = 0.0f;
 
@@ -70,22 +72,29 @@ void calculate_motor_command(const float pitch_error, float *motor_cmd)
 //The main task to balance the robot
 void balance_task(void *arg)
 {
-	// mpu_offsets are the initial accelerometer angles at rest position
+	/**
+	 * euler_angles are the complementary pitch and roll angles
+	 * mpu_offsets are the initial accelerometer angles at rest position
+	*/
 	float euler_angle[2], mpu_offset[2] = {0.0f, 0.0f};
+
 	float pitch_angle, pitch_error;
 	float motor_cmd, motor_pwm = 0.0f;
 
 	// Pitch angle where you want to go - pitch_cmd, setpoint and mpu_offsets are linked to one another
 	float pitch_cmd = 0.0f;
 
+	// Checking for successful initialisation of MPU-6050
 	if (enable_mpu6050() == ESP_OK)
 	{
+		// Function to enable Motor driver A in Normal Mode
 		enable_motor_driver(a, NORMAL_MODE);
 		while (1)
 		{
+			// Checking for successful calculation of complementary pitch and roll angles based on intial accelerometer angle
 			if (read_mpu6050(euler_angle, mpu_offset) == ESP_OK)
 			{
-				pitch_cmd = read_pid_const().setpoint;
+				pitch_cmd = read_pid_const().setpoint;	// Function to read PID setpoint from tuning_http_server
 				pitch_angle = euler_angle[1];
 				pitch_error = pitch_cmd - pitch_angle;
 
@@ -96,18 +105,24 @@ void balance_task(void *arg)
 
 				if (pitch_error > 1)
 				{
+					// setting motor A0 with definite speed(duty cycle of motor driver PWM) in forward direction
 					set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, motor_pwm);
+					// setting motor A1 with definite speed(duty cycle of motor driver PWM) in forward direction
 					set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, motor_pwm);
 				}
 
 				else if (pitch_error < -1)
 				{
+					// setting motor A0 with definite speed(duty cycle of motor driver PWM) in backward direction
 					set_motor_speed(MOTOR_A_0, MOTOR_BACKWARD, motor_pwm);
+					// setting motor A1 with definite speed(duty cycle of motor driver PWM) in backward direction
 					set_motor_speed(MOTOR_A_1, MOTOR_BACKWARD, motor_pwm);
 				}
 				else
 				{
+					// stopping motor A0
 					set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
+					// stopping motor A1
 					set_motor_speed(MOTOR_A_1, MOTOR_STOP, 0);
 				}
 			}

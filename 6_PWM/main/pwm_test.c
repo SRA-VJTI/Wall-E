@@ -25,24 +25,44 @@ void pwm_task(void *arg)
 		{
 			for (int duty_cycle = 60; duty_cycle <= 100; duty_cycle++)
 			{
+				// MOTOR A0 in forward direction with definite speed(duty cycle)
 				set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, duty_cycle);
+
+				// MOTOR A1 in forward direction with definite speed(duty cycle)
 				set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, duty_cycle);
+
+				// Delay of 100ms i.e. Wait for 100ms
 				vTaskDelay(100 / portTICK_PERIOD_MS);
 			}
 
+			// stopping the MOTOR A0
 			set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
+
+			// stopping the MOTOR A1
 			set_motor_speed(MOTOR_A_1, MOTOR_STOP, 0);
+
+			// Delay of 100ms i.e. Wait for 100ms
 			vTaskDelay(100 / portTICK_PERIOD_MS);
 
 			for (int duty_cycle = 60; duty_cycle <= 100; duty_cycle++)
 			{
+				// MOTOR A0 in backward direction with definite speed(duty cycle)
 				set_motor_speed(MOTOR_A_0, MOTOR_BACKWARD, duty_cycle);
+
+				// MOTOR A1 in backward direction with definite speed(duty cycle)
 				set_motor_speed(MOTOR_A_1, MOTOR_BACKWARD, duty_cycle);
+
+				// Delay of 100ms i.e. Wait for 100ms
 				vTaskDelay(100 / portTICK_PERIOD_MS);
 			}
 
+			// stopping the MOTOR A0
 			set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
+
+			// stopping the MOTOR A1
 			set_motor_speed(MOTOR_A_1, MOTOR_STOP, 0);
+
+			// Delay of 100ms i.e. Wait for 100ms
 			vTaskDelay(100 / portTICK_PERIOD_MS);
 		}
 	}
@@ -56,20 +76,31 @@ void pwm_task(void *arg)
 		{
 			for (int duty_cycle = 60; duty_cycle <= 100; duty_cycle++)
 			{
+				// MOTOR A0 in forward direction with definite speed(duty cycle)
 				set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, duty_cycle);
+				
+				// Delay of 100ms i.e. Wait for 100ms
 				vTaskDelay(100 / portTICK_PERIOD_MS);
 			}
-
+			
+			// stopping the MOTOR A0
 			set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
+			
+			// Delay of 100ms i.e. Wait for 100ms
 			vTaskDelay(100 / portTICK_PERIOD_MS);
 
 			for (int duty_cycle = 60; duty_cycle <= 100; duty_cycle++)
 			{
+				// MOTOR A0 in backward direction with definite speed(duty cycle)
 				set_motor_speed(MOTOR_A_0, MOTOR_BACKWARD, duty_cycle);
+				
+				// Delay of 10ms i.e. Wait for 10ms
 				vTaskDelay(100 / 10);
 			}
-
+			// stopping the MOTOR A0
 			set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
+			
+			// Delay of 100ms i.e. Wait for 100ms
 			vTaskDelay(100 / portTICK_PERIOD_MS);
 		}
 	}

@@ -5,13 +5,12 @@
 #include <string.h>
 #include <stdlib.h>
 
-
 //Components
 #include "sra_board.h"
 
 // Select the mode needed by uncommenting its definition
 #define MODE NORMAL_MODE
-// #define MODE PARALLEL_MODE 
+// #define MODE PARALLEL_MODE
 
 void pwm_task(void *arg)
 {
@@ -25,24 +24,44 @@ void pwm_task(void *arg)
 		{
 			for (int duty_cycle = 60; duty_cycle <= 100; duty_cycle++)
 			{
+				// setting motor speed of MOTOR A0 in forward direction with duty cycle
 				set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, duty_cycle);
+
+				// setting motor speed of MOTOR A1 in forward direction with duty cycle
 				set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, duty_cycle);
+
+				// adding delay of 100ms
 				vTaskDelay(100 / portTICK_PERIOD_MS);
 			}
 
+			// stopping the MOTOR A0
 			set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
+
+			// stoppin the MOTOR A1
 			set_motor_speed(MOTOR_A_1, MOTOR_STOP, 0);
+
+			// adding delay of 100ms
 			vTaskDelay(100 / portTICK_PERIOD_MS);
 
 			for (int duty_cycle = 60; duty_cycle <= 100; duty_cycle++)
 			{
+				// setting motor speed of MOTOR A0 in backward direction with duty cycle
 				set_motor_speed(MOTOR_A_0, MOTOR_BACKWARD, duty_cycle);
+
+				// setting motor speed of MOTOR A1 in backward direction with duty cycle
 				set_motor_speed(MOTOR_A_1, MOTOR_BACKWARD, duty_cycle);
+
+				// adding delay of 100ms
 				vTaskDelay(100 / portTICK_PERIOD_MS);
 			}
 
+			// stopping the MOTOR A0
 			set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
+
+			// stoppin the MOTOR A1
 			set_motor_speed(MOTOR_A_1, MOTOR_STOP, 0);
+
+			// adding delay of 100ms
 			vTaskDelay(100 / portTICK_PERIOD_MS);
 		}
 	}
@@ -56,27 +75,39 @@ void pwm_task(void *arg)
 		{
 			for (int duty_cycle = 60; duty_cycle <= 100; duty_cycle++)
 			{
+				// setting motor speed of motor A in forward direction with duty cycle
 				set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, duty_cycle);
+
+				// adding delay of 100ms
 				vTaskDelay(100 / portTICK_PERIOD_MS);
 			}
 
+			// stopping the motor A
 			set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
+
+			// adding delay of 100ms
 			vTaskDelay(100 / portTICK_PERIOD_MS);
 
 			for (int duty_cycle = 60; duty_cycle <= 100; duty_cycle++)
 			{
+				// setting motor speed of motor A in backward direction with duty cycle
 				set_motor_speed(MOTOR_A_0, MOTOR_BACKWARD, duty_cycle);
+
+				// adding delay of 100ms
 				vTaskDelay(100 / 10);
 			}
 
+			// stopping the motor A
 			set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
+
+			// adding delay of 100ms
 			vTaskDelay(100 / portTICK_PERIOD_MS);
 		}
 	}
 }
 
-	void app_main()
-	{
-		// Basic Function for task creation
-		xTaskCreate(&pwm_task, "pwm_task", 4096, NULL, 1, NULL);
-	}
+void app_main()
+{
+	// Basic Function for task creation
+	xTaskCreate(&pwm_task, "pwm_task", 4096, NULL, 1, NULL);
+}

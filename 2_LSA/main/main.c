@@ -28,7 +28,7 @@ void app_main(void)
     //Union containing line sensor readings
     line_sensor_array line_sensor_readings;
 	
-	// infinite loop to get readings continuously
+    // infinite loop to get LSA readings continuously
     while(1)
     {
         // get line sensor readings from the LSA sensors

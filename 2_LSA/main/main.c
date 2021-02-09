@@ -1,4 +1,4 @@
-// C Header file having basic Input Output Functions
+// C Header file having Standard Input Output Functions
 #include <stdio.h>
 
 // Header files for Free RTOS - Real Time Operating Systems

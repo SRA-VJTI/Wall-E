@@ -1,8 +1,5 @@
 ## LSA - Light Sensor Array
 
-### How does it look?
-
-
 ### Components of LSA
 | Component   | Description   | Quantity |
 | ----------- | ------------- | -------- |
@@ -25,12 +22,12 @@
 > Now to limit the current and thus to protect the LEDs, PhotoDiodes current limiting resistors are used.
 
 ### Working Principle
-- LSA works on the principle of reflectivity of light for different types of surfaces.
-	- Black Surface -> HIGH absorptivity -> LESS reflectivity
-	- White Surface -> LOW absorptivity -> HIGH reflectivity
+> - LSA works on the principle of reflectivity of light for different types of surfaces.
+	> - Black Surface -> HIGH absorptivity -> LESS reflectivity
+	> - White Surface -> LOW absorptivity -> HIGH reflectivity
 	
 ### Applications 
-- Application of LSA majorly lies in line following.
+> - Application of LSA majorly lies in line following.
 
 ### Scope of Improvement
 > - LSA sometimes provides slightly inaccurate readings due to external light and conditions. Therefore, LSA has low accuracy. Hence LSA should be kept close to the ground.

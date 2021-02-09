@@ -46,7 +46,7 @@ void app_main()
             var = var << 1;
             //left shifting the values of var
             vTaskDelay(1000 / portTICK_PERIOD_MS);
-            //delay of 1s
+             //delay of 1s
         }
     }
 }

@@ -1,15 +1,25 @@
+// C Header file having basic Input Output Functions
 #include <stdio.h>
+
+// Header files for Free RTOS - Real Time Operating Systems
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+
+// SRA's custom header file including additional functions
 #include "sra_board.h"
 
+// tested Margin Value Constants for Black and White Surfaces
 #define BLACK_MARGIN 400
 #define WHITE_MARGIN 2000
+
+// targetted Mapping Value Constants for Tested Margin Values
 #define CONSTRAIN_LSA_LOW 0
 #define CONSTRAIN_LSA_HIGH 1000
 
+// pointer to a character array 
 static const char* TAG = "LSA_READINGS";
 
+// main driver function
 void app_main(void)
 {
     // enable line sensor
@@ -17,10 +27,11 @@ void app_main(void)
 
     //Union containing line sensor readings
     line_sensor_array line_sensor_readings;
-
+	
+	// infinite loop to get readings continuously
     while(1)
     {
-        // get line sensor readings
+        // get line sensor readings from the LSA sensors
         line_sensor_readings = read_line_sensor();
         for(int i = 0; i < 4; i++)
         {
@@ -30,7 +41,7 @@ void app_main(void)
             line_sensor_readings.adc_reading[i] = map(line_sensor_readings.adc_reading[i], BLACK_MARGIN, WHITE_MARGIN, CONSTRAIN_LSA_LOW, CONSTRAIN_LSA_HIGH);
         }
 
-        // log final lsa readings
+        // Displaying logs - final lsa readings
         ESP_LOGI(TAG, "LSA_1: %d \t LSA_2: %d \t LSA_3: %d \t LSA_4: %d",line_sensor_readings.adc_reading[0], line_sensor_readings.adc_reading[1], line_sensor_readings.adc_reading[2], line_sensor_readings.adc_reading[3] );
 
     }

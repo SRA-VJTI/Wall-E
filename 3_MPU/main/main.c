@@ -19,15 +19,15 @@ void mpu_task(void *arg)
     while (1)
     {
         /*The MPU6050 comes up in sleep mode upon power-up
-        enable_mpu6050 disables the SLEEP_MODE of the MPU by accessing the POWER_MANAGEMENT_1 register
+         * enable_mpu6050 disables the SLEEP_MODE of the MPU by accessing the POWER_MANAGEMENT_1 register
          */
         if (enable_mpu6050() == ESP_OK) //Checks if MPU is initialised correctly
         {
             /* Euler angles are obtained by reading values from the accelerometer and gyroscope
-            Calculating roll, pitch from raw accelerometer and gyroscope readings seperately
-            And then performing sensor fusion via complementary filters to obtain a stable reading
-            with low pass filter on accelerometer data and high pass filter on gyroscope data
-            */
+             * Calculating change in roll, pitch from raw accelerometer and gyroscope readings seperately
+             * And then performing sensor fusion via complementary filter to obtain a stable reading
+             * The changes in angles from both measurements are weighted and added to the complementary angle
+             */
             while (read_mpu6050(euler_angle, mpu_offset) == ESP_OK)
                 ESP_LOGI(TAG, "Roll: %0.2f | Pitch: %0.2f", euler_angle[0], euler_angle[1]); //Logging information of roll and pitch angles
         }

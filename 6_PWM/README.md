@@ -27,7 +27,7 @@ Calculation of duty cycle is done by calculating the ON-time from total period o
 
 ![](https://www.javatpoint.com/embeddedsystem/images/pwm-avr-microcontroller2.png)
 
-![](https://www.embedded.com/wp-content/uploads/media-1074615-0109bcfig1.gif)
+![](https://upload.wikimedia.org/wikipedia/commons/b/b8/Duty_Cycle_Examples.png)
 
 ## Period 
 As represented in the above figure, Toff represents the off-time and Ton represents the on-time of a signal. Period is a sum of both on and off times and period is calculated as shown in the equation below:
@@ -56,7 +56,7 @@ Voltage regulation operation is performed by averaging the PWM signal. Output vo
 
 ![](https://exploreembedded.com/wiki/images/5/54/0_LPC1768_PWM.gif)
 
-![](https://makeabilitylab.github.io/physcomp/esp32/assets/movies/Huzzah32_GPIOFadeTestAllPinsSimultaneously-Optimized3.gif)
+![](https://makeabilitylab.github.io/physcomp/esp32/assets/movies/Huzzah32_Fade-optimized.gif)
 
 # PWM – For controlling speed
 

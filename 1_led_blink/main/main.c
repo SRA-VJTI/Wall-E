@@ -29,24 +29,24 @@ void app_main()
 
         uint8_t var = 0x01;
         //0x01 = 0000 0001(only 8th led is on)
-        // setting variable var to 0x01 
+        // After left-shifting 0x01 8-times, we end up with 0x00. To recover the var variable, we initialise it with 0x01.
 
-        while(1)//blinking the leds one by one from right hand side to left hand side
+        while(1) 
         {
             if (var == 0x00)
             //if variable var is  0x00(i.e, all leds are off)
-            //for security check
-            
+            //it checks whether the value of var has changed from 0x01 to 0x00.
             {
                 var = 0x01;
            //setting var to  0x01(8th led is on)
             }            
             ESP_ERROR_CHECK(set_bar_graph(var));
-            //setting the value of the function to that of the var 
+            // var contains the data for the LEDs and it's been passed as an argument to set_bar_graph() function.
             var = var << 1;
-            //left shifting the values of var
+            // It left shifts the values of var eg. from 0x01(means only the 8th led is on) it changes to 
+            // 0x02 (means only the 7th LED is on). Similarly, the LED's are turned on one by one from the 8th to the 1st.
             vTaskDelay(1000 / portTICK_PERIOD_MS);
-             //delay of 1s
+            //delay of 1s
         }
     }
 }

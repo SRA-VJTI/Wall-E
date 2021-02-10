@@ -4,7 +4,7 @@
   * [Period](#period)
 * [Led Dimmer](#led-dimmer)
 * [PWM – For controlling speed](*pwm-for-controlling-speed)
-* [Motor Drivers](#motor-driver)
+* [Motor Drivers](#motor-drivers)
 * [Description Of Functions Used](#description-of-functions-used)
 
 

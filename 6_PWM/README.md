@@ -50,7 +50,7 @@ Voltage regulation operation is performed by averaging the PWM signal. Output vo
 
 # LED Dimmer
 
-* LED Dimmer is the best example to visualise the working of the LED 
+* LED Dimmer is the best example to visualise the working of the PWM
 * PWM technique (pulse width modulation) is a very efficient way of controlling the brightness of LEDs with minimum energy waste. I
 * Instead of varying the brightness by varying the supply current with a variable resistor or transistor it is accomplished by varying the ratio of ON time vs OFF time. This saves the lot of energy.
 

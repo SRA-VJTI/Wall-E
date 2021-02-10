@@ -1,5 +1,5 @@
 # TABLE OF CONTENTS
-* [Pulse Width Modulation](#about-pwm)
+* [Pulse Width Modulation](#pulse-width-modulation)
   * [Duty Cycle](#duty-cycle)
   * [Period](#period)
 * [Led Dimmer](#led-dimmer)
@@ -8,7 +8,7 @@
 * [Description Of Functions Used](#description-of-functions-used)
 
 
-# Pulse Width Modulation(PWM)
+# Pulse Width Modulation
 
 Pulse Width Modulation (PWM) is a square wave with varying low and high amplitude signal. A general PWM signal is given in a figure below:
 

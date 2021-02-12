@@ -25,7 +25,7 @@ void app_main(void)
     // enable line sensor
     ESP_ERROR_CHECK(enable_line_sensor());
 
-    //Union containing line sensor readings
+    // Union containing line sensor readings
     line_sensor_array line_sensor_readings;
 	
     // infinite loop to get LSA readings continuously

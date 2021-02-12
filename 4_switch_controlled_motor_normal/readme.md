@@ -14,5 +14,6 @@
         <br/><br/>
 
 - ### **Working**
-    - switch_controlled_motor_normal takes input from LSA and runs the bot motors in Normal mode according to the input.
+    - takes input from LSA  
+    - runs the bot motors in Normal mode according to the input.
 

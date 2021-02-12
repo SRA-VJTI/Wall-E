@@ -14,6 +14,8 @@
         <br/><br/>
 
 - ### **Working**
+    - Activates GPIO swtiches to take input from LSA
+    - Activates one of the two TB6612FNG drivers
     - takes input from LSA  
     - runs the bot motors in Normal mode according to the input.
 

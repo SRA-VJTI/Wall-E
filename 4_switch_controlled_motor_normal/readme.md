@@ -1,7 +1,7 @@
 # switch_controlled_motor_normal
 ## About the Project
 - ### **Motor Driver Modes**
-    - The SRA board has 2x TB6612FNG motor drivers which allow a maximum of 4 motors to be controlled. This motor driver is characterized by its operation in two modes - **Normal mode** and **Parallel mode**, **switch_controlled_motor_normal** deals with normal mode aproach:   
+    - The SRA board has 2x TB6612FNG motor drivers which allow a maximum of 4 motors to be controlled. This motor driver is characterized by its operation in two modes - **Normal mode** and **Parallel mode**, **switch_controlled_motor_normal** deals with normal mode approach:   
         1. **Normal Mode**
         <br />
         <p align="center">

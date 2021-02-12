@@ -37,7 +37,7 @@ void pwm_task(void *arg)
 			// stopping the MOTOR A0
 			set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
 
-			// stoppin the MOTOR A1
+			// stopping the MOTOR A1
 			set_motor_speed(MOTOR_A_1, MOTOR_STOP, 0);
 
 			// adding delay of 100ms

@@ -13,7 +13,8 @@
 static const char *TAG = "mpu_test";
 
 void mpu_task(void *arg)
-{   //Euler angle buffer includes two floats - Roll angle and Pitch angle
+{   
+    //Euler angle buffer includes two floats - Roll angle and Pitch angle
     float euler_angle[2], mpu_offset[2] = {0.0f, 0.0f};
 
     while (1)
@@ -29,14 +30,19 @@ void mpu_task(void *arg)
              * The changes in angles from both measurements are weighted and added to the complementary angle
              */
             while (read_mpu6050(euler_angle, mpu_offset) == ESP_OK)
-                ESP_LOGI(TAG, "Roll: %0.2f | Pitch: %0.2f", euler_angle[0], euler_angle[1]); //Logging information of roll and pitch angles
+                ESP_LOGI(TAG, "Roll: %0.2f | Pitch: %0.2f", euler_angle[0], euler_angle[1]); 
+                //Logging information of roll and pitch angles
         }
+        //Logging Error
+        ESP_LOGE(TAG, "MPU Initialisation Failed / Connection Broke!"); 
         
-        ESP_LOGE(TAG, "MPU Initialisation Failed / Connection Broke!"); //Logging Error
     }
 }
 
 void app_main()
 {
-    xTaskCreate(mpu_task, "mpu_task", 4096, NULL, 1, NULL); //creating task to run mpu_task function 
+    /* creating task to run mpu_task function
+     * which runs at priority 1
+    */ 
+    xTaskCreate(mpu_task, "mpu_task", 4096, NULL, 1, NULL);
 }

@@ -29,7 +29,7 @@ void calculate_motor_command(const float pitch_error, float *motor_cmd)
 	float dt = 0.005f;
 
 	static float prev_pitch_error = 0.0f;
-	static float pitch_error_cumulative = 0.0f;
+	static float pitch_area = 0.0f;
 	float pitch_error_difference = 0.0f; 
 
 	float pitch_correction = 0.0f, absolute_pitch_correction = 0.0f;

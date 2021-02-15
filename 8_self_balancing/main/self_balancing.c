@@ -29,7 +29,7 @@ void calculate_motor_command(const float pitch_error, float *motor_cmd)
 	float dt = 0.005f;
 
 	static float prev_pitch_error = 0.0f;
-	static float pitch_error_cumulative = 0.0f;
+	static float pitch_area = 0.0f;
 	float pitch_error_difference = 0.0f; 
 
 	float pitch_correction = 0.0f, absolute_pitch_correction = 0.0f;
@@ -48,9 +48,8 @@ void calculate_motor_command(const float pitch_error, float *motor_cmd)
 	timer = esp_timer_get_time();
 
 	pitch_error_difference = pitch_error - prev_pitch_error;
-	pitch_error_cumulative += pitch_error;
 
-	pitch_area = pitch_error_cumulative * dt;
+	pitch_area += (pitch_error * dt);
 	pitch_rate = pitch_error_difference / dt;
 
 	/**

@@ -10,50 +10,50 @@ void drive_task(void *arg)
 
 	while(1)
 	{
-		if(read_switch(SWITCH_1))   					                //Reading the input of switch 1
+		if(read_switch(SWITCH_1))   					        //Reading the input of switch 1
 		{
 			set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, 80);		        //Setting the speed of motor A in forward direction, duty cycle 80%
-			ESP_LOGI(TAG_SWITCH_CONTROL_MOTOR, "MOTOR_A_0 FORWARD");    //Sending a message to esp log file	
+			ESP_LOGI(TAG_SWITCH_CONTROL_MOTOR, "MOTOR_A_0 FORWARD");    	//Sending a message to esp log file	
 		}
-		else if(read_switch(SWITCH_2))                                  //Reading the input of switch 2
+		else if(read_switch(SWITCH_2))                                  	//Reading the input of switch 2
 		{
-			set_motor_speed(MOTOR_A_0, MOTOR_BACKWARD, 80);             //Setting the speed of motor A in reverse direction, duty cycle 80%
+			set_motor_speed(MOTOR_A_0, MOTOR_BACKWARD, 80);             	//Setting the speed of motor A in reverse direction, duty cycle 80%
 			ESP_LOGI(TAG_SWITCH_CONTROL_MOTOR, "MOTOR_A_0 BACKWARD");
 		}
 		else
 		{
-			set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);                  //If both switches have zero input, stop.
+			set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);                  	//If both switches have zero input, stop.
 		}
 
 		if(read_switch(SWITCH_3))
 		{
-			set_motor_speed(MOTOR_B_0, MOTOR_FORWARD, 80);
+			set_motor_speed(MOTOR_B_0, MOTOR_FORWARD, 80);			//Setting the speed of motor B in forward direction, duty cycle 80%
 			ESP_LOGI(TAG_SWITCH_CONTROL_MOTOR, "MOTOR_B_0 FORWARD");
 		}
 		else if(read_switch(SWITCH_4))
 		{
 			set_motor_speed(MOTOR_B_0, MOTOR_BACKWARD, 80);
-			ESP_LOGI(TAG_SWITCH_CONTROL_MOTOR, "MOTOR_B_0 BACKWARD");
+			ESP_LOGI(TAG_SWITCH_CONTROL_MOTOR, "MOTOR_B_0 BACKWARD");	//Setting the speed of motor B in reverse direction, duty cycle 80%
 		}
 		else
 		{
 			set_motor_speed(MOTOR_B_0, MOTOR_STOP, 0);
 		}
-    vTaskDelay(100 / portTICK_PERIOD_MS);					//Delays the task by 1 Tick-Period
+    vTaskDelay(100 / portTICK_PERIOD_MS);						//Delays the task by 100ms
 	}
 }
 
 
 void app_main()
 {
-	 /**
-     * @brief Basic Function for task creation
-     */
+	/**
+     	* @brief Basic Function for task creation
+     	*/
 	//Task is created and added to the lists of tasks ready to run
-    xTaskCreate(&drive_task,					//address of the function to execute
-		"drive_task",							//name of the task
-		4096,								    //Memory allocated to the Task ie. 4096(4 bytes)
-		NULL,								    //Paramter passed as input(if any)
-		1,								        //Priority of the task
+    xTaskCreate(&drive_task,					//Address of the function to execute
+		"drive_task",					//Name of the task
+		4096,			             		//Memory allocated to the Task ie. 4096(4 bytes)
+		NULL,			 		        //Paramter passed as input(if any)
+		1,						//Priority of the task
 		NULL);                       			//Task handle
 }                                                                                 

@@ -74,12 +74,12 @@ void drive_task(void *arg)
 		{
 			set_motor_speed(MOTOR_B_0, MOTOR_STOP, 0);
 		}
-               /**
+        /**
 		 * Delay the task for a specific amount of freeRTOS ticks
 		 * RTOS ticks are a time resolution unit in ESP32, by default 1 RTOS tick will occur every 1ms.
 		 * the constant portTICK_PERIOD_MS has a default value of one tick period
 		 */
-                vTaskDelay(100 / portTICK_PERIOD_MS);						
+        vTaskDelay(100 / portTICK_PERIOD_MS);						
 	}
 }
 
@@ -91,7 +91,7 @@ void app_main()
      	*/
 
 	/*
-       xTaskCreate
+    xTaskCreate
 	* creates a new task with name "drive_task" and allocates 4096 words of memory to it
 	* for more information about xTaskCreate visit //https://www.freertos.org/a00125.html	
 	 
@@ -101,13 +101,8 @@ void app_main()
 	drive_task :	Name of the task
 	4096	   :	Memory allocated to the Task ie. 4096(4 bytes)
 	NULL	   :	Paramter passed as input(if any)
-	1	   :	Priority of the task
-	NULL       :     Task handle
+	1	   	   :	Priority of the task
+	NULL       :    Task handle
 	*/	
-    xTaskCreate(&drive_task,					
-		"drive_task",					
-		4096,			             		
-		NULL,			 		        
-		1,						
-		NULL);                       			
+    xTaskCreate(&drive_task,"drive_task",4096,NULL,1,NULL);                       			
 }                                                                                 

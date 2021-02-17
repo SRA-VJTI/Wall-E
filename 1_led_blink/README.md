@@ -11,7 +11,7 @@ TABLE OF CONTENTS
 <a name="des"></a>
 What is a LED?
 -----------------
-[21:57, 17/02/2021] Mayuri Angule: <p><strong><em>Light Emitting Diode</em></strong> is a device that produces light on electrical and electronic devices.<br> It is a light sensor which emits light that is reflected from surface which further helps in sensing the environment.</p>
+<p><strong><em>Light Emitting Diode</em></strong> is a device that produces light on electrical and electronic devices.<br> It is a light sensor which emits light that is reflected from surface which further helps in sensing the environment.</p>
 
 <a name="how"></a>
 How does a LED blinks?

@@ -1,11 +1,11 @@
-# switch_controlled_motor_driver_parallel
+# Switch Controlled Motor Driver in Parallel Mode
 - ### **Motor Driver Modes**
     - The new edition has 2x TB6612FNG motor drivers which allow a maximum of 4 motors to be controlled. This motor driver is characterized by its operation in two modes - **Normal mode** and **Parallel mode**:   
    
         1. **Parallel Mode**
         <br />
         <p align="center">
-        <img width="460" height="300" src="/parallel_mode.jpeg">
+        <img width="460" height="300" src="https://github.com/chaitravi-ce/Wall-E_v2.2-beta/blob/dev/5_switch_controlled_motor_parallel/parallel_mode.jpeg">
         </p>
 
         -  The parallel mode is a special feature, used for high-rated motors, requiring more than the 1.2A current limit.

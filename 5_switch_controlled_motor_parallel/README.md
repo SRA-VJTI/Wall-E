@@ -1,4 +1,4 @@
-# switch_controlled_motor_driver_parallel
+# Switch Controlled Motor Driver in Parallel Mode
 - ### **Motor Driver Modes**
     - The new edition has 2x TB6612FNG motor drivers which allow a maximum of 4 motors to be controlled. This motor driver is characterized by its operation in two modes - **Normal mode** and **Parallel mode**:   
    

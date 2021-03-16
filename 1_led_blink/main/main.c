@@ -31,8 +31,9 @@ void app_main()
         //0x01 = 0000 0001(only 8th led is on)
         // After left-shifting 0x01 8-times, we end up with 0x00. To recover the var variable, we initialise it with 0x01.
 
-        while(1) 
-        {
+        while(1)
+        {   
+            // After left-shifting 0x01 8-times, we end up with 0x00. To recover the var variable, we initialise it with 0x01.
             if (var == 0x00)
             //if variable var is  0x00(i.e, all leds are off)
             //it checks whether the value of var has changed from 0x01 to 0x00.

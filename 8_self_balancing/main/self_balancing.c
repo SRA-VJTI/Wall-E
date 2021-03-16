@@ -45,7 +45,7 @@ void calculate_motor_command(const float pitch_error, float *motor_cmd)
 	// Variables for storing corrected values
 	float pitch_correction = 0.0f, absolute_pitch_correction = 0.0f;
 	// Helper variables for calculating integral and derivative correction
-	float pitch_rate = 0.0f, pitch_area = 0.0f;
+	float pitch_rate = 0.0f;
 
 	// Variables storing correction values of different error terms
 	float P_term = 0.0f, I_term = 0.0f, D_term = 0.0f;

@@ -1,7 +1,3 @@
-
-## Installations
-For installations refer to [these instructions](/Installations.md)
-
 # Wall-E Workshop 2021
 Wall-E Workshop is a privilege Workshop conducted by SRA, for the development of a self-balancing-line-following bot, implemented with esp32
 

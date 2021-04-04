@@ -70,9 +70,9 @@ First We are going to install ESP-IDF First and then Wall-E files
 To clone the Repo just execute the following command on ESP-IDF Command Prompt. We are Making the project folder in the esp folder
 ```sh
 cd %userprofile%\esp
-git clone https://github.com/SRA-VJTI/Wall-E_v2.2-beta.git
+git clone https://github.com/SRA-VJTI/Wall-E_v2.2-beta.git --recurse-submodules
 cd Wall-E_v2.2
-git checkout dev
+
 ```
 ## Step 2 : Installation of SRA-Board Components
 Insatalling SRA-Boarch Components in the Components folder

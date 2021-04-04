@@ -12,7 +12,7 @@ Wall-E Workshop is a privilege Workshop conducted by SRA, for the development of
 ![](/documentation/assets/3d_sideview.png)
 ## Table of Contents
 - [Wall-E Workshop](#wall-e-workshop)
-  -[Installations](#installations)
+  - [Installations](#installations)
   - [Getting Started with esp32](#getting-started-with-esp-32)
   - [LED Blink](#led-blikn)
   - [Light Sensing Array](#light-sensing-array)

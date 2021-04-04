@@ -28,12 +28,12 @@ Wall-E Workshop is a privilege Workshop conducted by SRA, for the development of
 - Capable of operating in an ultra-low-power mode, ideal for battery-powered applications.
 
 
- ## Getting Started esp32
+## Getting Started esp32
 <p align="center">
   <img width="460" height="300" src="documentation/images/esp32.jpeg">
 </p>
-- ESP32 is a series of low-power system on a chip microcontrollers with integrated Wi-Fi and dual-mode Bluetooth.
-- Controls and communicates with micro level devices. 
+ESP32 is a series of low-power system on a chip microcontrollers with integrated Wi-Fi and dual-mode Bluetooth. 
+ Controls and communicates with micro level devices. 
 
  ## Content
 | TOPIC |  Link  | Description |

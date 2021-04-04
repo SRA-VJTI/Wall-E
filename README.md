@@ -20,6 +20,7 @@
 - [Installations](#installations)
   - [ESP-IDF](#esp-idf)
   - [SRA Board Component](#sra-board-component)
+- [Content](#content)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [License](#license)

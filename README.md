@@ -1,10 +1,3 @@
-<!-- PROJECT LOGO -->
-[![Stargazers][stars-shield]][stars-url]
-[![Forks][forks-shield]][forks-url]
-[![Issues][issues-shield]][issues-url]
-[![License][license-shield]][license-url]
-
-
 <p align="center">
   <img src="documentation/images/logo.png"/>
   
@@ -20,13 +13,30 @@
     <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/pulls">Send a Pull Request</a>
   </p>
  </p>
+ 
+ <p align="center">
+  <img src="https://github.com/SRA-VJTI/sra-board-component/workflows/SRA%20Board%20component/badge.svg">
+  <a href="https://github.com/SRA-VJTI/sra-board-component/network/members">
+    <img src="https://img.shields.io/github/forks/SRA-VJTI/sra-board-component">
+  </a>
+  <a href="https://github.com/SRA-VJTI/sra-board-component/stargazers">
+    <img src="https://img.shields.io/github/stars/SRA-VJTI/sra-board-component">
+  </a>
+  <a href="https://github.com/SRA-VJTI/sra-board-component/issues">
+    <img src="https://img.shields.io/github/issues/SRA-VJTI/sra-board-component">
+  </a>
+  <a href="https://github.com/SRA-VJTI/sra-board-component/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/SRA-VJTI/sra-board-component">
+  </a>
+  <a href="https://linkedin.com/in/sra-vjti">
+    <img src="https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&colorB=555">
+  </a>
+</p>
 
 ## Table of Contents
 
 - [About](#about-the-workshop)
 - [Installations](#installations)
-  - [ESP-IDF](#esp-idf)
-  - [SRA Board Component](#sra-board-component)
 - [Content](#content)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)

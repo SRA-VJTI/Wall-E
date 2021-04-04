@@ -44,7 +44,7 @@ ESP32 is a series of low-power system on a chip microcontrollers with integrated
 |Switch Controlled Motor in Normal Mode|[Normal_Mode](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/4_switch_controlled_motor_normal/readme.md)| Controls the movement of Bot manually using Switches connected in Normal Mode|
 |Switch Controlled Motor in Paralle Mode|[Parallel_Mode](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/5_switch_controlled_motor_parallel/README.md)| Controls the movement of Bot manually using Switches connected in Parallel Mode|
 |Pulse Width Modulation|[PWM](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/6_PWM/README.md)| Calculate average Voltage and controls speed accordingly|
-|Line-Following|[Line_Following]| Line-Following Algorithm that enables the bot to follow the path of white line|
+|Line-Following|[Line_Following](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/tree/dev/7_line_following)| Line-Following Algorithm that enables the bot to follow the path of white line|
 |Self-Balancing|[Self_Balancing](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/8_self_balancing/README.md)|Self-Balancing Algorithm that enables the bot to balance its weight under the force of gravity|
  
  

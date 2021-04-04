@@ -12,6 +12,7 @@ Wall-E Workshop is a privilege Workshop conducted by SRA, for the development of
 ![](/documentation/assets/3d_sideview.png)
 ## Table of Contents
 - [Wall-E Workshop](#wall-e-workshop)
+  - [Installations](#installations)
   - [Getting Started with esp32](#getting-started-with-esp-32)
   - [LED Blink](#led-blikn)
   - [Light Sensing Array](#light-sensing-array)
@@ -26,8 +27,8 @@ Wall-E Workshop is a privilege Workshop conducted by SRA, for the development of
 - The main motive of the workshop is to introduce students with esp32 microcontroller, self-balancing and line following programs and the dynamics that work behind it.
 - Hands on experience along with Hardware and Simulation.
 - Capable of operating in an ultra-low-power mode, ideal for battery-powered applications.
-
-
+## Installations
+- For Installations Please refer to [these instructions](/Installations.md)
 ## Getting Started esp32
 <p align="center">
   <img width="460" height="300" src="documentation/images/esp32.jpeg">
@@ -46,5 +47,6 @@ ESP32 is a series of low-power system on a chip microcontrollers with integrated
 |Pulse Width Modulation|[PWM](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/6_PWM/README.md)| Calculate average Voltage and controls speed accordingly|
 |Line-Following|[Line_Following](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/tree/dev/7_line_following)| Line-Following Algorithm that enables the bot to follow the path of white line|
 |Self-Balancing|[Self_Balancing](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/8_self_balancing/README.md)|Self-Balancing Algorithm that enables the bot to balance its weight under the force of gravity|
+
  
  

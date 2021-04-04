@@ -29,8 +29,6 @@ Wall-E Workshop is a privilege Workshop conducted by SRA, for the development of
 - Capable of operating in an ultra-low-power mode, ideal for battery-powered applications.
 ## Installations
 - For Installations Please refer to [these instructions](/Installations.md)
-
-
 ## Getting Started esp32
 <p align="center">
   <img width="460" height="300" src="documentation/images/esp32.jpeg">

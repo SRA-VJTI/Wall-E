@@ -1,3 +1,10 @@
+<!-- PROJECT LOGO -->
+[![Stargazers][stars-shield]][stars-url]
+[![Forks][forks-shield]][forks-url]
+[![Issues][issues-shield]][issues-url]
+[![License][license-shield]][license-url]
+
+
 <p align="center">
   <img src="documentation/images/logo.png"/>
   
@@ -84,3 +91,16 @@ Contributions are what make the open source community such an amazing place to b
 
 - [@SRAVJTI](https://twitter.com/SRAVJTI) - https://www.sravjti.in/
 - [SRA-VJTI Website](https://www.sravjti.in/contact-us)
+
+
+[forks-shield]:https://img.shields.io/github/forks/SRA-VJTI/Wall-E_v2.2-beta
+[forks-url]: https://github.com/HarshShah03325/Wall-E_v2.2-beta/network/members
+[stars-shield]: https://img.shields.io/github/stars/SRA-VJTI/Wall-E_v2.2-beta
+[stars-url]: https://github.com/SRA-VJTI/Wall-E_v2.2-beta/stargazers
+[issues-shield]: https://img.shields.io/github/issues/SRA-VJTI/Wall-E_v2.2-beta
+[issues-url]: https://github.com/SRA-VJTI/Wall-E_v2.2-beta/issues
+[license-shield]: https://img.shields.io/github/license/SRA-VJTI/Wall-E_v2.2-beta
+[license-url]: https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/master/LICENSE
+
+
+

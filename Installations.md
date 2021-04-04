@@ -5,64 +5,60 @@
 * [Commands](#commands)
 # For Windows
 First We are going to install ESP-IDF First and then Wall-E files
-## 1. Download the installer from ( https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/windows-setup.html#esp-idf-tools-installer )
+### 1. Download the ESP-IDF installer from ( https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/windows-setup.html#esp-idf-tools-installer )
+<img align="center" src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/1.png">
+
+
+
+### 2. After Downloading open .exe file, select `I accept` then click Next>.
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/66636289/112637273-f8ae2180-8e63-11eb-8f96-4921fd6c1441.png">
+  <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/2.png">
 </p>
 
-## 2. After Downloading open .exe file, select `I accept` then click Next>.
+### 3. In my case I already had python3.6 and github on my system. If you don’t, then select the install python, install git options 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/66636289/112638237-0c0dbc80-8e65-11eb-8e18-4cfb65691d55.png">
+  <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/3.png">
 </p>
 
-## 3. In my case I already had python3.6 and github on my system. If you don’t, then select the install python, install git options 
+### 4. The 1st option is only available for those already have github. For rest Choose the 'Install Git' option  
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/66636289/112638419-3eb7b500-8e65-11eb-94a9-0510cb33845e.png">
+  <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/4.png">
 </p>
 
-## 4. The 1st option is only available for those already have github. For rest Choose the 'Install Git' option  
+### 5. 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/66636289/112638775-9c4c0180-8e65-11eb-8891-9cd4e185f84c.png">
+  <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/5.png">
 </p>
 
-## 5. 
+### 6.
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/66636289/112639270-154b5900-8e66-11eb-8f93-29c0a2b279d6.png">
+  <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/6.png">
 </p>
 
-## 6.
+### 7. Click on Install then after Installation check all boxes and click on Finish.
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/66636289/112639872-c4883000-8e66-11eb-9151-f4a7c72c0dbb.png">
+  <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/7.png">
 </p>
 
-## 7. Click on Install then after Installation check all boxes and click on Finish.
+
+### 8. ESP-IDF Command Prompt & Poweshell window will pop-up :
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/66636289/112640010-f00b1a80-8e66-11eb-9856-88497a69e134.png">
-</p>
-<p align="center">
-  <img src="">
+  <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/8.png">
 </p>
 
-## 8. ESP-IDF Command Prompt & Poweshell window will pop-up :
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/66636289/112640831-bc7cc000-8e67-11eb-828a-2e77f53dbca7.png">
-</p>
-<p align="center">
-  <img src="ttps://user-images.githubusercontent.com/66636289/112641114-11203b00-8e68-11eb-9e43-f37664525e50.png">
-</p>
  
-## 9. Run 'export.bat' in ESP-IDF Command Prompt:
+### 9. Run 'export.bat' in ESP-IDF Command Prompt:
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/66636289/112641393-5ba1b780-8e68-11eb-85ba-c27e137258b8.png">
+  <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/9.png">
 </p>
 
-## 10 . Run `idf.py build`
+### 10 . Run `idf.py build`
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/66636289/112641959-d965c300-8e68-11eb-9d95-5a71c5625174.png">
+  <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/10.png">
 </p>
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/66636289/112641989-dff43a80-8e68-11eb-81a7-67f6faf1d322.png">
+  <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/10(1).png">
 </p>
 
 ## Wall-E Files
@@ -140,7 +136,7 @@ idf.py menuconfig # Command for Opening the Configuration Menu
 ```
 If the previous steps have been done correctly, the following menu appears :
 <p align="center">
-  <img src="Assets/project-configuration1.png">
+  <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/project-configuration1.png">
 </p>
 
 * This menu helps us to change the Parameters. Currenty we dont need to change anything.
@@ -151,7 +147,7 @@ idf.py build #Command for building the code
 ```
 This command will compile the application and all ESP-IDF components, then it will generate the bootloader, partition table, and application binaries.
 <p align="center">
-  <img src="Assets/build.png">
+  <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/build.png">
 </p>
 
 ## Step 6 : Flash onto the Device

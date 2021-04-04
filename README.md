@@ -17,16 +17,16 @@
  <p align="center">
   <img src="https://github.com/SRA-VJTI/sra-board-component/workflows/SRA%20Board%20component/badge.svg">
   <a href="https://github.com/SRA-VJTI/sra-board-component/network/members">
-    <img src="https://img.shields.io/github/forks/SRA-VJTI/sra-board-component">
+    <img src="https://img.shields.io/github/forks/SRA-VJTI/Wall-E_v2.2-beta">
   </a>
-  <a href="https://github.com/SRA-VJTI/sra-board-component/stargazers">
-    <img src="https://img.shields.io/github/stars/SRA-VJTI/sra-board-component">
+  <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/stargazers">
+    <img src="https://img.shields.io/github/stars/SRA-VJTI/Wall-E_v2.2-beta">
   </a>
-  <a href="https://github.com/SRA-VJTI/sra-board-component/issues">
-    <img src="https://img.shields.io/github/issues/SRA-VJTI/sra-board-component">
+  <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/issues">
+    <img src="https://img.shields.io/github/issues/SRA-VJTI/Wall-E_v2.2-beta">
   </a>
-  <a href="https://github.com/SRA-VJTI/sra-board-component/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/SRA-VJTI/sra-board-component">
+  <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/SRA-VJTI/Wall-E_v2.2-beta">
   </a>
   <a href="https://linkedin.com/in/sra-vjti">
     <img src="https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&colorB=555">

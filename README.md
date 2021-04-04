@@ -15,8 +15,8 @@
  </p>
  
  <p align="center">
-  <img src="https://github.com/SRA-VJTI/sra-board-component/workflows/SRA%20Board%20component/badge.svg">
-  <a href="https://github.com/SRA-VJTI/sra-board-component/network/members">
+  
+  <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/network/members">
     <img src="https://img.shields.io/github/forks/SRA-VJTI/Wall-E_v2.2-beta">
   </a>
   <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/stargazers">

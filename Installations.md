@@ -85,9 +85,9 @@ git clone https://github.com/SRA-VJTI/sra-board-component.git
 To clone the Repo just execute the following command on terminal. We are installing the project in the home folder
 ```sh
 cd $HOME
-git clone https://github.com/SRA-VJTI/Wall-E_v2.2-beta.git
+git clone https://github.com/SRA-VJTI/Wall-E_v2.2-beta.git --recurse-submodules
 cd Wall-E_v2.2-beta
-git checkout dev
+
 ```
 ## Step 2 : Installing the Necessary Prerequisites(ESP-IDF etc)
 Run the following commands for a quick install on Linux-based systems:

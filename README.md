@@ -2,6 +2,9 @@
 
 *Development Repository for the self-balancing-line-following bot workshop, implemented with ESP32*
 
+## Installations
+For installations refer to [these instructions](/Installations.md)
+
 ## Guidelines
 
 ### General

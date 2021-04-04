@@ -55,7 +55,7 @@
 
 ## Roadmap
 
-See the [open issues](https://github.com/SRA-VJTI/sra-board-component/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/issues) for a list of proposed features (and known issues).
 
 <!-- CONTRIBUTING -->
 
@@ -73,7 +73,7 @@ Contributions are what make the open source community such an amazing place to b
 
 ## License
 
-- Distributed under the [MIT License](https://github.com/SRA-VJTI/sra-board-component/blob/main/LICENSE).
+- Distributed under the [MIT License](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/main/LICENSE).
 
 <!-- CONTACT -->
 

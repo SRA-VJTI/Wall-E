@@ -89,7 +89,7 @@ cd Wall-E_v2.2-beta
 ## Step 2 : Installing the Necessary Prerequisites(ESP-IDF etc)
 Run the following commands for a quick install on Linux-based systems:
 ```sh
-cd Wall-E_v2.2-beta
+cd $HOME/Wall-E_v2.2-beta
 sudo chmod +x wall_e_install.sh
 ./wall_e_install.sh
 ```
@@ -102,7 +102,7 @@ idf.py flash monitor
 ## Step 3 : Installation of SRA-Board Components
 Insatalling SRA-Boarch Components in the Components folder
 ```sh
-cd Wall-E_v2.2.beta/components
+cd $HOME/Wall-E_v2.2.beta/components
 git clone https://github.com/SRA-VJTI/sra-board-component.git
 ```
 # Commands

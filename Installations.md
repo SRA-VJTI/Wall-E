@@ -88,7 +88,7 @@ git checkout dev
 ## Step 2 : Installing the Necessary Prerequisites(ESP-IDF etc)
 Run the following commands for a quick install on Linux-based systems:
 ```sh
-cd Wall-E_v2.2-beta
+cd $HOME/Wall-E_v2.2-beta
 sudo chmod +x wall_e_install.sh
 ./wall_e_install.sh
 ```

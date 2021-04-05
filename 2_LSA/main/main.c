@@ -22,7 +22,7 @@ static const char* TAG = "LSA_READINGS";
 // main driver function
 void app_main(void)
 {
-    // enable line sensor
+    // enable line sensor after checking optimal working state of ESP
     ESP_ERROR_CHECK(enable_line_sensor());
 
     // Union containing line sensor readings
@@ -41,8 +41,9 @@ void app_main(void)
             line_sensor_readings.adc_reading[i] = map(line_sensor_readings.adc_reading[i], BLACK_MARGIN, WHITE_MARGIN, CONSTRAIN_LSA_LOW, CONSTRAIN_LSA_HIGH);
         }
 
-        // Displaying logs - final lsa readings
+        // Displaying Information logs - final lsa readings 
         ESP_LOGI(TAG, "LSA_1: %d \t LSA_2: %d \t LSA_3: %d \t LSA_4: %d",line_sensor_readings.adc_reading[0], line_sensor_readings.adc_reading[1], line_sensor_readings.adc_reading[2], line_sensor_readings.adc_reading[3] );
-
+        // delay of 1s after each log
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }

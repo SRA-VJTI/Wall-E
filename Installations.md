@@ -101,7 +101,7 @@ idf.py flash monitor
 ## Step 3 : Installation of SRA-Board Components
 Insatalling SRA-Boarch Components in the Components folder
 ```sh
-cd Wall-E_v2.2.beta/components
+cd $HOME/Wall-E_v2.2.beta/components
 git clone https://github.com/SRA-VJTI/sra-board-component.git
 ```
 # Commands

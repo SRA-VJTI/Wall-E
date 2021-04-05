@@ -50,9 +50,9 @@
   </p>
 
 - Wall-E Workshop is a privilege Workshop conducted by SRA, for the development of a self-balancing-line-following bot, implemented with esp32
-- The main motive of the workshop is to introduce students with esp32 microcontroller, self\*balancing and line following programs and the dynamics that work behind it.
+- The main motive of the workshop is to introduce students with esp32 microcontroller, self-balancing and line following programs and the dynamics that work behind it.
 - Hands on experience along with Hardware and Simulation.
-- Capable of operating in an ultra-low-power mode, ideal for battery-powered applications.
+
 
 ## Installations
 

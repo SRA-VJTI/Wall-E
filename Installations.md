@@ -108,10 +108,11 @@ git clone https://github.com/SRA-VJTI/sra-board-component.git
 This is the Basic Procedure For Compiling and Flashing a Project code on the ESP32
 ## Step 1 : Set Up Environtment variables
 In the terminal where you are going to use ESP-IDF, run:
-* For Linux
+* For Linux - we have created a shortcut for the command `. $HOME/esp/esp-idf/export.sh`
 ```sh
-. $HOME/esp/esp-idf/export.sh
+get_idf
 ```
+if for some reason the `get_idf` command doesn't work you can always use the `. $HOME/esp/esp-idf/export.sh` command
 * For Windows
 ```sh
 %userprofile%\esp\esp-idf\export.bat

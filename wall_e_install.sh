@@ -15,6 +15,6 @@ else
     git clone -b release/v4.2 --recursive https://github.com/espressif/esp-idf.git
     cd ~/esp/esp-idf
     ./install.sh
-    alias get_idf='$HOME/esp/esp-idf/export.sh
+    echo "alias get_idf='. $HOME/esp/esp-idf/export.sh'" >>~/.bashrc
     source ~/.bashrc
 fi

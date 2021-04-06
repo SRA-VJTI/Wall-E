@@ -16,6 +16,6 @@ else
     cd ~/esp/esp-idf
     ./install.sh
     . $HOME/esp/esp-idf/export.sh
-    echo ". $HOME/esp/esp-idf/export.sh" >> ~/.profile
-    source ~/.profile
+    echo ". $HOME/esp/esp-idf/export.sh" >> ~/.bashrc
+    source ~/.bashrc
 fi

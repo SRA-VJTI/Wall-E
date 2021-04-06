@@ -113,7 +113,7 @@ Contributions are what make the open source community such an amazing place to b
 
 ## License
 
-- Distributed under the [MIT License](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/main/LICENSE).
+- Distributed under the [MIT License](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/master/LICENSE)
 
 <!-- CONTACT -->
 

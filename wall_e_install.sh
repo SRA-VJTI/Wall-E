@@ -16,4 +16,5 @@ else
     cd ~/esp/esp-idf
     ./install.sh
     alias get_idf='$HOME/esp/esp-idf/export.sh
+    source ~/.bashrc
 fi

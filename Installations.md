@@ -141,11 +141,11 @@ idf.py menuconfig # Command for Opening the Configuration Menu
 ```
 * For Windows -
 ```sh
-cd %userprofile%\esp\hello_world
-idf.py set-target esp32
-idf.py menuconfig
+cd %userprofile%\esp\hello_world #Navigating to the file
+idf.py set-target esp32#Command for Setting the Target
+idf.py menuconfig #Command for Opening the Configuration
 ```
-If the previous steps have been done correctly, the following menu appears :
+If the previous steps have been done correctly, the following configuration menu appears :
 <p align="center">
   <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/project-configuration1.png">
 </p>
@@ -153,6 +153,7 @@ If the previous steps have been done correctly, the following menu appears :
 * This menu helps us to change the Parameters. Currenty we dont need to change anything.
 ## Step 5 : Build the Project
 Build the project by running:
+* Same for Both Linux and Windows
 ```sh
 idf.py build #Command for building the code
 ```
@@ -174,9 +175,10 @@ idf.py -p PORT [-b BAUD] flash
 * (Depending on the port you used for connecting the board the port can vary from /dev/ttyUSB0 and Zero can be replaced by any other consecutive number.
 * and same for windows /COM1 one can be replaced by other number depending on the port you have connected esp to.)
 ## Step 7 : Flash onto the Device
-*For seeing the output given by esp32 we use this command after flashing
+* For seeing the output given by esp32 we use this command after flashing
 ```sh
 idf.py flash monitor
 ```
+* Same for both Windows and Linux
 
 

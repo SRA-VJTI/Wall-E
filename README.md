@@ -47,16 +47,26 @@
 ## About the Workshop
 <p align="center">
   <img src="documentation/images/wall_E_bot.JPG"/>
-  </p>
+  <h3 align="center"> Wall-E bot Simulation </h3>
+</p>
+<p align="center">
+  <img src="documentation/images/walle bot.png"/>
+  <h3 align="center"> Wall-E bot Simulation </h3>
+ </p>
 
-- Wall-E Workshop is a privilege Workshop conducted by SRA, for the development of a self-balancing-line-following bot, implemented with esp32
-- The main motive of the workshop is to introduce students with esp32 microcontroller, self-balancing and line following programs and the dynamics that work behind it.
-- Hands on experience along with Hardware and Simulation.
+How do you make a robot follow a line? Now what if the robot has only two wheels. How will it balance and follow the line? This is exactly what is taught in the Wall-E workshop.
+The Wall-E workshop focuses on the concepts of line-following and self-balancing, using ESP32, a powerful micro-controller with features like inbuilt Wi-Fi support and BLE, with extensive application in several domains like IoT, RF, etc. The workshop entails various essential concepts such as PID Control, Embedded Communication Protocols, PWM, Filters, RTOS, etc. and gives its attendees (first-year students) a general idea about the world of robotics and embedded hardware. Following are some of the highlights:
+- The custom-made SRA Development Board & ESP32.
+- ESP-IDF, the official IoT Development Framework by Espressif.
+- Motor Control with PWM and PID.
+- Accelerometer , Gyroscope and Complimentary filter.
+- Communcation protocols ( UART , SPI , I2C )
 
 
 ## Installations
 
 - For Installations Please refer to [these instructions](Installations.md)
+- In case of any errors , please refer to [Step-by-Step idf installation by espressif](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/#installation-step-by-step)
 
 ## Content
 
@@ -75,7 +85,12 @@
 
 ## Roadmap
 
-See the [open issues](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/issues) for a list of proposed features (and known issues).
+- See the [open issues](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/issues) for a list of proposed features (and known issues).
+- Check out the [Custom-made SRA development board](https://github.com/SRA-VJTI/sra-board-hardware-design)
+<p align="center">
+  <img src="documentation/images/sra_board.png"/>
+  <h3 align="center"> SRA development Board </h3>
+  </p>
 
 <!-- CONTRIBUTING -->
 

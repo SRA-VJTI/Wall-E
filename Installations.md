@@ -67,8 +67,6 @@ To clone the Repo just execute the following command on ESP-IDF Command Prompt. 
 ```sh
 cd %userprofile%\esp
 git clone https://github.com/SRA-VJTI/Wall-E_v2.2-beta.git
-cd Wall-E_v2.2
-git checkout dev
 ```
 ## Step 2 : Installation of SRA-Board Components
 Insatalling SRA-Boarch Components in the Components folder
@@ -82,8 +80,6 @@ To clone the Repo just execute the following command on terminal. We are install
 ```sh
 cd $HOME
 git clone https://github.com/SRA-VJTI/Wall-E_v2.2-beta.git
-cd Wall-E_v2.2-beta
-git checkout dev
 ```
 ## Step 2 : Installing the Necessary Prerequisites(ESP-IDF etc)
 Run the following commands for a quick install on Linux-based systems:
@@ -120,6 +116,12 @@ if for some reason the `get_idf` command doesn't work you can always use the `. 
 Through this command specify the Folder/Project in which we will to be using ESP-IDF 
 ## Step 2 : Start a Project
 Now you are ready to prepare your application for ESP32.
+* For Linux -
+```sh
+cd ~/esp
+cp -r $IDF_PATH/examples/get-started/hello_world .
+```
+* For Windows -
 ```sh
 cd %userprofile%\esp
 xcopy /e /i %IDF_PATH%\examples\get-started\hello_world hello_world
@@ -127,13 +129,21 @@ xcopy /e /i %IDF_PATH%\examples\get-started\hello_world hello_world
 ## Step 3 : Connect Your Device
 Now connect your ESP32 board to the computer and check under what serial port the board is visible.
 Serial ports have the Name
-* Starting with /dev/tty
+* Linux : names like `/dev/tty`
+* Windows : names like 'COM1`
 ## Step 4 : Configure
 Now you are ready to prepare your application for ESP32.
+* For Linux -
 ```sh
 cd ~/esp/hello_world #Navigating to the file
 idf.py set-target esp32 #Command for Setting the Target 
 idf.py menuconfig # Command for Opening the Configuration Menu
+```
+* For Windows -
+```sh
+cd %userprofile%\esp\hello_world
+idf.py set-target esp32
+idf.py menuconfig
 ```
 If the previous steps have been done correctly, the following menu appears :
 <p align="center">

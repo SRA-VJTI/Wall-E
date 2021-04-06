@@ -5,10 +5,11 @@
 * [Commands](#commands)
 # For Windows
 First We are going to install ESP-IDF First and then Wall-E files
-### 1. Download the ESP-IDF installer from ( https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/windows-setup.html#esp-idf-tools-installer )
-<img align="center" src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/1.png">
 
-
+## 1. Download the installer from [here]( https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/windows-setup.html#esp-idf-tools-installer )
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/66636289/112637273-f8ae2180-8e63-11eb-8f96-4921fd6c1441.png">
+</p>
 
 ### 2. After Downloading open .exe file, select `I accept` then click Next>.
 <p align="center">
@@ -66,14 +67,17 @@ First We are going to install ESP-IDF First and then Wall-E files
 To clone the Repo just execute the following command on ESP-IDF Command Prompt. We are Making the project folder in the esp folder
 ```sh
 cd %userprofile%\esp
-git clone https://github.com/SRA-VJTI/Wall-E_v2.2-beta.git
+git clone https://github.com/SRA-VJTI/Wall-E_v2.2-beta.git --recurse-submodules
+cd Wall-E_v2.2
+
 ```
 # For Linux 
 ## Step 1 : Cloning the Wall-E Git Repo
 To clone the Repo just execute the following command on terminal. We are installing the project in the home folder
 ```sh
 cd $HOME
-git clone https://github.com/SRA-VJTI/Wall-E_v2.2-beta.git
+git clone https://github.com/SRA-VJTI/Wall-E_v2.2-beta.git --recurse-submodules
+cd Wall-E_v2.2-beta
 ```
 ## Step 2 : Installing the Necessary Prerequisites(ESP-IDF etc)
 Run the following commands for a quick install on Linux-based systems:

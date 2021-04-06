@@ -47,12 +47,15 @@
 ## About the Workshop
 <p align="center">
   <img src="documentation/images/wall_E_bot.JPG"/>
+  <a href="https://github.com/MOLOCH-dev/Wall-E-Sim">
   <h3 align="center"> Wall-E bot Simulation </h3>
+  </a>
 </p>
 <p align="center">
   <img src="documentation/images/walle bot.png"/>
-  <a href="#https://github.com/MOLOCH-dev/Wall-E-Sim">
-    <h3 align="center"> walle bot </h3>
+ 
+  <h3 align="center"> Wall-E Bot Real </h3>
+ 
  </p>
 
 How do you make a robot follow a line? Now what if the robot has only two wheels. How will it balance and follow the line? This is exactly what is taught in the Wall-E workshop.

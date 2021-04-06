@@ -68,12 +68,6 @@ To clone the Repo just execute the following command on ESP-IDF Command Prompt. 
 cd %userprofile%\esp
 git clone https://github.com/SRA-VJTI/Wall-E_v2.2-beta.git
 ```
-## Step 2 : Installation of SRA-Board Components
-Insatalling SRA-Boarch Components in the Components folder
-```sh
-cd %userprofile%\esp\Wall-E_v2.2.beta\components
-git clone https://github.com/SRA-VJTI/sra-board-component.git
-```
 # For Linux 
 ## Step 1 : Cloning the Wall-E Git Repo
 To clone the Repo just execute the following command on terminal. We are installing the project in the home folder
@@ -93,12 +87,6 @@ After this, test the hello_world example in the same terminal; if it runs withou
 ```sh
 cd ~/esp/esp-idf/examples/get-started/hello_world
 idf.py flash monitor
-```
-## Step 3 : Installation of SRA-Board Components
-Insatalling SRA-Boarch Components in the Components folder
-```sh
-cd $HOME/Wall-E_v2.2.beta/components
-git clone https://github.com/SRA-VJTI/sra-board-component.git
 ```
 # Commands
 This is the Basic Procedure For Compiling and Flashing a Project code on the ESP32

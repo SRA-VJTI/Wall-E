@@ -51,7 +51,8 @@
 </p>
 <p align="center">
   <img src="documentation/images/walle bot.png"/>
-  <h3 align="center"> Wall-E Real bot </h3>
+  <a href="#https://github.com/MOLOCH-dev/Wall-E-Sim">
+    <h3 align="center"> walle bot </h3>
  </p>
 
 How do you make a robot follow a line? Now what if the robot has only two wheels. How will it balance and follow the line? This is exactly what is taught in the Wall-E workshop.
@@ -66,7 +67,7 @@ The Wall-E workshop focuses on the concepts of line-following and self-balancing
 ## Installations
 
 - For Installations Please refer to [these instructions](Installations.md)
-- In case of any errors , please refer to [Step-by-Step idf installation by espressif](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/#installation-step-by-step)
+- You can also refer to [Step-by-Step official guide](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/#installation-step-by-step)
 
 ## Content
 
@@ -87,7 +88,7 @@ The Wall-E workshop focuses on the concepts of line-following and self-balancing
 
 - See the [open issues](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/issues) for a list of proposed features (and known issues).
 - Check out the [Custom-made SRA development board](https://github.com/SRA-VJTI/sra-board-hardware-design)
-- Components of [SRA development board](https://sravjti.tech/sra-board-component/)
+- ESP-idf SRA board [Components](https://sravjti.tech/sra-board-component/)
 <p align="center">
   <img src="documentation/images/sra_board.png"/>
   <h3 align="center"> SRA development Board </h3>

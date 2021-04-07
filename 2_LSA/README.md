@@ -18,7 +18,7 @@
 - Physical PCB
 ![](https://imgur.com/a/5dRPTwZ)
 - PCB Model
-~[](https://imgur.com/a/WPPmcVR)
+![](https://imgur.com/a/WPPmcVR)
 
 ### Components of LSA
 | Component   | Description   | Quantity |
@@ -45,7 +45,7 @@
 - LSA works on the principle of reflectivity of light for different types of surfaces.
 	- Black Surface -> HIGH absorptivity -> LESS reflectivity
 	- White Surface -> LOW absorptivity -> HIGH reflectivity
-![Demonstration](https://imgur.com/qMNJzhO)
+![](https://imgur.com/qMNJzhO)
 	
 ### Applications 
 - Application of LSA majorly lies in line following.

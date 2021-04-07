@@ -71,12 +71,6 @@ git clone https://github.com/SRA-VJTI/Wall-E_v2.2-beta.git --recurse-submodules
 cd Wall-E_v2.2
 
 ```
-## Step 2 : Installation of SRA-Board Components
-Insatalling SRA-Boarch Components in the Components folder
-```sh
-cd %userprofile%\esp\Wall-E_v2.2.beta\components
-git clone https://github.com/SRA-VJTI/sra-board-component.git
-```
 # For Linux 
 ## Step 1 : Cloning the Wall-E Git Repo
 To clone the Repo just execute the following command on terminal. We are installing the project in the home folder
@@ -84,7 +78,6 @@ To clone the Repo just execute the following command on terminal. We are install
 cd $HOME
 git clone https://github.com/SRA-VJTI/Wall-E_v2.2-beta.git --recurse-submodules
 cd Wall-E_v2.2-beta
-
 ```
 ## Step 2 : Installing the Necessary Prerequisites(ESP-IDF etc)
 Run the following commands for a quick install on Linux-based systems:
@@ -99,20 +92,15 @@ After this, test the hello_world example in the same terminal; if it runs withou
 cd ~/esp/esp-idf/examples/get-started/hello_world
 idf.py flash monitor
 ```
-## Step 3 : Installation of SRA-Board Components
-Insatalling SRA-Boarch Components in the Components folder
-```sh
-cd $HOME/Wall-E_v2.2.beta/components
-git clone https://github.com/SRA-VJTI/sra-board-component.git
-```
 # Commands
 This is the Basic Procedure For Compiling and Flashing a Project code on the ESP32
 ## Step 1 : Set Up Environtment variables
 In the terminal where you are going to use ESP-IDF, run:
-* For Linux
+* For Linux - we have created a shortcut for the command `. $HOME/esp/esp-idf/export.sh`
 ```sh
-. $HOME/esp/esp-idf/export.sh
+get_idf
 ```
+if for some reason the `get_idf` command doesn't work you can always use the `. $HOME/esp/esp-idf/export.sh` command
 * For Windows
 ```sh
 %userprofile%\esp\esp-idf\export.bat
@@ -120,6 +108,12 @@ In the terminal where you are going to use ESP-IDF, run:
 Through this command specify the Folder/Project in which we will to be using ESP-IDF 
 ## Step 2 : Start a Project
 Now you are ready to prepare your application for ESP32.
+* For Linux -
+```sh
+cd ~/esp
+cp -r $IDF_PATH/examples/get-started/hello_world .
+```
+* For Windows -
 ```sh
 cd %userprofile%\esp
 xcopy /e /i %IDF_PATH%\examples\get-started\hello_world hello_world
@@ -127,15 +121,23 @@ xcopy /e /i %IDF_PATH%\examples\get-started\hello_world hello_world
 ## Step 3 : Connect Your Device
 Now connect your ESP32 board to the computer and check under what serial port the board is visible.
 Serial ports have the Name
-* Starting with /dev/tty
+* Linux : names like `/dev/tty`
+* Windows : names like 'COM1`
 ## Step 4 : Configure
 Now you are ready to prepare your application for ESP32.
+* For Linux -
 ```sh
 cd ~/esp/hello_world #Navigating to the file
 idf.py set-target esp32 #Command for Setting the Target 
 idf.py menuconfig # Command for Opening the Configuration Menu
 ```
-If the previous steps have been done correctly, the following menu appears :
+* For Windows -
+```sh
+cd %userprofile%\esp\hello_world #Navigating to the file
+idf.py set-target esp32#Command for Setting the Target
+idf.py menuconfig #Command for Opening the Configuration
+```
+If the previous steps have been done correctly, the following configuration menu appears :
 <p align="center">
   <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/project-configuration1.png">
 </p>
@@ -143,6 +145,7 @@ If the previous steps have been done correctly, the following menu appears :
 * This menu helps us to change the Parameters. Currenty we dont need to change anything.
 ## Step 5 : Build the Project
 Build the project by running:
+* Same for Both Linux and Windows
 ```sh
 idf.py build #Command for building the code
 ```
@@ -164,9 +167,10 @@ idf.py -p PORT [-b BAUD] flash
 * (Depending on the port you used for connecting the board the port can vary from /dev/ttyUSB0 and Zero can be replaced by any other consecutive number.
 * and same for windows /COM1 one can be replaced by other number depending on the port you have connected esp to.)
 ## Step 7 : Flash onto the Device
-*For seeing the output given by esp32 we use this command after flashing
+* For seeing the output given by esp32 we use this command after flashing
 ```sh
 idf.py flash monitor
 ```
+* Same for both Windows and Linux
 
 

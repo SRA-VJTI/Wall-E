@@ -24,15 +24,7 @@ float forward_buffer = 3.1f;
 // Calculate the motor inputs according to angle of the MPU
 void calculate_motor_command(const float pitch_error, float *motor_cmd)
 {
-	// Flag variable for checking if we are in 1st iteration
-	static bool is_first_iteration = true;
-
-	// Variable for storing time obtained from the esp_get_time() function
-	static uint32_t timer = 0;
-
-	// Variable used for storing a small interval of time which will be utilized for calculating derivative and itegral
-	float dt = 0.005f;
-
+	
 	/** Error values **/
 	// Stores pitch error of previous iteration
 	static float prev_pitch_error = 0.0f;
@@ -50,36 +42,14 @@ void calculate_motor_command(const float pitch_error, float *motor_cmd)
 	// Variables storing correction values of different error terms
 	float P_term = 0.0f, I_term = 0.0f, D_term = 0.0f;
 
-	if (is_first_iteration)
-	{
-		/**
-		 * Since its the first time this function is called timer is 0
-		 * So in the first iteration timer is set so that we have a 
-			reference time next in the next iteration
-		*/
-		// flag for identifying the first iteration is now set to false
-		is_first_iteration = false;
-		timer = esp_timer_get_time();
-		return;
-	}
-
-	// Conversion from milliseconds to seconds
-	dt = (float)(esp_timer_get_time() - timer) / 1000000;
-	//set timer to current time for reference in next iteration
-	timer = esp_timer_get_time();
-
 	// Evaluated delta(error)
 	pitch_error_difference = pitch_error - prev_pitch_error;
 
-	// Evaluated area of the graph error vs time
-	pitch_area += (pitch_error * dt);
+	// Evaluated area of the graph error vs time (cumulative error)
+	pitch_area += (pitch_error);
 	// evaluated delta(error)/delta(time) to calculate rate of change in error w.r.t time
-	pitch_rate = pitch_error_difference / dt;
+	pitch_rate = pitch_error_difference;
 
-	/**
-	 * Integral term is bounded to prevent windup
-	 * Bounding also helps, when dt is jumpy when the schedulers are warming up the threads
-	*/
 	// Calculating p,i and d terms my multuplying corresponding proportional constants
 	P_term = read_pid_const().kp * pitch_error;
 	I_term = read_pid_const().ki * bound(pitch_area, -MAX_PITCH_AREA, MAX_PITCH_AREA);
@@ -168,6 +138,11 @@ void balance_task(void *arg)
 					// stopping motor A1
 					set_motor_speed(MOTOR_A_1, MOTOR_STOP, 0);
 				}
+
+				//ESP_LOGI("debug","left_duty_cycle:  %f    ::  right_duty_cycle :  %f  :: error :  %f  correction  :  %f  \n",left_duty_cycle, right_duty_cycle, error, correction);
+				ESP_LOGI("debug", "KP: %f ::  KI: %f  :: KD: %f :: Roll: %0.2f | Pitch: %0.2f | PitchError: %0.2f", read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, euler_angle[0], euler_angle[1], pitch_error);
+				
+				vTaskDelay(100 / portTICK_PERIOD_MS);
 			}
 		}
 	}

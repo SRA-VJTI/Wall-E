@@ -3,7 +3,7 @@
 ### Table of Contents
 * [Overview](#overview)
 * [Components of LSA](#components-of-lsa)
-* [Function od Components](#function-of-components)
+* [Function of Components](#function-of-components)
 	* [LED](#led)
 	* [PhotoDiode](#photodiode)
 	* [IC LM324](#ic-lm324)
@@ -16,7 +16,7 @@
 ### Overview 
 - The Light Sensor Array(LSA) is used to detect the white/black lined surface and it sends this data to the microcontroller ESP32. Thus, the purpose of line following is achieved.
 - Physical PCB
-![](https://imgur.com/a/5dRPTwZ)
+![](https://drive.google.com/file/d/1cdTDn6es5xVDZxhYENmADuIx9tZpwBtm/view?usp=sharing)
 - PCB Model
 ![](https://imgur.com/a/WPPmcVR)
 

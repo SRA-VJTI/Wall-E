@@ -26,6 +26,7 @@ The first step is to install the ESP-IDF.
   <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/4.png">
 </p>
 
+
 ### Step 5: Next, click `v4.2(release version)` and change the Installation path to `C:\Users\(Username)\esp\esp-idf`
 <p align="center">
   <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/5.png">

@@ -34,8 +34,8 @@
 
 - [About](#about-the-workshop)
 - [Installation](#installation)
+- [Examples](#examples)
 - [Resources](#resources)
-- [Roadmap](#roadmap)
 - [Contribution](#contribution)
 - [License](#license)
 
@@ -69,7 +69,7 @@ The Wall-E workshop focuses on the concepts of line-following and self-balancing
 - For Installation, please refer to [these instructions](Installations.md)
 - You can also refer to [Step-by-Step official guide by espressif](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/#installation-step-by-step)
 
-## Resources
+## Examples
 
 |                  TOPIC                  |                                                        Link                                                         |                                          Description                                           |
 | :-------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
@@ -84,7 +84,7 @@ The Wall-E workshop focuses on the concepts of line-following and self-balancing
 
 <!-- ROADMAP -->
 
-## Roadmap
+## Resources
 
 - Please visit and look at our [Custom-made SRA development board](https://github.com/SRA-VJTI/sra-board-hardware-design)
 - Visit ESP-IDF SRA board [Components](https://github.com/SRA-VJTI/sra-board-hardware-design) to have a detailed information about the components of SRA board 

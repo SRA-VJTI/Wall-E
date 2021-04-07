@@ -134,7 +134,7 @@ idf.py menuconfig # Command for Opening the Configuration Menu
 * For Windows -
 ```sh
 cd %userprofile%\esp\hello_world #Navigating to the file
-idf.py set-target esp32#Command for Setting the Target
+idf.py set-target esp32 #Command for Setting the Target
 idf.py menuconfig #Command for Opening the Configuration
 ```
 If the previous steps have been done correctly, the following configuration menu appears :

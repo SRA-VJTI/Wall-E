@@ -32,21 +32,17 @@ The first step is to install the ESP-IDF.
   <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/5.png">
 </p>
 
-
-
 ### Step 6: Click on `Install` then after Installation,check all boxes and click on `Finish`
 <p align="center">
   <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/7.png">
 </p>
-
 
 ### Step 7: ESP-IDF Command Prompt & Poweshell window will pop-up :
 <p align="center">
   <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/8.png">
 </p>
 
- 
-### Step 8: Run 'export.bat' in ESP-IDF Command Prompt:
+ ### Step 8: Run 'export.bat' in ESP-IDF Command Prompt:
 <p align="center">
   <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/9.png">
 </p>
@@ -69,6 +65,7 @@ cd Wall-E_v2.2
 
 ```
 ## For Linux 
+
 ### Step 1 : Cloning the Wall-E Git repo
 To clone the repo,execute the following commands on terminal. Installing the project in the Home folder.
 ```sh
@@ -91,15 +88,17 @@ idf.py flash monitor
 ```
 # Commands
 This is the basic procedure for compiling and flashing a code on the ESP32
+
 ### Step 1 : Set Up Environtment variables
 In the terminal where you are going to use ESP-IDF, run:
 - For Linux  
    - Run `get_idf` command.
-   - If `get_idf` command shows an error work, use the `. $HOME/esp/esp-idf/export.sh` command.
+   - If `get_idf` command shows an error, use `. $HOME/esp/esp-idf/export.sh` command.
 - For Windows
    - Run `%userprofile%\esp\esp-idf\export.bat` command.
 
 Through this command specify the Folder/Project in which we will to be using ESP-IDF 
+
 ### Step 2 : Start a Project
 Now you are ready to prepare your application for ESP32.
 * For Linux -
@@ -114,9 +113,9 @@ xcopy /e /i %IDF_PATH%\examples\get-started\hello_world hello_world
 ```
 ### Step 3 : Connect Your Device
 Connect your ESP32 board to the computer and check under what serial port the board is visible.
-Serial ports have the Name
-* Linux : names like `/dev/tty`
-* Windows : names like 'COM1`
+* Linux : `/dev/tty`
+* Windows : `COM1`
+
 ### Step 4 : Configure
 
 * For Linux -
@@ -159,6 +158,7 @@ idf.py -p PORT [-b BAUD] flash
 * PORT - /COM1 (`idf.py -p /COM1 -b 2000000 flash`)
 * (Depending on the port you used for connecting the board the port can vary from /dev/ttyUSB0 and Zero can be replaced by any other consecutive number.
 * and same for windows /COM1 one can be replaced by other number depending on the port you have connected esp to.)
+
 ### Step 7 : Flash onto the Device
 * For seeing the output given by esp32 we use this command after flashing
 ```sh

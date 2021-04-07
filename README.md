@@ -36,7 +36,7 @@
 - [Installation](#installation)
 - [Resources](#resources)
 - [Roadmap](#roadmap)
-- [Contributing](#contributing)
+- [Contribution](#contribution)
 - [License](#license)
 
 - [Acknowledgements](#acknowledgements)
@@ -95,7 +95,7 @@ The Wall-E workshop focuses on the concepts of line-following and self-balancing
 
 <!-- CONTRIBUTING -->
 
-## Contributing
+## Contribution
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **extremely appreciated**.
 - See the [open issues](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/issues) for a list of proposed features (and known issues).

@@ -1,59 +1,57 @@
 # Table Of Contents
-* WALL-E Installations
+* WALL-E Installation
     * [For Windows](#for-windows)
     * [For Linux](#for-linux)
-* [Commands](#commands)
+
 # For Windows
-First We are going to install ESP-IDF First and then Wall-E files
+The first step is to install the ESP-IDF. 
 
 ## 1. Download the installer from [here]( https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/windows-setup.html#esp-idf-tools-installer )
+### Please download the offline version
 <p align="center">
   <img src="https://user-images.githubusercontent.com/66636289/112637273-f8ae2180-8e63-11eb-8f96-4921fd6c1441.png">
 </p>
 
-### 2. After Downloading open .exe file, select `I accept` then click Next>.
+### 2. After Downloading open .exe file, select `I accept the agreement` then click `Next >`
 <p align="center">
   <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/2.png">
 </p>
 
-### 3. In my case I already had python3.6 and github on my system. If you don’t, then select the install python, install git options 
+### 3. If you don't have python 3.6 installed , then select `Python 3.6 (64-bit)`  
 <p align="center">
   <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/3.png">
 </p>
 
-### 4. The 1st option is only available for those already have github. For rest Choose the 'Install Git' option  
+### 4. If you already have git installed, select `2.30.0.Windows.2`, or else select `Install Git`   
 <p align="center">
   <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/4.png">
 </p>
 
-### 5. 
+### 5. Next, click `v4.2(release version` 
 <p align="center">
   <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/5.png">
 </p>
 
-### 6.
-<p align="center">
-  <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/6.png">
-</p>
 
-### 7. Click on Install then after Installation check all boxes and click on Finish.
+
+### 6. Click on `Install` then after Installation,check all boxes and click on `Finish`
 <p align="center">
   <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/7.png">
 </p>
 
 
-### 8. ESP-IDF Command Prompt & Poweshell window will pop-up :
+### 7. ESP-IDF Command Prompt & Poweshell window will pop-up :
 <p align="center">
   <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/8.png">
 </p>
 
  
-### 9. Run 'export.bat' in ESP-IDF Command Prompt:
+### 8. Run 'export.bat' in ESP-IDF Command Prompt:
 <p align="center">
   <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/9.png">
 </p>
 
-### 10 . Run `idf.py build`
+### 9 . Run `idf.py build`
 <p align="center">
   <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/10.png">
 </p>
@@ -62,8 +60,7 @@ First We are going to install ESP-IDF First and then Wall-E files
   <img src="https://github.com/hashmis79/Wall-e-Installations/blob/main/Assets/10(1).png">
 </p>
 
-## Wall-E Files
-## Step 1 : Cloning the Wall-E Git Repo
+### 10 : Cloning the Wall-E Git Repo
 To clone the Repo just execute the following command on ESP-IDF Command Prompt. We are Making the project folder in the esp folder
 ```sh
 cd %userprofile%\esp
@@ -71,40 +68,37 @@ git clone https://github.com/SRA-VJTI/Wall-E_v2.2-beta.git --recurse-submodules
 cd Wall-E_v2.2
 
 ```
-# For Linux 
-## Step 1 : Cloning the Wall-E Git Repo
-To clone the Repo just execute the following command on terminal. We are installing the project in the home folder
+## For Linux 
+### Step 1 : Cloning the Wall-E Git repo
+To clone the repo,execute the following commands on terminal. Installing the project in the Home folder.
 ```sh
 cd $HOME
 git clone https://github.com/SRA-VJTI/Wall-E_v2.2-beta.git --recurse-submodules
 cd Wall-E_v2.2-beta
 ```
-## Step 2 : Installing the Necessary Prerequisites(ESP-IDF etc)
+### Step 2 : Installing the necessary prerequisites.
 Run the following commands for a quick install on Linux-based systems:
 ```sh
 cd $HOME/Wall-E_v2.2-beta
 sudo chmod +x wall_e_install.sh
 ./wall_e_install.sh
 ```
-After this, test the hello_world example in the same terminal; if it runs without any errors, log out & log back in.
+Test the hello_world example in the same terminal; if it runs without any errors, log out & log back in.
 (Connect ESP32 to your device before running the below commands)
 ```sh
 cd ~/esp/esp-idf/examples/get-started/hello_world
 idf.py flash monitor
 ```
 # Commands
-This is the Basic Procedure For Compiling and Flashing a Project code on the ESP32
+This is the basic procedure for compiling and flashing a code on the ESP32
 ## Step 1 : Set Up Environtment variables
 In the terminal where you are going to use ESP-IDF, run:
-* For Linux - we have created a shortcut for the command `. $HOME/esp/esp-idf/export.sh`
-```sh
-get_idf
-```
-if for some reason the `get_idf` command doesn't work you can always use the `. $HOME/esp/esp-idf/export.sh` command
-* For Windows
-```sh
-%userprofile%\esp\esp-idf\export.bat
-```
+- For Linux  
+   - Run `get_idf` command.
+   - If `get_idf` command shows an error work, use the `. $HOME/esp/esp-idf/export.sh` command.
+- For Windows
+   - Run `%userprofile%\esp\esp-idf\export.bat` command.
+
 Through this command specify the Folder/Project in which we will to be using ESP-IDF 
 ## Step 2 : Start a Project
 Now you are ready to prepare your application for ESP32.
@@ -171,6 +165,6 @@ idf.py -p PORT [-b BAUD] flash
 ```sh
 idf.py flash monitor
 ```
-* Same for both Windows and Linux
+
 
 

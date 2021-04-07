@@ -153,11 +153,11 @@ Flash the binaries that you just built (bootloader.bin, partition-table.bin and 
 idf.py -p PORT [-b BAUD] flash 
 ```
 * For Linux 
-* PORT - /dev/ttyUSB0 (`idf.py -p /dev/ttyUSB0 -b 2000000 flash`)
+PORT - /dev/ttyUSB0 (`idf.py -p /dev/ttyUSB0 -b 2000000 flash`)
 * For Windows 
-* PORT - /COM1 (`idf.py -p /COM1 -b 2000000 flash`)
-* (Depending on the port you used for connecting the board the port can vary from /dev/ttyUSB0 and Zero can be replaced by any other consecutive number.
-* and same for windows /COM1 one can be replaced by other number depending on the port you have connected esp to.)
+PORT - /COM1 (`idf.py -p /COM1 -b 2000000 flash`)
+Depending on the port you used for connecting the board the port can vary from /dev/ttyUSB0 and Zero can be replaced by any other consecutive number
+and for windows /COM1 one can be replaced by other number depending on the port to which you have connected esp.
 
 ### Step 7 : Flash onto the Device
 * For seeing the output given by esp32 we use this command after flashing

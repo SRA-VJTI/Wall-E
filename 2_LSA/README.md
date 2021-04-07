@@ -4,10 +4,10 @@
 * [Overview](#overview)
 * [Components of LSA](#components-of-lsa)
 * [Function of Components](#function-of-components)
-	* [LED](#led)
-	* [PhotoDiode](#photodiode)
-	* [IC LM324](#ic-lm324)
-	* [Resistors](#resistors)
+	* [LED](#function-of-components)
+	* [PhotoDiode](#function-of-components)
+	* [IC LM324](#function-of-components)
+	* [Resistors](#function-of-components)
 * [Working Principle](#working-principle)
 * [Appplications](#applications)
 * [Scope of Improvement](#scope-of-improvement)
@@ -47,6 +47,7 @@
 - LSA works on the principle of reflectivity of light for different types of surfaces.
 	- Black Surface -> HIGH absorptivity -> LESS reflectivity
 	- White Surface -> LOW absorptivity -> HIGH reflectivity
+- Demonstration
 <img src="https://media.giphy.com/media/RWzMm1zevfBu46gbcm/giphy.gif" width="1000" height="800">
 	
 ### Applications 

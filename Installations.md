@@ -4,7 +4,7 @@
     * [For Linux](#for-linux)
 * [Commands](#commands)
 # For Windows
-First We are going to install ESP-IDF First and then Wall-E files
+First we are going to install ESP-IDF and then the Wall-E files
 
 ## 1. Download the installer from [here]( https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/windows-setup.html#esp-idf-tools-installer )
 <p align="center">

@@ -148,10 +148,10 @@ This command will compile the application and all ESP-IDF components, then it wi
 
 ### Step 6 : Flash onto the Device
 Flash the binaries that you just built (bootloader.bin, partition-table.bin and hello-world.bin) onto your ESP32 board by running.:
-* Note : Press Down the Boot Button on ESP32 and then execute the Flash command
 ```sh
 idf.py -p PORT [-b BAUD] flash 
 ```
+* Note : If the above command fails. Try Pressing Down the Boot Button on ESP32 and then executing the Flash command
 * For Linux 
    * PORT - /dev/ttyUSB0 (`idf.py -p /dev/ttyUSB0 -b 2000000 flash`)
 * For Windows 

@@ -3,30 +3,30 @@
   
   <h3 align="center"> Wall-E version 2.2 </h3>
   <p align="center">
-    Code repository for <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta">Wall-E_v2.2</a>
+    Code repository for <a href="https://github.com/SRA-VJTI/Wall-E_v2.2">Wall-E_v2.2</a>
     <br />
     <br />
-    <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/issues">Report Bug</a>
+    <a href="https://github.com/SRA-VJTI/Wall-E_v2.2/issues">Report Bug</a>
     ·
-    <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/issues">Request Feature</a>
+    <a href="https://github.com/SRA-VJTI/Wall-E_v2.2/issues">Request Feature</a>
     ·
-    <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/pulls">Send a Pull Request</a>
+    <a href="https://github.com/SRA-VJTI/Wall-E_v2.2/pulls">Send a Pull Request</a>
   </p>
  </p>
  
  <p align="center">
   
-  <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/network/members">
-    <img src="https://img.shields.io/github/forks/SRA-VJTI/Wall-E_v2.2-beta">
+  <a href="https://github.com/SRA-VJTI/Wall-E_v2.2/network/members">
+    <img src="https://img.shields.io/github/forks/SRA-VJTI/Wall-E_v2.2">
   </a>
-  <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/stargazers">
-    <img src="https://img.shields.io/github/stars/SRA-VJTI/Wall-E_v2.2-beta">
+  <a href="https://github.com/SRA-VJTI/Wall-E_v2.2/stargazers">
+    <img src="https://img.shields.io/github/stars/SRA-VJTI/Wall-E_v2.2">
   </a>
-  <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/issues">
-    <img src="https://img.shields.io/github/issues/SRA-VJTI/Wall-E_v2.2-beta">
+  <a href="https://github.com/SRA-VJTI/Wall-E_v2.2/issues">
+    <img src="https://img.shields.io/github/issues/SRA-VJTI/Wall-E_v2.2">
   </a>
-  <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/SRA-VJTI/Wall-E_v2.2-beta">
+  <a href="https://github.com/SRA-VJTI/Wall-E_v2.2/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/SRA-VJTI/Wall-E_v2.2">
   </a>
 </p>
 
@@ -73,14 +73,14 @@ The Wall-E workshop focuses on the concepts of line-following and self-balancing
 
 |                  TOPIC                  |                                                        Link                                                         |                                          Description                                           |
 | :-------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
-|                LED Blink                |              [LED_Blink](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/1_led_blink/README.md)               |                     Performing LED Blink by connecting the LED with esp32                      |
-|           Light Sensing Array           |                    [LSA](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/2_LSA/README.md)                     |        Sensing Array that uses different Light Sensors, majorly used for Line-Following        |
-|                 MPU6050                 |                    [MPU](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/3_MPU/README.md)                     |           Motion controlled MPU measures angles with respect to 6 Degrees of Freedom           |
-| Switch controlled motor in normal mode  |   [Normal_Mode](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/4_switch_controlled_motor_normal/readme.md)   |         Controls the movement of Bot manually using switches connected in normal mode          |
-| Switch controlled motor in parallel mode | [Parallel_Mode](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/5_switch_controlled_motor_parallel/README.md) |        Controls the movement of bot manually using switches connected in parallel mode         |
-|         Pulse Width Modulation          |                    [PWM](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/6_PWM/README.md)                     |                    Calculate average voltage and controls speed accordingly                    |
-|             Line-Following              |              [Line_Following](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/tree/dev/7_line_following)               |         Line-Following algorithm that enables the bot to follow the path of white line         |
-|             Self-Balancing              |         [Self_Balancing](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/8_self_balancing/README.md)          | Self-Balancing algorithm that enables the bot to balance its weight under the force of gravity |
+|                LED Blink                |              [LED_Blink](https://github.com/SRA-VJTI/Wall-E_v2.2/blob/dev/1_led_blink/README.md)               |                     Performing LED Blink by connecting the LED with esp32                      |
+|           Light Sensing Array           |                    [LSA](https://github.com/SRA-VJTI/Wall-E_v2.2/blob/dev/2_LSA/README.md)                     |        Sensing Array that uses different Light Sensors, majorly used for Line-Following        |
+|                 MPU6050                 |                    [MPU](https://github.com/SRA-VJTI/Wall-E_v2.2/blob/dev/3_MPU/README.md)                     |           Motion controlled MPU measures angles with respect to 6 Degrees of Freedom           |
+| Switch controlled motor in normal mode  |   [Normal_Mode](https://github.com/SRA-VJTI/Wall-E_v2.2/blob/dev/4_switch_controlled_motor_normal/readme.md)   |         Controls the movement of Bot manually using switches connected in normal mode          |
+| Switch controlled motor in parallel mode | [Parallel_Mode](https://github.com/SRA-VJTI/Wall-E_v2.2/blob/dev/5_switch_controlled_motor_parallel/README.md) |        Controls the movement of bot manually using switches connected in parallel mode         |
+|         Pulse Width Modulation          |                    [PWM](https://github.com/SRA-VJTI/Wall-E_v2.2/blob/dev/6_PWM/README.md)                     |                    Calculate average voltage and controls speed accordingly                    |
+|             Line-Following              |              [Line_Following](https://github.com/SRA-VJTI/Wall-E_v2.2/tree/dev/7_line_following)               |         Line-Following algorithm that enables the bot to follow the path of white line         |
+|             Self-Balancing              |         [Self_Balancing](https://github.com/SRA-VJTI/Wall-E_v2.2/blob/dev/8_self_balancing/README.md)          | Self-Balancing algorithm that enables the bot to balance its weight under the force of gravity |
 
 <!-- ROADMAP -->
 
@@ -98,7 +98,7 @@ The Wall-E workshop focuses on the concepts of line-following and self-balancing
 ## Contribution
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **extremely appreciated**.
-- See the [open issues](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/issues) for a list of proposed features (and known issues).
+- See the [open issues](https://github.com/SRA-VJTI/Wall-E_v2.2/issues) for a list of proposed features (and known issues).
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
@@ -110,19 +110,19 @@ Contributions are what make the open source community such an amazing place to b
 
 ## License
 
-- Distributed under the [MIT License](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/master/LICENSE)
+- Distributed under the [MIT License](https://github.com/SRA-VJTI/Wall-E_v2.2/blob/master/LICENSE)
 
 <!-- CONTACT -->
 
 
-[forks-shield]:https://img.shields.io/github/forks/SRA-VJTI/Wall-E_v2.2-beta
-[forks-url]: https://github.com/HarshShah03325/Wall-E_v2.2-beta/network/members
-[stars-shield]: https://img.shields.io/github/stars/SRA-VJTI/Wall-E_v2.2-beta
-[stars-url]: https://github.com/SRA-VJTI/Wall-E_v2.2-beta/stargazers
-[issues-shield]: https://img.shields.io/github/issues/SRA-VJTI/Wall-E_v2.2-beta
-[issues-url]: https://github.com/SRA-VJTI/Wall-E_v2.2-beta/issues
-[license-shield]: https://img.shields.io/github/license/SRA-VJTI/Wall-E_v2.2-beta
-[license-url]: https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/master/LICENSE
+[forks-shield]:https://img.shields.io/github/forks/SRA-VJTI/Wall-E_v2.2
+[forks-url]: https://github.com/HarshShah03325/Wall-E_v2.2/network/members
+[stars-shield]: https://img.shields.io/github/stars/SRA-VJTI/Wall-E_v2.2
+[stars-url]: https://github.com/SRA-VJTI/Wall-E_v2.2/stargazers
+[issues-shield]: https://img.shields.io/github/issues/SRA-VJTI/Wall-E_v2.2
+[issues-url]: https://github.com/SRA-VJTI/Wall-E_v2.2/issues
+[license-shield]: https://img.shields.io/github/license/SRA-VJTI/Wall-E_v2.2
+[license-url]: https://github.com/SRA-VJTI/Wall-E_v2.2/blob/master/LICENSE
 
 
 

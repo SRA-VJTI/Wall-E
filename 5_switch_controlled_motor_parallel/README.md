@@ -5,7 +5,7 @@
         1. **Parallel Mode**
         <br />
         <p align="center">
-        <img width="460" height="300" src="https://github.com/chaitravi-ce/Wall-E_v2.2-beta/blob/dev/5_switch_controlled_motor_parallel/parallel_mode.jpeg">
+        <img width="460" height="300" src="https://github.com/chaitravi-ce/Wall-E_v2.2/blob/dev/5_switch_controlled_motor_parallel/parallel_mode.jpeg">
         </p>
 
         -  The parallel mode is a special feature, used for high-rated motors, requiring more than the 1.2A current limit.

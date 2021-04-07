@@ -60,7 +60,7 @@ The first step is to install the ESP-IDF.
 To clone the Repo just execute the following command on ESP-IDF Command Prompt. We are Making the project folder in the esp folder
 ```sh
 cd %userprofile%\esp
-git clone https://github.com/SRA-VJTI/Wall-E_v2.2-beta.git --recurse-submodules
+git clone https://github.com/SRA-VJTI/Wall-E_v2.2.git --recurse-submodules
 cd Wall-E_v2.2
 
 ```
@@ -70,13 +70,13 @@ cd Wall-E_v2.2
 To clone the repo,execute the following commands on terminal. Installing the project in the Home folder.
 ```sh
 cd $HOME
-git clone https://github.com/SRA-VJTI/Wall-E_v2.2-beta.git --recurse-submodules
-cd Wall-E_v2.2-beta
+git clone https://github.com/SRA-VJTI/Wall-E_v2.2.git --recurse-submodules
+cd Wall-E_v2.2
 ```
 ### Step 2 : Installing the necessary prerequisites.
 Run the following commands for a quick install on Linux-based systems:
 ```sh
-cd $HOME/Wall-E_v2.2-beta
+cd $HOME/Wall-E_v2.2
 sudo chmod +x wall_e_install.sh
 ./wall_e_install.sh
 ```

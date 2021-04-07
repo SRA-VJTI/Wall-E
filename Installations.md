@@ -2,6 +2,7 @@
 * WALL-E Installation
     * [For Windows](#for-windows)
     * [For Linux](#for-linux)
+    * [For MacOS](#for-macos)
 
 # For Windows
 The first step is to install the ESP-IDF. 
@@ -86,6 +87,20 @@ sudo chmod +x wall_e_install.sh
 cd ~/esp/esp-idf/examples/get-started/hello_world
 idf.py flash monitor
 ```
+
+# For MacOS
+### STEP 1 : Download the file "wall_e_install_mac.sh" given in the root folder itself and put it in the "Downloads" folder
+
+### STEP 2 : Open terminal (press command+space , type terminal)
+
+### STEP 3 : Run this command
+```sh
+ "source ~/Downloads/install_esp_idf.sh"
+```
+
+ It will take some time to install, make sure you have an active internet connection. It will take around 2GB of data
+ If u face any difficulties , do not shy away from asking it
+
 # Commands
 This is the basic procedure for compiling and flashing a code on the ESP32
 

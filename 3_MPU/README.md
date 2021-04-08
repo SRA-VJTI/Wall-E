@@ -1,14 +1,15 @@
 # TABLE OF CONTENTS
-* [MPU6050](#mpu6050)
-  * [Interial Measurement unit](#inertial-measurement-unit)
-  * [Initialising MPU6050](#initialising-mpu6050)
-* [Accelerometer](#accelerometer)
-  * [Working Principle](#accelerometer-working-principle)
-  * [Reading data](#reading-accelerometer-data)
-  * [Calculation of Euler Angles](#accelerometer-euler-angles)
-* [Gyroscope](#gyroscope)
-  * [Reading data](#reading-gyroscope-data)
-* [Complementary Filter](#complementary-filter)
+- [TABLE OF CONTENTS](#table-of-contents)
+- [MPU6050](#mpu6050)
+- [Inertial Measurement Unit](#inertial-measurement-unit)
+- [Initialising MPU6050](#initialising-mpu6050)
+  - [Accelerometer](#accelerometer)
+  - [Reading Accelerometer Data](#reading-accelerometer-data)
+  - [Accelerometer Euler Angles](#accelerometer-euler-angles)
+  - [Gyroscope](#gyroscope)
+  - [Reading Gyroscope Data](#reading-gyroscope-data)
+  - [Complementary Filter](#complementary-filter)
+  - [Reading Register Data](#reading-register-data)
 
 
 
@@ -90,7 +91,7 @@ There are various terms related with the Pulse Width Modulation:-
 
 * The roll and pitch angles are calculated from the accelerometer using the [formula](https://www.digikey.com/en/articles/using-an-accelerometer-for-inclination-sensing) below :
   
-![](https://lh6.googleusercontent.com/RfptgCKeJRoqq_V-HznNBYOT7jNanQ3a22YafbYz-DjEGvyxyqV0-oo6P6KFj_pGCVq21vNtEdXO18Zv-pau4ITdf5FFuBfkM-LjDjGnpjcwO5XeRsoBJXUX7RTNUfP7N0AvurZrQKc)
+<img src="https://render.githubusercontent.com/render/math?math=\theta = \arctan(\frac{A_{X.OUT}}{A_{Y.OUT}})">
    
   
 

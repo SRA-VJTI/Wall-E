@@ -35,29 +35,18 @@ The first step is to install the ESP-IDF.
 
 ### Step 6: Click on `Install` then after Installation,check all boxes and click on `Finish`
 <p align="center">
-  <img src="./documentation/Assets/7.png">
+  <img src="./documentation/Assets/6.png">
+  <img src="./documentation/Assets/6_1.png">
+  <img src="./documentation/Assets/6_2.png">
 </p>
 
-### Step 7: ESP-IDF Command Prompt & Poweshell window will pop-up :
+
+ ### Step 7: Run `export.bat` in ESP-IDF Command Prompt:
 <p align="center">
   <img src="./documentation/Assets/8.png">
 </p>
 
- ### Step 8: Run `export.bat` in ESP-IDF Command Prompt:
-<p align="center">
-  <img src="./documentation/Assets/9.png">
-</p>
-
-### Step 9: Run `idf.py build`
-<p align="center">
-  <img src="./documentation/Assets/10.png">
-</p>
-
-<p align="center">
-  <img src="./documentation/Assets/10(1).png">
-</p>
-
-### Step 10: Cloning the Wall-E Git Repo
+### Step 8: Cloning the Wall-E Git Repo
 To clone the Repo just execute the following command on ESP-IDF Command Prompt. We are Making the project folder in the esp folder
 ```sh
 cd %userprofile%\esp

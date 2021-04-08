@@ -45,7 +45,7 @@ The first step is to install the ESP-IDF.
 </p>
 
 
- ### Step 7: Run `install.bat` and then `export.bat` in ESP-IDF Command Prompt:
+ ### Step 7: Run `install.bat` and then `export.bat` in Command Prompt:
  ```
  cd %userprofile%\esp\esp-idf
  install.bat

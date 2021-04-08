@@ -29,6 +29,10 @@ The first step is to install the ESP-IDF.
 </p>
 
 ### Step 5: Next, click `v4.2(release version)` 
+
+* Note : The installation path should be `%userprofile%\esp\esp-idf` 
+* To put it simply it should be C:\Users\Username\esp\esp-idf
+
 <p align="center">
   <img src="./documentation/Assets/5.png">
 </p>
@@ -179,7 +183,6 @@ This command will compile the application and all ESP-IDF components, then it wi
 
 ### Step 6 : Flash onto the Device
 Flash the binaries that you just built (bootloader.bin, partition-table.bin and hello-world.bin) onto your ESP32 board by running.:
-* Note : Press Down the Boot Button on ESP32 and then execute the Flash command
 ```sh
 idf.py -p PORT [-b BAUD] flash 
 ```
@@ -191,6 +194,7 @@ idf.py -p PORT [-b BAUD] flash
    * PORT - /COM1 (`idf.py -p /COM1 -b 2000000 flash`)
 * Depending on the port you used for connecting the board the port can vary from /dev/ttyUSB0 and Zero can be replaced by any other consecutive number
 and for windows /COM1 one can be replaced by other number depending on the port to which you have connected esp.
+* Note : In case you are unable to flash Press Down the Boot Button on ESP32 and then execute the Flash command
 
 ### Step 7 : Flash onto the Device
 * For seeing the output given by esp32 we use this command after flashing

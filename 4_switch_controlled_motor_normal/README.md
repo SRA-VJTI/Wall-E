@@ -5,7 +5,7 @@
         1. **Normal Mode**
         <br />
         <p align="center">
-        <img width="460" height="300" src="normal_mode.jpeg">
+        <img width="460" height="300" src="./normal_mode.jpeg">
         </p>
 
         -  As discussed earlier, the new design has two motor drivers. Each TB6612FNG can control two motors. Therefore, using two motor driver one can control 4 motors using 8 GPIO's of ESP32.

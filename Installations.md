@@ -29,35 +29,34 @@ The first step is to install the ESP-IDF.
 </p>
 
 ### Step 5: Next, click `v4.2(release version)` 
+
+* Note : The installation path should be `%userprofile%\esp\esp-idf` 
+* To put it simply it should be C:\Users\Username\esp\esp-idf
+
 <p align="center">
   <img src="./documentation/Assets/5.png">
 </p>
 
 ### Step 6: Click on `Install` then after Installation,check all boxes and click on `Finish`
 <p align="center">
-  <img src="./documentation/Assets/7.png">
+  <img src="./documentation/Assets/6.png">
+  <img src="./documentation/Assets/6_1.png">
+  <img src="./documentation/Assets/6_2.png">
 </p>
 
-### Step 7: ESP-IDF Command Prompt & Poweshell window will pop-up :
+
+ ### Step 7: Run `install.bat` and then `export.bat` in Command Prompt:
+ ```
+ cd %userprofile%\esp\esp-idf
+ install.bat
+ export.bat
+ ```
 <p align="center">
+  <img src="./documentation/Assets/7.png">
   <img src="./documentation/Assets/8.png">
 </p>
 
- ### Step 8: Run `export.bat` in ESP-IDF Command Prompt:
-<p align="center">
-  <img src="./documentation/Assets/9.png">
-</p>
-
-### Step 9: Run `idf.py build`
-<p align="center">
-  <img src="./documentation/Assets/10.png">
-</p>
-
-<p align="center">
-  <img src="./documentation/Assets/10(1).png">
-</p>
-
-### Step 10: Cloning the Wall-E Git Repo
+### Step 8: Cloning the Wall-E Git Repo
 To clone the Repo just execute the following command on ESP-IDF Command Prompt. We are Making the project folder in the esp folder
 ```sh
 cd %userprofile%\esp
@@ -184,7 +183,6 @@ This command will compile the application and all ESP-IDF components, then it wi
 
 ### Step 6 : Flash onto the Device
 Flash the binaries that you just built (bootloader.bin, partition-table.bin and hello-world.bin) onto your ESP32 board by running.:
-* Note : Press Down the Boot Button on ESP32 and then execute the Flash command
 ```sh
 idf.py -p PORT [-b BAUD] flash 
 ```
@@ -196,6 +194,7 @@ idf.py -p PORT [-b BAUD] flash
    * PORT - /COM1 (`idf.py -p /COM1 -b 2000000 flash`)
 * Depending on the port you used for connecting the board the port can vary from /dev/ttyUSB0 and Zero can be replaced by any other consecutive number
 and for windows /COM1 one can be replaced by other number depending on the port to which you have connected esp.
+* Note : In case you are unable to flash Press Down the Boot Button on ESP32 and then execute the Flash command
 
 ### Step 7 : Flash onto the Device
 * For seeing the output given by esp32 we use this command after flashing

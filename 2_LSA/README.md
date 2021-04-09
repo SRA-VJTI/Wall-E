@@ -17,10 +17,10 @@
 - The Light Sensor Array(LSA) is used to detect the white/black lined surface and it sends this data to the microcontroller ESP32. Thus, the purpose of line following is achieved.
 
 - Physical PCB
-<img src="https://drive.google.com/uc?export=view&id=1cdTDn6es5xVDZxhYENmADuIx9tZpwBtm" width="1000" height="600">
+<img src="assets/lsa_pcb.jpeg" width="1000" height="600">
 
 - PCB Model
-<img src="https://drive.google.com/uc?export=view&id=1cfuqMPvastqsQvNRJQY0tcx79ZZdEiXe" width="1000" height="450">
+<img src="assets/lsa_pcb_model.jpeg" width="1000" height="450">
 
 ### Components of LSA
 | Component   | Description   | Quantity |
@@ -48,7 +48,7 @@
 	- Black Surface -> HIGH absorptivity -> LESS reflectivity
 	- White Surface -> LOW absorptivity -> HIGH reflectivity
 - Demonstration
-<img src="https://media.giphy.com/media/RWzMm1zevfBu46gbcm/giphy.gif" width="1000" height="800">
+<img src="assets/lsa_reflectivty.mp4" width="1000" height="800">
 	
 ### Applications 
 - Application of LSA majorly lies in line following.

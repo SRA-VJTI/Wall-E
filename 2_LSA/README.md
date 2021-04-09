@@ -48,8 +48,9 @@
 	- Black Surface -> HIGH absorptivity -> LESS reflectivity
 	- White Surface -> LOW absorptivity -> HIGH reflectivity
 - Demonstration
-<img src="assets/lsa_reflectivty.gif" width="1000" height="800">
-	
+<!-- <img src="assets/lsa_reflectivty.gif" width="1000" height="800"> -->
+![]("assets/lsa_reflectivity.gif")
+
 ### Applications 
 - Application of LSA majorly lies in line following.
 

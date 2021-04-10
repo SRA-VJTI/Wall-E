@@ -40,7 +40,8 @@ Sensors detect deviation from line
 2. Find error correction
 3. Correct the error
 4. Follow the line
-![chart1](./assets/chart1.png)
+<!-- ![chart1](./assets/chart1.png) -->
+<img src="./assets/chart1.png"></img>
 ![chart2](./assets/chart2.png)
 
 

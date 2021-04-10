@@ -16,7 +16,7 @@
 const int weights[4] = {3,1,-1,-3};
 
 /*
- * Motor value boundts
+ * Motor value bounds
  */
 int optimum_duty_cycle = 63;
 int lower_duty_cycle = 50;

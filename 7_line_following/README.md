@@ -13,7 +13,7 @@
 * [Description of the Functions](#Description-of-the-functions)
 
 
-## Directory 
+## Directory Structure
 ```
 .
 ├── CMakeLists.txt

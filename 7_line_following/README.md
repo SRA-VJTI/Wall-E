@@ -39,10 +39,11 @@ The more negative the resulting weighted sum, the more the robot is to the left 
 
 PID stands for **P**roportional-**I**ntegral-**D**erivative
 It is one kind of device used to control different process variables like pressure, flow, temperature, and speed in industrial applications. In this controller, a control loop feedback device is used to regulate all the process variables.This type of control is used to drive a system in the direction of an objective location otherwise level.
-[Follw this link for detailed explanation of PID](https://www.youtube.com/playlist?list=PLn8PRpmsu08pQBgjxYFXSsODEF3Jqmm-y)
-[this link explains PID with respect to line folllowing](https://youtu.be/4Y7zG48uHRo)
+> [Follw this link for detailed explanation of PID](https://www.youtube.com/playlist?list=PLn8PRpmsu08pQBgjxYFXSsODEF3Jqmm-y)
+> [this link explains PID with respect to line folllowing](https://youtu.be/4Y7zG48uHRo)
 <!-- ![pid flow chart](./assets/pidflow.png ) -->
 <img src="./assets/pidflow.png" alt="drawing"  height="300"/>
+
 
 
 ### Use of Wifi Module
@@ -65,8 +66,20 @@ Sensors detect deviation from line
 3. Correct the error
 4. Follow the line
 <!-- ![chart1](./assets/chart.png) -->
-<img src="./assets/chart.png" alt="drawing" height="300"/>
+<img src="./assets/chart.png" alt="drawing" height="500"/>
 
 
 
 ## Description of the functions
+```
+void calculate_error()
+```
+**Description**: Uses sensor readings to calculate the error.
+> error is calculated by multiplying weights to the sensor reading and taking a weighted sum.
+> wieghted sum is divided by sum to calculate position wrt to line
+> if all sensors were black, reached a dead end, we decide the direction according to previous error and assign error of 2.5
+```
+void calculate_correction()
+```
+**Description**: Uses error calculated by the error function to calculate the correction. 
+> ```    correction = read_pid_const().kp*error + read_pid_const().ki*cumulative_error + read_pid_const().kd*difference ```

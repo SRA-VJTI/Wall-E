@@ -48,7 +48,7 @@ void lsa_to_bar()
 
 void calculate_correction()
 {
-    error = error*10;  // we need the error correction in range 0-100 so that we can send it directly as duty cycle paramete
+    error = error*10;  // we need the error correction in range 0-100 so that we can send it directly as duty cycle parameter
     difference = error - prev_error;
     cumulative_error += error;
 
@@ -79,7 +79,7 @@ void calculate_error()
         pos = weighted_sum / sum; // This will give us the position wrt line. if +ve then bot is facing left and if -ve the bot is facing to right.
     }
 
-    if(all_black_flag == 1)  // If all black then we check for previous error to assign current error.
+    if(all_black_flag == 1)  // If all black then we check for previous error to assign maximum current error.
     {
         if(prev_error > 0)
         {
@@ -135,10 +135,4 @@ void app_main()
 {
     xTaskCreate(&line_follow_task, "line_follow_task", 4096, NULL, 1, NULL);
     start_tuning_http_server();
-}
-
-if(This intersted you){
-    follow this link;
-    THANK_YOU;
-    break;
 }

@@ -13,7 +13,7 @@
 #define MAX_PITCH_AREA (850.0f)
 #define MAX_PITCH_RATE (850.0f)
 
-#define MAX_PWM (100.0f)
+#define MAX_PWM (80.0f)
 #define MIN_PWM (60.0f)
 
 /* Self Balancing Tuning Parameters
@@ -115,19 +115,19 @@ void balance_task(void *arg)
 				// Bot tilts downwards
 				if (pitch_error > 1)
 				{
-					// setting motor A0 with definite speed(duty cycle of motor driver PWM) in forward direction
-					set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, motor_pwm);
-					// setting motor A1 with definite speed(duty cycle of motor driver PWM) in forward direction
-					set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, motor_pwm);
+					// setting motor A0 with definite speed(duty cycle of motor driver PWM) in Backward direction
+					set_motor_speed(MOTOR_A_0, MOTOR_BACKWARD, motor_pwm);
+					// setting motor A1 with definite speed(duty cycle of motor driver PWM) in Backward direction
+					set_motor_speed(MOTOR_A_1, MOTOR_BACKWARD, motor_pwm);
 				}
 
 				// Bot tilts upwards
 				else if (pitch_error < -1)
 				{
-					// setting motor A0 with definite speed(duty cycle of motor driver PWM) in backward direction
-					set_motor_speed(MOTOR_A_0, MOTOR_BACKWARD, motor_pwm);
-					// setting motor A1 with definite speed(duty cycle of motor driver PWM) in backward direction
-					set_motor_speed(MOTOR_A_1, MOTOR_BACKWARD, motor_pwm);
+					// setting motor A0 with definite speed(duty cycle of motor driver PWM) in Forward direction
+					set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, motor_pwm);
+					// setting motor A1 with definite speed(duty cycle of motor driver PWM) in Forward direction
+					set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, motor_pwm);
 				}
 
 				// Bot remains in desired region for vertical balance
@@ -140,7 +140,7 @@ void balance_task(void *arg)
 				}
 
 				//ESP_LOGI("debug","left_duty_cycle:  %f    ::  right_duty_cycle :  %f  :: error :  %f  correction  :  %f  \n",left_duty_cycle, right_duty_cycle, error, correction);
-				ESP_LOGI("debug", "KP: %f ::  KI: %f  :: KD: %f :: Roll: %0.2f | Pitch: %0.2f | PitchError: %0.2f", read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, euler_angle[0], euler_angle[1], pitch_error);
+				ESP_LOGI("debug", "KP: %f ::  KI: %f  :: KD: %f :: Setpoint: %0.2f :: Roll: %0.2f | Pitch: %0.2f | PitchError: %0.2f", read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, read_pid_const().setpoint, euler_angle[0], euler_angle[1], pitch_error);
 				
 				vTaskDelay(100 / portTICK_PERIOD_MS);
 			}

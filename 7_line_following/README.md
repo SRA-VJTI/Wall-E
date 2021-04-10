@@ -13,7 +13,8 @@
 * [Description of the Functions](#Description-of-the-functions)
 
 
-## Directory Sturcture
+## Directory 
+```
 .
 ├── CMakeLists.txt
 ├── frontend
@@ -29,7 +30,7 @@
 │   ├── tuning_http_server.c
 │   └── wifi_handler.c
 └── partition_table.csv
-
+```
 ## Theory
 Line Following is one of the most important aspects of robotics.
 A Line Following Robot is an autonomous robot which is able to follow a line (usually black or white) that is drawn on a surface consisting of a contrasting color. It is designed to move automatically and follow the line.

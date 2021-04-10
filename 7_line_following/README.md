@@ -24,14 +24,16 @@ A Line Following Robot is an autonomous robot which is able to follow a line (us
 ## How does a bot follow the line?
 The robot uses arrays of optical sensors (LSAs) to identify the line, thus assisting the robot to stay on the track. We have used an array of four sensors to make the movement precise and flexible.
 
-![LSA image](./assets/line_following.png =100x100)
+<!-- ![LSA image](./assets/line_following.png =100x100) -->
+<img src="./assets/line_following.png" alt="drawing" width="200"/>
 
 ### Error Calculation
 First, we multiply the values of the LSA with certain weights. Here we have used 3,1,-1, and -3
 3 for the leftmost sensor, -3 for the rightmost
 The more negative the resulting weighted sum, the more the robot is to the left of the line, and vice versa.
 
-![curves](./assets/curves.png =100x100)
+<!-- ![curves](./assets/curves.png =100x100) -->
+<img src="./assets/curves.png" alt="drawing" width="200" />
 
 ### Use of PID
 
@@ -52,7 +54,8 @@ For easy tuning we use wifi module that dynamically changes the `kp,ki,kd` value
 3. Server receives the kp,ki,kd values for tuning
 4. Server makes appropriate changes to the bot
 5. Back to step 3
-![wifi](./assets/wifi.png =100x100)
+<!-- ![wifi](./assets/wifi.png =100x100) -->
+<img src="./assets/wifi.png" alt="drawing" width="200"/>
 
 ## ALGORITHM
 The process to implement a line following robot can be summarized in these basic steps :

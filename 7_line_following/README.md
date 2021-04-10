@@ -41,7 +41,7 @@ Sensors detect deviation from line
 3. Correct the error
 4. Follow the line
 <!-- ![chart1](./assets/chart1.png) -->
-<img src="./assets/chart1.png" style="hieght=100px;width=100px;"></img>
+<img src="./assets/chart1.png" style="hieght:100px;width:100px;"></img>
 ![chart2](./assets/chart2.png)
 
 

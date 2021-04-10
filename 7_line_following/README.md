@@ -24,14 +24,14 @@ A Line Following Robot is an autonomous robot which is able to follow a line (us
 ## How does a bot follow the line?
 The robot uses arrays of optical sensors (LSAs) to identify the line, thus assisting the robot to stay on the track. We have used an array of four sensors to make the movement precise and flexible.
 
-![LSA image](./assets/line_following.png)
+![LSA image](./assets/line_following.png = 100x100)
 
 ### Error Calculation
 First, we multiply the values of the LSA with certain weights. Here we have used 3,1,-1, and -3
 3 for the leftmost sensor, -3 for the rightmost
 The more negative the resulting weighted sum, the more the robot is to the left of the line, and vice versa.
 
-![curves](./assets/curves.png)
+![curves](./assets/curves.png = 100x100)
 
 ### Use of PID
 
@@ -39,7 +39,7 @@ PID stands for **P**roportional-**I**ntegral-**D**erivative
 It is one kind of device used to control different process variables like pressure, flow, temperature, and speed in industrial applications. In this controller, a control loop feedback device is used to regulate all the process variables.This type of control is used to drive a system in the direction of an objective location otherwise level.
 [Follw this link for detailed explanation of PID](https://www.youtube.com/playlist?list=PLn8PRpmsu08pQBgjxYFXSsODEF3Jqmm-y)
 [this link explains PID with respect to line folllowing](https://youtu.be/4Y7zG48uHRo)
-![pid flow chart](./assets/pidflow.png)
+![pid flow chart](./assets/pidflow.png )
 
 
 ### Use of Wifi Module
@@ -52,7 +52,7 @@ For easy tuning we use wifi module that dynamically changes the `kp,ki,kd` value
 3. Server receives the kp,ki,kd values for tuning
 4. Server makes appropriate changes to the bot
 5. Back to step 3
-![wifi](./assets/wifi.png)
+![wifi](./assets/wifi.png = 100x100)
 
 ## ALGORITHM
 The process to implement a line following robot can be summarized in these basic steps :
@@ -61,11 +61,8 @@ Sensors detect deviation from line
 2. Find error correction
 3. Correct the error
 4. Follow the line
-<!-- ![chart1](./assets/chart1.png) -->
-<img src="./assets/chart1.png" style="height:100px;width:100px;"></img>
-<img src="./assets/chart2.png" style="height:100px;width:100px;"></img>
-<!-- ![chart2](./assets/chart2.png) -->
+![chart1](./assets/chart.png)
+
 
 
 ## Description of the functions
-

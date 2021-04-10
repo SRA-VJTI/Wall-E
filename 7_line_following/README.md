@@ -14,6 +14,21 @@
 
 
 ## Directory Sturcture
+.
+├── CMakeLists.txt
+├── frontend
+│   └── index.html
+├── main
+│   ├── CMakeLists.txt
+│   ├── component.mk
+│   ├── include
+│   │   ├── tuning_http_server.h
+│   │   └── wifi_handler.h
+│   ├── Kconfig
+│   ├── line_following.c
+│   ├── tuning_http_server.c
+│   └── wifi_handler.c
+└── partition_table.csv
 
 ## Theory
 Line Following is one of the most important aspects of robotics.
@@ -51,36 +66,36 @@ Although simple in concept, the mathematics underpinning PID control is complex 
 The process of finding these values is referred to as “tuning.” When a PID controller is tuned optimally, the device minimizes deviation from the set point, and responds to disturbances or set point changes quickly but with minimal overshoot.
 
 For easy tuning we use wifi module that dynamically changes the `kp,ki,kd` values
-1. User connects to the server using Wi-Fi
-2. Server sends the HTML file back to the user
-3. Server receives the kp,ki,kd values for tuning
-4. Server makes appropriate changes to the bot
-5. Back to step 3
+> 1. User connects to the server using Wi-Fi
+> 2. Server sends the HTML file back to the user
+> 3. Server receives the kp,ki,kd values for tuning
+> 4. Server makes appropriate changes to the bot
+> 5. Back to step 3
 <!-- ![wifi](./assets/wifi.png =100x100) -->
 <img src="./assets/wifi.png" alt=" " height="300"/>
 
 ## ALGORITHM
 The process to implement a line following robot can be summarized in these basic steps :
 Sensors detect deviation from line
-1. Find error
-2. Find error correction
-3. Correct the error
-4. Follow the line
+> 1. Find error
+> 2. Find error correction
+> 3. Correct the error
+> 4. Follow the line
 <!-- ![chart1](./assets/chart.png) -->
 <img src="./assets/chart.png" alt=" " height="500"/>
 
 
 
 ## Description of the functions
-```
+```c
 void calculate_error()
 ```
 **Description**: Uses sensor readings to calculate the error.
 > error is calculated by multiplying weights to the sensor reading and taking a weighted sum.
 > wieghted sum is divided by sum to calculate position wrt to line
 > if all sensors were black, reached a dead end, we decide the direction according to previous error and assign error of 2.5
-```
+```c
 void calculate_correction()
 ```
 **Description**: Uses error calculated by the error function to calculate the correction. 
-> ```    correction = read_pid_const().kp*error + read_pid_const().ki*cumulative_error + read_pid_const().kd*difference ```
+> ```c    correction = read_pid_const().kp*error + read_pid_const().ki*cumulative_error + read_pid_const().kd*difference ```

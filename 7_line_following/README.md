@@ -25,7 +25,7 @@ A Line Following Robot is an autonomous robot which is able to follow a line (us
 The robot uses arrays of optical sensors (LSAs) to identify the line, thus assisting the robot to stay on the track. We have used an array of four sensors to make the movement precise and flexible.
 
 <!-- ![LSA image](./assets/line_following.png =100x100) -->
-<img src="./assets/line_following.png" alt="drawing" width="500" hieght="500"/>
+<img src="./assets/line_following.png" alt="drawing" width="300" hieght="300"/>
 
 ### Error Calculation
 First, we multiply the values of the LSA with certain weights. Here we have used 3,1,-1, and -3
@@ -33,7 +33,7 @@ First, we multiply the values of the LSA with certain weights. Here we have used
 The more negative the resulting weighted sum, the more the robot is to the left of the line, and vice versa.
 
 <!-- ![curves](./assets/curves.png =100x100) -->
-<img src="./assets/curves.png" alt="drawing" width="500" hieght="500"/>
+<img src="./assets/curves.png" alt="drawing" width="300" hieght="300"/>
 
 ### Use of PID
 
@@ -42,7 +42,7 @@ It is one kind of device used to control different process variables like pressu
 [Follw this link for detailed explanation of PID](https://www.youtube.com/playlist?list=PLn8PRpmsu08pQBgjxYFXSsODEF3Jqmm-y)
 [this link explains PID with respect to line folllowing](https://youtu.be/4Y7zG48uHRo)
 <!-- ![pid flow chart](./assets/pidflow.png ) -->
-<img src="./assets/pidflow.png" alt="drawing"  hieght="500"/>
+<img src="./assets/pidflow.png" alt="drawing"  hieght="300"/>
 
 
 ### Use of Wifi Module
@@ -56,7 +56,7 @@ For easy tuning we use wifi module that dynamically changes the `kp,ki,kd` value
 4. Server makes appropriate changes to the bot
 5. Back to step 3
 <!-- ![wifi](./assets/wifi.png =100x100) -->
-<img src="./assets/wifi.png" alt="drawing" hieght="500"/>
+<img src="./assets/wifi.png" alt="drawing" hieght="300"/>
 
 ## ALGORITHM
 The process to implement a line following robot can be summarized in these basic steps :

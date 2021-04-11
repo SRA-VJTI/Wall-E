@@ -1,41 +1,128 @@
-# Wall-E_v2.2-beta
+<p align="center">
+  <img src="documentation/images/logo.png"/>
+  
+  <h3 align="center"> Wall-E version 2.2 </h3>
+  <p align="center">
+    Code repository for <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta">Wall-E_v2.2</a>
+    <br />
+    <br />
+    <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/issues">Request Feature</a>
+    ·
+    <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/pulls">Send a Pull Request</a>
+  </p>
+ </p>
+ 
+ <p align="center">
+  
+  <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/network/members">
+    <img src="https://img.shields.io/github/forks/SRA-VJTI/Wall-E_v2.2-beta">
+  </a>
+  <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/stargazers">
+    <img src="https://img.shields.io/github/stars/SRA-VJTI/Wall-E_v2.2-beta">
+  </a>
+  <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/issues">
+    <img src="https://img.shields.io/github/issues/SRA-VJTI/Wall-E_v2.2-beta">
+  </a>
+  <a href="https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/SRA-VJTI/Wall-E_v2.2-beta">
+  </a>
+</p>
 
-*Development Repository for the self-balancing-line-following bot workshop, implemented with ESP32*
+## Table of Contents
 
-## Guidelines
+- [About](#about-the-workshop)
+- [Installation](#installation)
+- [Examples](#examples)
+- [Resources](#resources)
+- [Contribution](#contribution)
+- [License](#license)
 
-### General
+- [Acknowledgements](#acknowledgements)
 
-1) Strict deadlines will be followed, since the tasks in general are not complicated. Failure to do so will result in elimination from the project after warnings.
-2) The ones who will structure and compile the code will have the responsibility of making it easy-to-read and debug for the ones who will test it.
-3) Try to maintain error logs in a file or screenshots for every stage of development and any genuine errors.
+## About the Workshop
+<p align="center">
+  <img src="documentation/images/wall_E_bot.JPG"/>
+  <a href="https://github.com/MOLOCH-dev/Wall-E-Sim">
+  <h3 align="center"> Wall-E bot simulation </h3>
+  </a>
+</p>
+<p align="center">
+  <img src="documentation/images/walle bot.png"/>
+ 
+  <h3 align="center"> Wall-E Bot real </h3>
+ 
+ </p>
 
-### Git
+How do you make a robot follow a line? Now what if the robot has only two wheels. How will it balance and follow the line? This is exactly what is taught in the Wall-E workshop.
+The Wall-E workshop focuses on the concepts of line-following and self-balancing, using ESP32, a powerful micro-controller with features like inbuilt Wi-Fi support and BLE, with extensive application in several domains like IoT, RF, etc. The workshop entails various essential concepts such as PID Control, Embedded Communication Protocols, PWM, Filters, RTOS, etc. and gives its attendees (first-year students) a general idea about the world of robotics and embedded hardware. Following are some of the highlights:
+- The custom-made SRA Development Board & ESP32.
+- ESP-IDF, the official IoT Development framework by espressif.
+- Motor Control with PWM and PID.
+- Accelerometer , gyroscope and complimentary filter.
+- Communcation protocols ( UART , SPI , I2C )
 
-**1. Branches & Workflow**
 
-* After the project is tracked (after `git init`) and the initial commit had been made, create the following branches.        
-    1. `master`     
-    2. `testing`        
-    3. `development`        
+## Installation
 
-* All commits must be initially made to the `development` branch. Once a feature or a fix is committed **then and then only** will it move the `testing` branch. Once the code has been tested properly it can be merged with the `master` branch.
+- For Installation, please refer to [these instructions](Installations.md)
+- You can also refer to [Step-by-Step official guide by espressif](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/#installation-step-by-step)
 
-* Since multiple people will be working in a repository, this structure will be further broken down. From the last stable point of `development` create branches as follows `memeber-name/feature-name` or `member-name/fixes-issue`. For example, `vedant/udp-logger` or `lukesh/fixed-load-prohibited`. 
+## Examples
 
-* Once you have finished your implementation, merge it into `development` and follow the workflow mentioned in the above paragraph. Also, each member will work only on his/her respective branch.
+|                  TOPIC                  |                                                        Link                                                         |                                          Description                                           |
+| :-------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
+|                LED Blink                |              [LED_Blink](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/1_led_blink/README.md)               |                     Performing LED Blink by connecting the LED with esp32                      |
+|           Light Sensing Array           |                    [LSA](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/2_LSA/README.md)                     |        Sensing Array that uses different Light Sensors, majorly used for Line-Following        |
+|                 MPU6050                 |                    [MPU](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/3_MPU/README.md)                     |           Motion controlled MPU measures angles with respect to 6 Degrees of Freedom           |
+| Switch controlled motor in normal mode  |   [Normal_Mode](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/4_switch_controlled_motor_normal/readme.md)   |         Controls the movement of Bot manually using switches connected in normal mode          |
+| Switch controlled motor in parallel mode | [Parallel_Mode](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/5_switch_controlled_motor_parallel/README.md) |        Controls the movement of bot manually using switches connected in parallel mode         |
+|         Pulse Width Modulation          |                    [PWM](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/6_PWM/README.md)                     |                    Calculate average voltage and controls speed accordingly                    |
+|             Line-Following              |              [Line_Following](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/tree/dev/7_line_following)               |         Line-Following algorithm that enables the bot to follow the path of white line         |
+|             Self-Balancing              |         [Self_Balancing](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/dev/8_self_balancing/README.md)          | Self-Balancing algorithm that enables the bot to balance its weight under the force of gravity |
 
-**2. GitIgnore**
-* The .gitignore file tells Git which files or folders to ignore in a project.
-* Basic information on what is gitignore and how to use it can be found [here](https://www.freecodecamp.org/news/gitignore-what-is-it-and-how-to-add-to-repo/)
-* [GitIgnore Templates](https://github.com/github/gitignore)
+<!-- ROADMAP -->
 
-**3. Files Not to Track**
-* Track (or Push) only the files that are necessary to build/run the code.
-* Examples include intermediary build files like `.o`\, output files eg `binary files`, `py.swp`, `py.swo`, etc. and hidden folders generated by text editors and IDE's like `.vscode`.
+## Resources
 
-**4. Commit Messages**
-* Commit messages must be short(*80-100 characters*) and mention what was done in this change. Avoid committing messages such as **Fixed Crash** and **Refactor Code**.
-* Refer to this [blog post](https://chris.beams.io/posts/git-commit/) for more information as it explains most of the guidelines.
+- Please visit and look at our [Custom-made SRA development board](https://github.com/SRA-VJTI/sra-board-hardware-design)
+- Visit ESP-IDF SRA board [Components](https://github.com/SRA-VJTI/sra-board-hardware-design) to have a detailed information about the components of SRA board 
+<p align="center">
+  <img src="documentation/images/sra_board.png"/>
+  <h3 align="center"> SRA development board </h3>
+  </p>
+
+<!-- CONTRIBUTING -->
+
+## Contribution
+
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **extremely appreciated**.
+- See the [open issues](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/issues) for a list of proposed features (and known issues).
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<!-- LICENSE -->
+
+## License
+
+- Distributed under the [MIT License](https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/master/LICENSE)
+
+<!-- CONTACT -->
+
+
+[forks-shield]:https://img.shields.io/github/forks/SRA-VJTI/Wall-E_v2.2-beta
+[forks-url]: https://github.com/HarshShah03325/Wall-E_v2.2-beta/network/members
+[stars-shield]: https://img.shields.io/github/stars/SRA-VJTI/Wall-E_v2.2-beta
+[stars-url]: https://github.com/SRA-VJTI/Wall-E_v2.2-beta/stargazers
+[issues-shield]: https://img.shields.io/github/issues/SRA-VJTI/Wall-E_v2.2-beta
+[issues-url]: https://github.com/SRA-VJTI/Wall-E_v2.2-beta/issues
+[license-shield]: https://img.shields.io/github/license/SRA-VJTI/Wall-E_v2.2-beta
+[license-url]: https://github.com/SRA-VJTI/Wall-E_v2.2-beta/blob/master/LICENSE
+
 
 

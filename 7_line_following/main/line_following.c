@@ -16,7 +16,7 @@
 const int weights[4] = {3,1,-1,-3};
 
 /*
- * Motor value boundts
+ * Motor value bounds
  */
 int optimum_duty_cycle = 63;
 int lower_duty_cycle = 50;
@@ -48,7 +48,7 @@ void lsa_to_bar()
 
 void calculate_correction()
 {
-    error = error*10;  // we need the error correction in range 0-100 so that we can send it directly as duty cycle paramete
+    error = error*10;  // we need the error correction in range 0-100 so that we can send it directly as duty cycle parameter
     difference = error - prev_error;
     cumulative_error += error;
 
@@ -79,7 +79,7 @@ void calculate_error()
         pos = weighted_sum / sum; // This will give us the position wrt line. if +ve then bot is facing left and if -ve the bot is facing to right.
     }
 
-    if(all_black_flag == 1)  // If all black then we check for previous error to assign current error.
+    if(all_black_flag == 1)  // If all black then we check for previous error to assign maximum current error.
     {
         if(prev_error > 0)
         {

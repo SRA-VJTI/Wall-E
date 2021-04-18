@@ -49,7 +49,7 @@
   </a>
 </p>
 <p align="center">
-  <img src="documentation/images/walle bot.png"/>
+  <img src="documentation/Assets/self_balance_demo.gif"/>
  
   <h3 align="center"> Wall-E Bot real </h3>
  

@@ -141,8 +141,9 @@ void balance_task(void *arg)
 
 				//ESP_LOGI("debug","left_duty_cycle:  %f    ::  right_duty_cycle :  %f  :: error :  %f  correction  :  %f  \n",left_duty_cycle, right_duty_cycle, error, correction);
 				ESP_LOGI("debug", "KP: %f ::  KI: %f  :: KD: %f :: Setpoint: %0.2f :: Roll: %0.2f | Pitch: %0.2f | PitchError: %0.2f", read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, read_pid_const().setpoint, euler_angle[0], euler_angle[1], pitch_error);
+				// ESP_LOGI("debug", "Pitch: %0.2f", pitch_angle);
 				
-				vTaskDelay(100 / portTICK_PERIOD_MS);
+				vTaskDelay(10 / portTICK_PERIOD_MS);
 			}
 		}
 	}

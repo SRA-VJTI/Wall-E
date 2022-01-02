@@ -123,7 +123,7 @@ static esp_err_t rest_common_get_handler(httpd_req_t *req)
     return ESP_OK;
 }
 
-/* Simple handler for light brightness control */
+/* Simple handler for Tuning PID */
 static esp_err_t tuning_pid_post_handler(httpd_req_t *req)
 {
     int total_len = req->content_len;

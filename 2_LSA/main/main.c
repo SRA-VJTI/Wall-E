@@ -19,11 +19,42 @@
 // pointer to a character array 
 static const char* TAG = "LSA_READINGS";
 
+// function to display reading on OLED
+void display_lsa(line_sensor_array readings,u8g2_t *oled_config)
+{
+    // clear the screen
+    u8g2_ClearBuffer(oled_config);
+
+    // plot the bar of LSA 0
+    u8g2_DrawFrame(oled_config, 27,0,10,30);
+    u8g2_DrawBox(oled_config, 27,0,10,readings.adc_reading[0]*0.03);
+
+    // plot the bar of LSA 1
+    u8g2_DrawFrame(oled_config, 47,0,10,30);
+    u8g2_DrawBox(oled_config, 47,0,10,readings.adc_reading[1]*0.03);
+
+    // plot the bar of LSA 2
+    u8g2_DrawFrame(oled_config,67,0,10,30);
+    u8g2_DrawBox(oled_config,67,0,10,readings.adc_reading[2]*0.03);
+
+    // plot the bar of LSA 3
+    u8g2_DrawFrame(oled_config, 87,0,10,30);
+    u8g2_DrawBox(oled_config, 87,0,10,readings.adc_reading[3]*0.03);
+
+    // Sends the buffer to the OLED Display
+	u8g2_SendBuffer(oled_config);
+}
+
 // main driver function
 void app_main(void)
 {
     // enable line sensor after checking optimal working state of ESP
     ESP_ERROR_CHECK(enable_line_sensor());
+
+    // Declaring the required OLED struct
+    u8g2_t oled_config;
+    // Initialising the OLED
+	ESP_ERROR_CHECK(init_oled(&oled_config));
 
     // Union containing line sensor readings
     line_sensor_array line_sensor_readings;
@@ -42,7 +73,11 @@ void app_main(void)
         }
       
         // Displaying Information logs - final lsa readings 
-        ESP_LOGI(TAG, "LSA_1: %d \t LSA_2: %d \t LSA_3: %d \t LSA_4: %d",line_sensor_readings.adc_reading[0], line_sensor_readings.adc_reading[1], line_sensor_readings.adc_reading[2], line_sensor_readings.adc_reading[3] );
+        ESP_LOGI(TAG, "LSA_1: %d \t LSA_2: %d \t LSA_3: %d \t LSA_4: %d",line_sensor_readings.adc_reading[0], line_sensor_readings.adc_reading[1], line_sensor_readings.adc_reading[2], line_sensor_readings.adc_reading[3]);
+
+        // Displaying Readings on OLED Display
+        display_lsa(line_sensor_readings,&oled_config);
+
         // delay of 1s after each log
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }

@@ -184,7 +184,7 @@ static void server_handle_task(void *pvParameters)
     vTaskDelete(NULL);
 }
 
-void plot_graph(float p_term, float d_term, float i_term)
+void plot_graph(float p_term, float d_term, float i_term, float pitch_corr, float pitch_err)
 {
     char out[100];
     int len;
@@ -192,10 +192,14 @@ void plot_graph(float p_term, float d_term, float i_term)
     char n0_buf[20];
     char n1_buf[20];
     char n2_buf[20];
+    char n3_buf[20];
+    char n4_buf[20];
 
     sprintf(n0_buf, "%.1f", p_term);
     sprintf(n1_buf, "%.1f", d_term);
     sprintf(n2_buf, "%.1f", i_term);
+    sprintf(n3_buf, "%.1f", pitch_corr);
+    sprintf(n4_buf, "%.1f", pitch_err);
 
     char n[100];
 
@@ -205,6 +209,11 @@ void plot_graph(float p_term, float d_term, float i_term)
     strcat(n, n1_buf);
     strcat(n, ",");
     strcat(n, n2_buf);
+    strcat(n, ",");
+    strcat(n, n3_buf);
+    strcat(n, ",");
+    strcat(n, n4_buf);
+    ESP_LOGI("debug", ": %s", n);
     sprintf(out, "%s", n);
     len = strlen(n);
     ws_server_send_text_all(n, len);

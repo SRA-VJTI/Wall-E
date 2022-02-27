@@ -57,7 +57,7 @@ void calculate_motor_command(const float pitch_error, float *motor_cmd)
 
 	pitch_correction = P_term + I_term + D_term;
 
-  plot_graph(P_term, D_term, I_term);
+    plot_graph(P_term, D_term, I_term, pitch_correction, pitch_error);
 	/**
 	 * Calculating absolute value of pitch_correction since duty cycle can't be negative. 
 	 * Since it is a floating point variable, fabsf was used instead of abs

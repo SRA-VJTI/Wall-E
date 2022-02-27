@@ -13,6 +13,12 @@
     function send_Text_ki(text) {
       websocket.send("I" + text);
     }
+    function send_Text_setpoint(text) {
+      websocket.send("S" + text);
+    }
+    function send_Text_offset(text) {
+      websocket.send("O" + text);
+    }
 
 
 
@@ -189,6 +195,30 @@
             },
           },
         }),
+        scales: {
+          xAxes: [
+            {
+              type: "time",
+              time: {
+                displayFormats: {
+                  millisecond: "S",
+                },
+              },
+            },
+          ],
+          yAxes: [
+            {
+              ticks: {
+                suggestedMin: -1000,
+                suggestedMax: 1000,
+              },
+            },
+          ],
+        },
+        legend: { display: false },
+        tooltips: {
+          enabled: false,
+        },
       });
 
       var rollChartInstance = new Chart(rollChart, {
@@ -203,17 +233,41 @@
           }]
         },
         options: Object.assign({}, commonOptions, {
-          title:{
+          title: {
             display: true,
             text: "Pitch correction",
-            fontSize: 18
+            fontSize: 18,
           },
           elements: {
             point: {
               radius: 0,
             },
           },
-        })
+        }),
+        scales: {
+          xAxes: [
+            {
+              type: "time",
+              time: {
+                displayFormats: {
+                  millisecond: "S",
+                },
+              },
+            },
+          ],
+          yAxes: [
+            {
+              ticks: {
+                suggestedMin: -1000,
+                suggestedMax: 1000,
+              },
+            },
+          ],
+        },
+        legend: { display: false },
+        tooltips: {
+          enabled: false,
+        },
           });
 
     var pitchChartInstance = new Chart(pitchChart, {
@@ -228,17 +282,41 @@
           }]
         },
         options: Object.assign({}, commonOptions, {
-          title:{
+          title: {
             display: true,
-            text: "Pitch error",
-            fontSize: 18
+            text: "D-term",
+            fontSize: 18,
           },
           elements: {
             point: {
               radius: 0,
             },
           },
-        })
+        }),
+        scales: {
+          xAxes: [
+            {
+              type: "time",
+              time: {
+                displayFormats: {
+                  millisecond: "S",
+                },
+              },
+            },
+          ],
+          yAxes: [
+            {
+              ticks: {
+                suggestedMin: -1000,
+                suggestedMax: 1000,
+              },
+            },
+          ],
+        },
+        legend: { display: false },
+        tooltips: {
+          enabled: false,
+        },
       });
 
       function addData(data) {
@@ -277,7 +355,7 @@
           });
           pitchChartInstance.data.labels.push(new Date());
           pitchChartInstance.data.datasets.forEach((dataset) =>{
-            dataset.data.push(data[data[4]])
+            dataset.data.push(data[4])
           });
       
 
@@ -400,15 +478,27 @@
     <button type="button" onclick="send_Text_kp(document.getElementsByName('ftext')[0].value);">Send</button>
   </form>
 
+  <form id="frm3" action="#">
+    Ki <input type="number" name="ftext" /><br />
+    <button type="button" onclick="send_Text_ki(document.getElementsByName('ftext')[2].value);">
+      Send
+    </button>
+  </form>
   <form id="frm2" action="#">
     Kd <input type="number" name="ftext" /><br />
     <button type="button" onclick="send_Text_kd(document.getElementsByName('ftext')[1].value);">
       Send
     </button>
   </form>
-  <form id="frm3" action="#">
-    Ki <input type="number" name="ftext" /><br />
-    <button type="button" onclick="send_Text_ki(document.getElementsByName('ftext')[2].value);">
+  <form id="frm4" action="#">
+    Setpoint <input type="number" name="ftext" /><br />
+    <button type="button" onclick="send_Text_offset(document.getElementsByName('ftext')[3].value);">
+      Send
+    </button>
+  </form>
+  <form id="frm5" action="#">
+    Offset <input type="number" name="ftext" /><br />
+    <button type="button" onclick="send_Text_setpoint(document.getElementsByName('ftext')[4].value);">
       Send
     </button>
   </form>

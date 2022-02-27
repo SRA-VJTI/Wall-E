@@ -32,6 +32,8 @@
       var xAccelChart = $("#xAccelChart");
       var yAccelChart = $("#yAccelChart");
       var zAccelChart = $("#zAccelChart");
+      var rollChart = $("#rollChart");
+      var pitchChart = $("#pitchChart");
       //chart instances & configuration
 
       var commonOptions = {
@@ -189,19 +191,72 @@
         }),
       });
 
+      var rollChartInstance = new Chart(rollChart, {
+        type: 'line',
+        data: {
+          datasets: [{
+              label: "Roll",
+              data: 0,
+              fill: false,
+              borderColor: '#343e9a',
+              borderWidth: 1
+          }]
+        },
+        options: Object.assign({}, commonOptions, {
+          title:{
+            display: true,
+            text: "Pitch correction",
+            fontSize: 18
+          },
+          elements: {
+            point: {
+              radius: 0,
+            },
+          },
+        })
+          });
+
+    var pitchChartInstance = new Chart(pitchChart, {
+        type: 'line',
+        data: {
+          datasets: [{
+              label: "Pitch",
+              data: 0,
+              fill: false,
+              borderColor: '#343e9a',
+              borderWidth: 1
+          }]
+        },
+        options: Object.assign({}, commonOptions, {
+          title:{
+            display: true,
+            text: "Pitch error",
+            fontSize: 18
+          },
+          elements: {
+            point: {
+              radius: 0,
+            },
+          },
+        })
+      });
+
       function addData(data) {
+        console.log(data);
         var new_data = data
           .split(",")
           .filter((x) => x.trim().length && !isNaN(x))
           .map(Number);
         var new_data_1 = data.split(",");
-        var temp = new_data_1[2];
+        var temp = new_data_1[4];
         temp = temp.replace(/\D/g, "");
         temp = parseInt(temp, 10);
         data = new_data.concat(temp);
         console.log(data[0]);
         console.log(data[1]);
         console.log(data[2]);
+        console.log(data[3]);
+        console.log(data[4]);
 
         if (data) {
           xAccelChartInstance.data.labels.push(new Date());
@@ -216,6 +271,15 @@
           zAccelChartInstance.data.datasets.forEach((dataset) => {
             dataset.data.push(data[2]);
           });
+          rollChartInstance.data.labels.push(new Date());
+          rollChartInstance.data.datasets.forEach((dataset) =>{
+            dataset.data.push(data[3])
+          });
+          pitchChartInstance.data.labels.push(new Date());
+          pitchChartInstance.data.datasets.forEach((dataset) =>{
+            dataset.data.push(data[data[4]])
+          });
+      
 
           if (updateCount > numberElements) {
             xAccelChartInstance.data.labels.shift();
@@ -224,10 +288,16 @@
             yAccelChartInstance.data.datasets[0].data.shift();
             zAccelChartInstance.data.labels.shift();
             zAccelChartInstance.data.datasets[0].data.shift();
+            rollChartInstance.data.labels.shift();
+            rollChartInstance.data.datasets[0].data.shift();
+            pitchChartInstance.data.labels.shift();
+            pitchChartInstance.data.datasets[0].data.shift();
           } else updateCount++;
           xAccelChartInstance.update();
           yAccelChartInstance.update();
           zAccelChartInstance.update();
+          rollChartInstance.update();
+          pitchChartInstance.update();
         }
       }
 
@@ -314,6 +384,15 @@
       <canvas id="zAccelChart"></canvas>
     </div>
     <!--zAccel-->
+  </div>
+
+  <div id="orientationContainer" class="container">
+    <div id="Roll" class="x">
+      <canvas id="rollChart"></canvas>
+    </div>
+    <div id="Pitch" class="y">
+      <canvas id="pitchChart"></canvas>
+    </div>
   </div>
   
   <form id="frm1" action="#">

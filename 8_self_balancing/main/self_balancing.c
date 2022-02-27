@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "tuning_http_server.h"
+#include "tuning_websocket_server.h"
 
 //Limiting Variables
 #define MAX_PITCH_CORRECTION (90.0f)
@@ -57,6 +57,7 @@ void calculate_motor_command(const float pitch_error, float *motor_cmd)
 
 	pitch_correction = P_term + I_term + D_term;
 
+  plot_graph(P_term, D_term, I_term);
 	/**
 	 * Calculating absolute value of pitch_correction since duty cycle can't be negative. 
 	 * Since it is a floating point variable, fabsf was used instead of abs
@@ -154,9 +155,9 @@ void balance_task(void *arg)
 
 void app_main()
 {
+  // Starts tuning server for wireless control
+	start_websocket_server();
+
 	// xTaskCreate -> Create a new task and add it to the list of tasks that are ready to run
 	xTaskCreate(&balance_task, "balance task", 4096, NULL, 1, NULL);
-	
-	// Starts tuning server for wireless control
-	start_tuning_http_server();
 }

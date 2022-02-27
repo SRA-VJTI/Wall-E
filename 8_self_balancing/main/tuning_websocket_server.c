@@ -54,6 +54,14 @@ void websocket_callback(uint8_t num, WEBSOCKET_TYPE_t type, char *msg, uint64_t 
                 ESP_LOGI(TAG, "got message length %i: %s", (int)len - 1, &(msg[1]));
                 pid_constants.ki = atof(&msg[1]);
                 break;
+            case 'S':
+                ESP_LOGI(TAG, "got message length %i: %s", (int)len - 1, &(msg[1]));
+                pid_constants.setpoint = atof(&msg[1]);
+                break;
+            case 'O':
+                ESP_LOGI(TAG, "got message length %i: %s", (int)len - 1, &(msg[1]));
+                pid_constants.offset = atof(&msg[1]);
+                break;
             default:
                 ESP_LOGI(TAG, "got an unknown message with length %i", (int)len);
                 break;

@@ -6,7 +6,20 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400&display=swap" rel="stylesheet">
+    <script
+    type="text/javascript"
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"
+    ></script>
     <script>
+      Chart.defaults.global.defaultFontColor = "#FFF";
+      Chart.defaults.global.defaultFontFamily = "Oswald";
       var websocket = new WebSocket("ws://" + location.hostname + "/");
 
       function send_Text_kp(text) {
@@ -51,9 +64,11 @@
                 type: "time",
                 time: {
                   displayFormats: {
+                    // second: "S",
                     millisecond: "S",
                   },
                 },
+                gridLines: { color: "#C6C6C6" },
               },
             ],
             yAxes: [
@@ -62,6 +77,7 @@
                   suggestedMin: -50, // minimum will be 0, unless there is a lower value.
                   suggestedMax: 50, // maximum will be
                 },
+                gridLines: { color: "#C6C6C6" },
               },
             ],
           },
@@ -76,18 +92,20 @@
             datasets: [
               {
                 label: "X Acceleration",
-                data: 0,
                 fill: false,
-                borderColor: "#343e9a",
-                borderWidth: 1,
+                borderColor: "#FFF",
+                borderWidth: 2,
+                fontColor: "#FFF",
               },
             ],
           },
           options: Object.assign({}, commonOptions, {
             title: {
               display: true,
-              text: "P-Term",
+              text: "P-TERM",
               fontSize: 18,
+              fontFamily: "Oswald",
+              fontColor: "#FFF",
             },
             elements: {
               point: {
@@ -101,9 +119,10 @@
                 type: "time",
                 time: {
                   displayFormats: {
-                    second: "S",
+                    millisecond: "S",
                   },
                 },
+                gridLines: { color: "#FFF" },
               },
             ],
             yAxes: [
@@ -112,6 +131,7 @@
                   suggestedMin: -50, // minimum will be 0, unless there is a lower value.
                   suggestedMax: 50, // maximum will be
                 },
+                gridLines: { color: "#FFF" },
               },
             ],
           },
@@ -129,16 +149,19 @@
                 label: "Y Acceleration",
                 data: 0,
                 fill: false,
-                borderColor: "#343e9a",
-                borderWidth: 1,
+                borderColor: "#FFF",
+                borderWidth: 2,
+                fontColor: "#FFF",
               },
             ],
           },
           options: Object.assign({}, commonOptions, {
             title: {
               display: true,
-              text: "D-term",
+              text: "D-TERM",
               fontSize: 18,
+              fontFamily: "Oswald",
+              fontColor: "#FFF",
             },
             elements: {
               point: {
@@ -155,6 +178,7 @@
                     millisecond: "S",
                   },
                 },
+                gridLines: { color: "#FFF" },
               },
             ],
             yAxes: [
@@ -163,6 +187,7 @@
                   suggestedMin: -1000,
                   suggestedMax: 1000,
                 },
+                gridLines: { color: "#FFF" },
               },
             ],
           },
@@ -180,16 +205,19 @@
                 label: "Z Acceleration",
                 data: 0,
                 fill: false,
-                borderColor: "#343e9a",
-                borderWidth: 1,
+                borderColor: "#FFF",
+                borderWidth: 2,
+                fontColor: "#FFF",
               },
             ],
           },
           options: Object.assign({}, commonOptions, {
             title: {
               display: true,
-              text: "I-term",
+              text: "I-TERM",
               fontSize: 18,
+              fontFamily: "Oswald",
+              fontColor: "#FFF",
             },
             elements: {
               point: {
@@ -206,6 +234,7 @@
                     millisecond: "S",
                   },
                 },
+                gridLines: { color: "#FFF" },
               },
             ],
             yAxes: [
@@ -214,6 +243,7 @@
                   suggestedMin: -1000,
                   suggestedMax: 1000,
                 },
+                gridLines: { color: "#FFF" },
               },
             ],
           },
@@ -231,16 +261,19 @@
                 label: "Roll",
                 data: 0,
                 fill: false,
-                borderColor: "#343e9a",
-                borderWidth: 1,
+                borderColor: "#FFF",
+                borderWidth: 2,
+                fontColor: "#FFF",
               },
             ],
           },
           options: Object.assign({}, commonOptions, {
             title: {
               display: true,
-              text: "Pitch correction",
+              text: "PITCH CORRECTION",
               fontSize: 18,
+              fontFamily: "Oswald",
+              fontColor: "#FFF",
             },
             elements: {
               point: {
@@ -257,6 +290,7 @@
                     millisecond: "S",
                   },
                 },
+                gridLines: { color: "#FFF" },
               },
             ],
             yAxes: [
@@ -265,6 +299,7 @@
                   suggestedMin: -1000,
                   suggestedMax: 1000,
                 },
+                gridLines: { color: "#FFF" },
               },
             ],
           },
@@ -282,16 +317,19 @@
                 label: "Pitch",
                 data: 0,
                 fill: false,
-                borderColor: "#343e9a",
-                borderWidth: 1,
+                borderColor: "#FFF",
+                borderWidth: 2,
+                fontColor: "#FFF",
               },
             ],
           },
           options: Object.assign({}, commonOptions, {
             title: {
               display: true,
-              text: "Corrected term",
+              text: "CORRECTED TERM",
               fontSize: 18,
+              fontFamily: "Oswald",
+              fontColor: "#FFF"
             },
             elements: {
               point: {
@@ -308,6 +346,7 @@
                     millisecond: "S",
                   },
                 },
+                gridLines: { color: "#FFF" },
               },
             ],
             yAxes: [
@@ -316,6 +355,7 @@
                   suggestedMin: -1000,
                   suggestedMax: 1000,
                 },
+                gridLines: { color: "#FFF" },
               },
             ],
           },
@@ -402,13 +442,45 @@
             };
           }
         }
+        
 
         updateData();
       };
     </script>
+
     <style>
+      @import "susy";
+      @import "compass/reset";
+
+      body{
+        font-family: Oswald, sans-serif;
+        color: #FFF;
+        background: #000;
+      }
+
+      img{
+        filter: grayscale(1) invert(1);
+      }
+
+      span.input-group-text{
+        /* background-color: #FFF; */
+        border-radius: 5px 0px 0px 5px;
+        border: 0px solid #ffffff;
+      }
+
+      .form-control{
+        border-radius: 0px 5px 5px 0px;
+        margin: 0;
+        border: 0px solid #ffffff;
+      }
+
       .container {
         display: flex;
+        color: #FFF;
+      }
+
+      .value-container{
+        margin: 2em 2em 2em 5.3em;
       }
 
       .label {
@@ -420,52 +492,78 @@
       .x {
         flex: 3;
         text-align: center;
-        background-color: rgba(235, 113, 101, 0.73);
+        background-color: rgba(197, 40, 61, 0.55);
         margin: 10px;
+        border-radius: 15px;
       }
 
       .y {
         flex: 3;
         text-align: center;
-        background-color: rgba(70, 163, 71, 0.64);
+        background-color: rgba(103, 148, 54, 0.60);
         margin-top: 10px;
         margin-bottom: 10px;
+        border-radius: 15px;
       }
 
       .z {
         flex: 3;
         text-align: center;
-        background-color: rgba(70, 140, 215, 0.74);
+        background-color: rgba(35, 87, 137, 0.64);
         margin: 10px;
+        border-radius: 15px;
       }
 
       h1 {
         text-align: center;
       }
-    </style>
 
-    <script
-      type="text/javascript"
-      src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"
-    ></script>
+      .stars, .twinkling, .clouds {
+        position:absolute;
+        display:block;
+        top:0; bottom:0;
+        left:0; right:0;
+        width:100%; height:100%;
+      }
+
+      .stars {
+        z-index: -102;
+        background: #000 url('https://image.ibb.co/mjnygo/stars.png') repeat top center;
+      }
+
+      .twinkling{
+        z-index: -101;
+        background:transparent url('https://image.ibb.co/ir1DE8/twinkling.png') repeat top center;
+        animation: move-twink-back 200s linear infinite;
+      }
+
+      .clouds{
+        z-index: -100;
+          background:transparent url('https://image.ibb.co/bT4N7T/clouds.png') repeat top center;
+        animation: move-clouds-back 200s linear infinite;
+      }
+
+      @keyframes move-twink-back {
+        from {background-position:0 0;}
+        to {background-position:-10000px 5000px;}
+      }
+
+      @keyframes move-clouds-back {
+        from {background-position:0 0;}
+        to {background-position:10000px 0;}
+      }
+
+    </style>
   </head>
 
-  <body
-    style="
-      background: linear-gradient(135deg, rgb(173, 169, 169), rgb(71, 70, 70));
-    "
-  >
-    <div id="labelAccel" class="label">
+  <body>
+  <div id="labelAccel" class="label">
       <img
         src="https://drive.google.com/uc?export=view&id=1zkT3u49ixBW_8_TA8xBO0mTogS-rzqpp"
         width="200"
         height="120"
       />
-      <h1>PID Tuning</h1>
+      <h1>PID TUNING</h1>
     </div>
 
     <div id="accelContainer" class="container">
@@ -493,19 +591,20 @@
     </div>
 
     <div style="te">
-      <div class="container">
+      <div class="container value-container">
         <div class="row">
           <div class="col-sm">
             <form id="frm1" action="#">
-              <b>Kp</b> &nbsp;<input
-                type="number"
-                name="ftext"
-                style="width: 150px"
-              /><br />
+              <div style = "width:200px;" class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Kp</span>
+                </div>
+                <input name="ftext" type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+              </div>
               <div style="transform: translateX(70px); margin-top: 10px">
                 <button
                   type="button"
-                  class="btn btn-primary btn-block"
+                  class="btn btn-secondary btn-block"
                   onclick="send_Text_kp(document.getElementsByName('ftext')[0].value);"
                 >
                   Send
@@ -515,12 +614,16 @@
           </div>
           <div class="col-sm">
             <form id="frm2" action="#">
-              <b>Ki</b> &nbsp;
-              <input type="number" name="ftext" style="width: 150px" /><br />
+              <div style = "width:200px;" class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Ki</span>
+                </div>
+                <input name="ftext" type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+              </div>
               <div style="transform: translateX(70px); margin-top: 10px">
                 <button
                   type="button"
-                  class="btn btn-primary btn-block"
+                  class="btn btn-secondary btn-block"
                   onclick="send_Text_ki(document.getElementsByName('ftext')[1].value);"
                 >
                   Send
@@ -530,15 +633,16 @@
           </div>
           <div class="col-sm">
             <form id="frm3" action="#">
-              <b>Kd</b> &nbsp;<input
-                type="number"
-                name="ftext"
-                style="width: 150px"
-              /><br />
+              <div style = "width:200px;" class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Kd</span>
+                </div>
+                <input name="ftext" type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+              </div>
               <div style="transform: translateX(70px); margin-top: 10px">
                 <button
                   type="button"
-                  class="btn btn-primary btn-block"
+                  class="btn btn-secondary btn-block"
                   onclick="send_Text_kd(document.getElementsByName('ftext')[2].value);"
                 >
                   Send
@@ -548,12 +652,16 @@
           </div>
           <div class="col-sm" style="width: 500px">
             <form id="frm4" action="#">
-              <b>Setpoint</b> &nbsp;
-              <input type="number" name="ftext" style="width: 150px" /><br />
-              <div style="transform: translateX(110px); margin: 10px">
+              <div style = "width:200px;" class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Setpoint</span>
+                </div>
+                <input name="ftext" type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+              </div>
+              <div style="transform: translateX(70px); margin: 10px">
                 <button
                   type="button"
-                  class="btn btn-primary btn-block"
+                  class="btn btn-secondary btn-block"
                   onclick="send_Text_offset(document.getElementsByName('ftext')[3].value);"
                 >
                   Send
@@ -563,15 +671,16 @@
           </div>
           <div class="col-sm">
             <form id="frm5" action="#">
-              <b>Offset</b> &nbsp;<input
-                type="number"
-                name="ftext"
-                style="width: 150px"
-              /><br />
-              <div style="transform: translateX(90px); margin: 10px">
+              <div style = "width:200px;" class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Offset</span>
+                </div>
+                <input name="ftext" type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+              </div>
+              <div style="transform: translateX(70px); margin: 10px">
                 <button
                   type="button"
-                  class="btn btn-primary btn-block"
+                  class="btn btn-secondary btn-block"
                   onclick="send_Text_setpoint(document.getElementsByName('ftext')[4].value);"
                 >
                   Send
@@ -582,5 +691,8 @@
         </div>
       </div>
     </div>
+    <div class='stars'></div>
+    <div class='twinkling'></div>
+    <div class='clouds'></div>  
   </body>
 </html>

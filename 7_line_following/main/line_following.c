@@ -101,6 +101,12 @@ void line_follow_task(void* arg)
     ESP_ERROR_CHECK(enable_motor_driver(a, NORMAL_MODE));
     ESP_ERROR_CHECK(enable_line_sensor());
     ESP_ERROR_CHECK(enable_bar_graph());
+
+    // Declaring the required OLED struct
+    u8g2_t oled_config;
+
+    // Initialising the OLED
+    ESP_ERROR_CHECK(init_oled(&oled_config));
     
     while(true)
     {
@@ -124,6 +130,9 @@ void line_follow_task(void* arg)
         
         //ESP_LOGI("debug","left_duty_cycle:  %f    ::  right_duty_cycle :  %f  :: error :  %f  correction  :  %f  \n",left_duty_cycle, right_duty_cycle, error, correction);
         ESP_LOGI("debug", "KP: %f ::  KI: %f  :: KD: %f", read_pid_const().kp, read_pid_const().ki, read_pid_const().kd);
+
+        // Diplaying kp, ki, kd values on OLED 
+        display_pid_values(read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, &oled_config);
 
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }

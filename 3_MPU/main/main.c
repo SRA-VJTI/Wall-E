@@ -13,9 +13,14 @@
 static const char *TAG = "mpu_test";
 
 void mpu_task(void *arg)
-{   
-    //Euler angle buffer includes two floats - Roll angle and Pitch angle
+{
+    // Euler angle buffer includes two floats - Roll angle and Pitch angle
     float euler_angle[2], mpu_offset[2] = {0.0f, 0.0f};
+
+    // Declaring the required OLED struct
+    u8g2_t oled_config;
+    // Initialising the OLED
+    ESP_ERROR_CHECK(init_oled(&oled_config));
 
     while (1)
     {
@@ -23,7 +28,7 @@ void mpu_task(void *arg)
          * enable_mpu6050 disables the SLEEP_MODE of the MPU by accessing the POWER_MANAGEMENT_1 register
          * and checks if the MPU is initialised correctly
          */
-        if (enable_mpu6050() == ESP_OK) 
+        if (enable_mpu6050() == ESP_OK)
         {
             /* Euler angles are obtained by reading values from the accelerometer and gyroscope
              * Calculating change in roll, pitch from raw accelerometer and gyroscope readings seperately
@@ -31,13 +36,16 @@ void mpu_task(void *arg)
              * The changes in angles from both measurements are weighted and added to the complementary angle
              */
             while (read_mpu6050(euler_angle, mpu_offset) == ESP_OK)
-                //Logging information of roll and pitch angles
-                ESP_LOGI(TAG, "Roll: %0.2f | Pitch: %0.2f", euler_angle[0], euler_angle[1]); 
-                
+            {
+                // Logging information of roll and pitch angles
+                ESP_LOGI(TAG, "Roll: %0.2f | Pitch: %0.2f", euler_angle[0], euler_angle[1]);
+
+                // Displaying pitch and roll on OLED
+                display_mpu(euler_angle[1], euler_angle[0], &oled_config);
+            }
         }
-        //Logging Error
-        ESP_LOGE(TAG, "MPU Initialisation Failed / Connection Broke!"); 
-        
+        // Logging Error
+        ESP_LOGE(TAG, "MPU Initialisation Failed / Connection Broke!");
     }
 }
 
@@ -45,6 +53,6 @@ void app_main()
 {
     /* creating task to run mpu_task function
      * which runs at priority 1
-    */ 
+     */
     xTaskCreate(mpu_task, "mpu_task", 4096, NULL, 1, NULL);
 }

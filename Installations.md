@@ -103,12 +103,13 @@ sudo chmod +x wall_e_install.sh
 
 
 ## For MacOS
-### STEP 1 : Installing the necessary files
+### STEP 1 : Installing the necessary file
 - Download the file "wall_e_install_mac.sh" given in the root folder itself and put it in the "Downloads" folder
 - Download the driver by clicking on this [link](https://www.silabs.com/documents/public/software/Mac_OSX_VCP_Driver.zip) , unzip it, then install it on the system
 
 ### STEP 2 : Opening The Terminal
 Open the terminal by pressing command+space and then typing terminal.
+Note: If you're an M1 mac os user refer this [link](https://youtu.be/9W8rTTE1WEA) to open the terminal.
 
 ### STEP 3 : Installing the Pre-Requisites 
 Copy this command in the command in the terminal , then press return 
@@ -132,6 +133,9 @@ cd $HOME
 git clone https://github.com/SRA-VJTI/Wall-E.git --recurse-submodules
 cd Wall-E
 ```
+<p align="center">
+  <img src="./documentation/Assets/Installation/15.png">
+</p>
 
  It will take some time to install, make sure you have an active internet connection. It will take around 2GB of data.
 

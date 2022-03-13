@@ -133,7 +133,11 @@ void line_follow_task(void* arg)
         ESP_LOGI("debug", "KP: %f ::  KI: %f  :: KD: %f", read_pid_const().kp, read_pid_const().ki, read_pid_const().kd);
 #ifdef CONFIG_ENABLE_OLED
         // Diplaying kp, ki, kd values on OLED 
-        display_pid_values(read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, &oled_config);
+        if (read_pid_const().val_changed)
+        {
+            display_pid_values(read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, &oled_config);
+            reset_val_changed_pid_const();
+        }
 #endif
 
         vTaskDelay(10 / portTICK_PERIOD_MS);

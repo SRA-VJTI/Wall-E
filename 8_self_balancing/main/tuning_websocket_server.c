@@ -2,7 +2,7 @@
 
 static const char *TAG = "tuning_websocket_server";
 
-static pid_const_t pid_constants = {.kp = 5.0, .ki = 0.0, .kd = 1.0, .setpoint = 5.0, .offset = 0.0};
+static pid_const_t pid_constants = {.kp = 5.0, .ki = 0.0, .kd = 1.0, .setpoint = 6.0, .offset = 0.0, .val_changed = true};
 
 static QueueHandle_t client_queue;
 const static int client_queue_size = 10;
@@ -40,6 +40,8 @@ void websocket_callback(uint8_t num, WEBSOCKET_TYPE_t type, char *msg, uint64_t 
     case WEBSOCKET_TEXT:
         if (len)
         { // if the message length was greater than zero
+            pid_constants.val_changed = true;
+
             switch (msg[0])
             {
             case 'P':
@@ -230,6 +232,11 @@ void plot_graph(float p_term, float d_term, float i_term, float pitch_corr, floa
 pid_const_t read_pid_const()
 {
     return pid_constants;
+}
+
+void reset_val_changed_pid_const()
+{
+    pid_constants.val_changed = false;
 }
 
 void start_websocket_server()

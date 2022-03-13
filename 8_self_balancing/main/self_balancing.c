@@ -151,8 +151,12 @@ void balance_task(void *arg)
 				ESP_LOGI("debug", "KP: %f ::  KI: %f  :: KD: %f :: Setpoint: %0.2f :: Roll: %0.2f | Pitch: %0.2f | PitchError: %0.2f", read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, read_pid_const().setpoint, euler_angle[0], euler_angle[1], pitch_error);
 				// ESP_LOGI("debug", "Pitch: %0.2f", pitch_angle);
 #ifdef CONFIG_ENABLE_OLED
-				// Diplaying kp, ki, kd values on OLED 
-				display_pid_values(read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, &oled_config);
+				// Diplaying kp, ki, kd values on OLED
+				if (read_pid_const().val_changed)
+				{
+					display_pid_values(read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, &oled_config);
+					reset_val_changed_pid_const();
+				}
 #endif				
 				vTaskDelay(10 / portTICK_PERIOD_MS);
 			}

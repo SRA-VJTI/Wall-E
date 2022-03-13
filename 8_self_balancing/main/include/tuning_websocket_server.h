@@ -36,9 +36,11 @@ typedef struct pid_const
     float kd;
     float setpoint;
     float offset;
+    bool val_changed;
 } pid_const_t;
 
 pid_const_t read_pid_const();
+void reset_val_changed_pid_const();
 void start_websocket_server();
 void plot_graph(float p_term, float d_term, float i_term, float pitch_corr, float pitch_err);
 

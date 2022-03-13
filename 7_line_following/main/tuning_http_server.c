@@ -2,7 +2,7 @@
 
 static const char *TAG = "tuning_http_server";
 static char scratch[SCRATCH_BUFSIZE];
-static pid_const_t pid_constants = {.kp = 0.9, .ki = 0, .kd = 6.5};
+static pid_const_t pid_constants = {.kp = 0.9, .ki = 0, .kd = 6.5, .val_changed = true};
 
 static void initialise_mdns(void)
 {
@@ -166,6 +166,8 @@ static esp_err_t tuning_pid_post_handler(httpd_req_t *req)
 
     cJSON_Delete(root);
     httpd_resp_sendstr(req, "Post control value successfully");
+
+    pid_constants.val_changed = true;
     return ESP_OK;
 }
 
@@ -212,6 +214,11 @@ static esp_err_t start_tuning_http_server_private()
 pid_const_t read_pid_const()
 {
     return pid_constants;
+}
+
+void reset_val_changed_pid_const()
+{
+    pid_constants.val_changed = false;
 }
 
 void start_tuning_http_server()

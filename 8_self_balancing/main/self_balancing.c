@@ -7,7 +7,11 @@
 #include <math.h>
 
 #include "tuning_websocket_server.h"
+#include "freertos/queue.h"
 
+
+#define MESSAGE_QUEUE_SIZE 1024
+#define BUFFER_SIZE 512
 //Limiting Variables
 #define MAX_PITCH_CORRECTION (90.0f)
 #define MAX_PITCH_AREA (850.0f)
@@ -20,6 +24,93 @@
 float forward_offset = 2.51f;
 float forward_buffer = 3.1f;
 */
+
+static QueueHandle_t mpu_queue;
+static TaskHandle_t mpu_read_task_handle = NULL;
+
+/**
+ * @brief Initialises message queue
+ * 
+ * @return esp_err_t ESP_OK - if queue init sucessfully, ESP_FAIL - if queue init failed
+ **/
+static esp_err_t init_queue(void)
+{
+	mpu_queue = xQueueCreate(MESSAGE_QUEUE_SIZE, sizeof(char*));
+
+	if (mpu_queue == NULL)
+	{
+		ESP_LOGE("debug", "%s", "Queue creation failed");
+		return ESP_FAIL;
+	}
+	else
+	{
+		ESP_LOGI("debug", "%s", "Queue created");
+		return ESP_OK;
+	}
+}
+
+/**
+ * @brief Sends log message to message queue
+ * 
+ * @param log_message log message to be sent to the queue
+ * @return esp_err_t ESP_OK - if queue init sucessfully, ESP_FAIL - if queue init failed
+ **/
+static esp_err_t send_to_queue(float *euler_angle)
+{
+	BaseType_t qerror = xQueueSendToBack(mpu_queue, (void*)&euler_angle, (TickType_t) 0/portTICK_PERIOD_MS);
+
+	if(qerror == pdPASS)
+	{
+		ESP_LOGD("debug", "%s", "Data sent to Queue");
+		return ESP_OK;
+	}
+	else if(qerror == errQUEUE_FULL)
+	{
+		ESP_LOGE("debug", "%s", "Data not sent to Queue, Queue full");
+		return ESP_FAIL;
+	}
+	else
+	{
+		ESP_LOGE("debug", "%s", "Unknown error");
+		return ESP_FAIL;
+	}
+}
+
+/**
+ * @brief Receive data from queue. Timeout is set to portMAX_DELAY, which is around 50 days (confirm from esp32 specs)
+ * 
+ * @return char* - returns log message received from the queue, returns NULL if error
+ **/
+static float* receive_from_queue(void)
+{
+	float *data;
+	// ************************* IMPORTANT *******************************************************************
+	// Timeout period is set to portMAX_DELAY, so if it doesnot receive a log message for ~50 days, config assert will fail and program will crash
+	//
+	BaseType_t qerror = xQueueReceive(mpu_queue, &data, (TickType_t) portMAX_DELAY);
+	configASSERT(qerror);
+	//
+	// *******************************************************************************************************
+
+	if(qerror == pdPASS)
+	{
+		ESP_LOGD("debug", "%s", "Data received from Queue");
+	}
+	else if(qerror == pdFALSE)
+	{
+		ESP_LOGW("debug", "%s", "Data not received from Queue");
+		data = NULL;
+	}
+	else
+	{
+		free((void*)data);
+
+		ESP_LOGE("debug", "%s", "Unknown error");
+		data = NULL;
+	}
+
+	return data;
+}
 
 // Calculate the motor inputs according to angle of the MPU
 void calculate_motor_command(const float pitch_error, float *motor_cmd)
@@ -75,7 +166,7 @@ void balance_task(void *arg)
 	 * euler_angles are the complementary pitch and roll angles obtained from mpu6050
 	 * mpu_offsets are the initial accelerometer angles at rest position
 	*/
-	float euler_angle[2], mpu_offset[2] = {0.0f, 0.0f};
+	float *euler_angle;
 
 	float pitch_angle, pitch_error;
 
@@ -101,6 +192,7 @@ void balance_task(void *arg)
 	{
 		// Function to enable Motor driver A in Normal Mode
 		enable_motor_driver(a, NORMAL_MODE);
+		vTaskResume(mpu_read_task_handle);
 		while (1)
 		{
 			/**
@@ -108,7 +200,8 @@ void balance_task(void *arg)
 			 *											and roll angles based on intial accelerometer angle
 			*/
 			// Ensure required values are obtained from mpu6050
-			if (read_mpu6050(euler_angle, mpu_offset) == ESP_OK)
+			euler_angle = receive_from_queue();
+			if (euler_angle != NULL)
 			{
 				// To read PID setpoint from tuning_http_server
 				pitch_cmd = read_pid_const().setpoint;
@@ -167,11 +260,29 @@ void balance_task(void *arg)
 	vTaskDelete(NULL);
 }
 
+void read_mpu_task()
+{
+	float euler_angle[2], mpu_offset[2] = {0.0f, 0.0f};
+	
+	while (1)
+	{
+		read_mpu6050(euler_angle, mpu_offset);
+		send_to_queue(euler_angle);
+
+		vTaskDelay(10 / portTICK_PERIOD_MS);
+	}
+	
+	vTaskDelete(NULL);
+}
+
 void app_main()
 {
   // Starts tuning server for wireless control
 	start_websocket_server();
 
+	init_queue();
 	// xTaskCreate -> Create a new task and add it to the list of tasks that are ready to run
-	xTaskCreate(&balance_task, "balance task", 4096, NULL, 1, NULL);
+	xTaskCreatePinnedToCore(&balance_task, "balance task", 4096, NULL, 1, NULL, 1);
+	xTaskCreatePinnedToCore(&read_mpu_task, "read mpu task", 2048, NULL, 2, &mpu_read_task_handle, 0);
+	vTaskSuspend(mpu_read_task_handle);
 }

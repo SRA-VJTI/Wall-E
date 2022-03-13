@@ -5,95 +5,111 @@
     * [For MacOS](#for-macos)
 
 # For Windows
-The first step is to install the ESP-IDF. 
+The first step is to install the ESP-IDF v4.2. 
 
-## Step 1:Download the installer from [here]( https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/windows-setup.html#esp-idf-tools-installer )
-### Please download the offline version
+## Step 1:Download the installer from [here](https://dl.espressif.com/dl/esp-idf/?idf=4.4)
+Please download the **offline** version pointed by the
+arrow
 <p align="center">
-  <img src="./documentation/Assets/1.png">
+  <img src="./documentation/Assets/Installation/0.png">
 </p>
 
 ### Step 2: After Downloading open .exe file, select `I accept the agreement` then click `Next >`
 <p align="center">
-  <img src="./documentation/Assets/2.png">
+  <img src="./documentation/Assets/Installation/1.png">
 </p>
 
-### Step 3: If you don't have python 3.6 installed , then select `Python 3.6 (64-bit)`  
+Once you reach this step, click next.
+
 <p align="center">
-  <img src="./documentation/Assets/3.png">
+  <img src="./documentation/Assets/Installation/2.png">
 </p>
 
-### Step 4: If you already have git installed, select `2.30.0.Windows.2`, or else select `Install Git`   
+We recommend to keep the default installation path and click next. 
+
 <p align="center">
-  <img src="./documentation/Assets/4.png">
+  <img src="./documentation/Assets/Installation/3.png">
 </p>
 
-### Step 5: Next, click `v4.2(release version)` 
-
-* Note : The installation path should be `%userprofile%\esp\esp-idf` 
-* To put it simply it should be C:\Users\Username\esp\esp-idf
+### Step 3: In Select Components section, keep everything as default and click next
 
 <p align="center">
-  <img src="./documentation/Assets/5.png">
+  <img src="./documentation/Assets/Installation/4.png">
 </p>
 
-### Step 6: Click on `Install` then after Installation,check all boxes and click on `Finish`
+### Step 4: In Ready to Install section, click on install which will take a few minutes. And then later Click next
+
 <p align="center">
-  <img src="./documentation/Assets/6.png">
-  <img src="./documentation/Assets/6_1.png">
-  <img src="./documentation/Assets/6_2.png">
+  <img src="./documentation/Assets/Installation/5.png">
 </p>
 
+### Step 5: Make sure all the checkbox are marked before clicking finish 
 
- ### Step 7: Run `install.bat` and then `export.bat` in Command Prompt:
- ```
- cd %userprofile%\esp\esp-idf
- install.bat
- export.bat
- ```
 <p align="center">
-  <img src="./documentation/Assets/7.png">
-  <img src="./documentation/Assets/8.png">
+  <img src="./documentation/Assets/Installation/6.png">
+</p>
+
+### Step 6: Once you click On Finish, this is what you should be getting. 
+
+<p align="center">
+  <img src="./documentation/Assets/Installation/7.png">
+</p>
+
+ ### Step 7: Open ESP-IDF 4.2 CMD which should be on your desktop
+
+<p align="center">
+  <img src="./documentation/Assets/Installation/esp-idf.jpeg">
 </p>
 
 ### Step 8: Cloning the Wall-E Git Repo
-To clone the Repo just execute the following command on ESP-IDF Command Prompt. We are Making the project folder in the esp folder
+To clone the Repo just execute the following command on ESP-IDF Command Prompt. We are making the project folder in Desktop 
 ```sh
-cd %userprofile%\esp
-git clone https://github.com/SRA-VJTI/Wall-E_v2.2.git --recurse-submodules
-cd Wall-E_v2.2
-
+cd %userprofile%\Desktop 
+git clone https://github.com/SRA-VJTI/Wall-E.git --recurse-submodules
+cd Wall-E
 ```
+
+<p align="center">
+  <img src="./documentation/Assets/Installation/8.png">
+</p>
+
+**Pro Tip**: 
+`cd %userprofile%\Desktop\Wall-E` takes you to the Wall-E directory which contains all the required code 
+
 ## For Linux 
 
 ### Step 1 : Cloning the Wall-E Git repo
-To clone the repo,execute the following commands on terminal. Installing the project in the Home folder.
+Open the terminal to clone the repo,execute the following commands on terminal. Installing the project in the Home folder.
 ```sh
 cd $HOME
-git clone https://github.com/SRA-VJTI/Wall-E_v2.2.git --recurse-submodules
-cd Wall-E_v2.2
+git clone https://github.com/SRA-VJTI/Wall-E.git --recurse-submodules
+cd Wall-E 
 ```
+<p align="center">
+  <img src="./documentation/Assets/Installation/9.png">
+</p>
+
 ### Step 2 : Installing the necessary prerequisites.
 Run the following commands for a quick install on Linux-based systems:
 ```sh
-cd $HOME/Wall-E_v2.2
+cd $HOME/Wall-E
 sudo chmod +x wall_e_install.sh
 ./wall_e_install.sh
 ```
-- Test the hello_world example in the same terminal; if it runs without any errors, log out & log back in.
-(Connect ESP32 to your device before running the below commands)
-```sh
-cd ~/esp/esp-idf/examples/get-started/hello_world
-idf.py flash monitor
-```
+<p align="center">
+  <img src="./documentation/Assets/Installation/13.png">
+</p>
+
 
 ## For MacOS
-### STEP 1 : Installing the necessary files
+### STEP 1 : Installing the necessary file
 - Download the file "wall_e_install_mac.sh" given in the root folder itself and put it in the "Downloads" folder
 - Download the driver by clicking on this [link](https://www.silabs.com/documents/public/software/Mac_OSX_VCP_Driver.zip) , unzip it, then install it on the system
 
 ### STEP 2 : Opening The Terminal
 Open the terminal by pressing command+space and then typing terminal.
+
+**Note:** If you're an M1 mac os user refer this [link](https://youtu.be/9W8rTTE1WEA) to open the terminal.
 
 ### STEP 3 : Installing the Pre-Requisites 
 Copy this command in the command in the terminal , then press return 
@@ -114,54 +130,62 @@ Cloning the Wall-E Git repo
 To clone the repo,execute the following commands on terminal.
 ```sh
 cd $HOME
-git clone https://github.com/SRA-VJTI/Wall-E_v2.2.git --recurse-submodules
-cd Wall-E_v2.2
+git clone https://github.com/SRA-VJTI/Wall-E.git --recurse-submodules
+cd Wall-E
 ```
+<p align="center">
+  <img src="./documentation/Assets/Installation/15.png">
+</p>
 
  It will take some time to install, make sure you have an active internet connection. It will take around 2GB of data.
 
 # Commands
 This is the basic procedure for compiling and flashing a code on the ESP32
 
-### Step 1 : Set Up Environtment variables
-In the terminal where you are going to use ESP-IDF, run:
-- For Linux/MacOS  
-   - Run `get_idf` command.
-   - If `get_idf` command shows an error, use `. $HOME/esp/esp-idf/export.sh` command.
-- For Windows
-   - Run `%userprofile%\esp\esp-idf\export.bat` command.
 
-Through this command specify the Folder/Project in which we will to be using ESP-IDF 
-
-### Step 2 : Start a Project
+### Step 1 : Start a Project
 Now you are ready to prepare your application for ESP32.
 * For Linux/MacOS -
 ```sh
 cd ~/esp
-cp -r $IDF_PATH/examples/get-started/hello_world .
+cp -r ~/esp/esp-idf/examples/get-started/hello_world .
+ls 
 ```
+<p align="center">
+  <img src="./documentation/Assets/Installation/14.jpeg">
+</p>
+
 * For Windows -
 ```sh
-cd %userprofile%\esp
+cd %userprofile%\Desktop\Wall-E
 xcopy /e /i %IDF_PATH%\examples\get-started\hello_world hello_world
-```
-### Step 3 : Connect Your Device
+``` 
+<p align="center">
+  <img src="./documentation/Assets/Installation/10.jpeg">
+</p> 
+
+<p align="center">
+  <img src="./documentation/Assets/Installation/12.jpeg">
+</p> 
+
+
+### Step 2 : Connect Your Device
 Connect your ESP32 board to the computer and check under what serial port the board is visible.
 * Linux : `/dev/tty`
 * MacOS : `/dev/cu`
 * Windows : `COM1`
 
-### Step 4 : Configure
+### Step 3 : Configure
 
 * For Linux/MacOS -
 ```sh
-cd ~/esp/hello_world #Navigating to the file
+cd ~/esp/esp-idf/examples/get-started/hello_world #Navigating to the file
 idf.py set-target esp32 #Command for Setting the Target 
 idf.py menuconfig # Command for Opening the Configuration Menu
 ```
 * For Windows -
 ```sh
-cd %userprofile%\esp\hello_world #Navigating to the file
+cd examples\get-started\hello_world #Navigating to the file
 idf.py set-target esp32 #Command for Setting the Target
 idf.py menuconfig #Command for Opening the Configuration
 ```
@@ -170,7 +194,7 @@ If the previous steps have been executed correctly, you screen will show this:
   <img src="./documentation/Assets/project-configuration1.png">
 </p>
 
-### Step 5 : Build the Project
+### Step 4 : Build the Project
 Build the project by running:
 * Same for Both Linux and Windows
 ```sh
@@ -181,7 +205,7 @@ This command will compile the application and all ESP-IDF components, then it wi
   <img src="./documentation/Assets/build.png">
 </p>
 
-### Step 6 : Flash onto the Device
+### Step 5 : Flash onto the Device
 Flash the binaries that you just built (bootloader.bin, partition-table.bin and hello-world.bin) onto your ESP32 board by running.:
 ```sh
 idf.py -p PORT [-b BAUD] flash 
@@ -196,7 +220,7 @@ idf.py -p PORT [-b BAUD] flash
 and for windows /COM1 one can be replaced by other number depending on the port to which you have connected esp.
 * Note : In case you are unable to flash Press Down the Boot Button on ESP32 and then execute the Flash command
 
-### Step 7 : Flash onto the Device
+### Step 6 : Flash onto the Device
 * For seeing the output given by esp32 we use this command after flashing
 ```sh
 idf.py flash monitor

@@ -552,6 +552,19 @@
         from {background-position:0 0;}
         to {background-position:10000px 0;}
       }
+      @media (max-width: 1200px) {
+			  .value-container{
+				  margin-top: 2em;
+			  }
+			  .offset-container{
+				  margin-left: 23em;
+			  }
+		  }
+		  @media (min-width: 1200px) {
+			  .value-container{
+				  margin-top: 2em;
+			  }
+		  }
 
     </style>
   </head>
@@ -669,7 +682,7 @@
               </div>
             </form>
           </div>
-          <div class="col-sm">
+          <div class="col-sm offset-container">
             <form id="frm5" action="#">
               <div style = "width:200px;" class="input-group mb-3">
                 <div class="input-group-prepend">

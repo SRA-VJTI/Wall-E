@@ -27,11 +27,13 @@ void app_main(void)
 
     // Union containing line sensor readings
     line_sensor_array line_sensor_readings;
-
+    
+#ifdef CONFIG_ENABLE_OLED
     // Declaring the required OLED struct
     u8g2_t oled_config;
     // Initialising the OLED
     ESP_ERROR_CHECK(init_oled(&oled_config));
+#endif
 
     // infinite loop to get LSA readings continuously
     while (1)
@@ -45,10 +47,10 @@ void app_main(void)
             // map readings from (BLACK_MARGIN, WHITE_MARGIN) to (CONSTRAIN_LSA_LOW, CONSTRAIN_LSA_HIGH)
             line_sensor_readings.adc_reading[i] = map(line_sensor_readings.adc_reading[i], BLACK_MARGIN, WHITE_MARGIN, CONSTRAIN_LSA_LOW, CONSTRAIN_LSA_HIGH);
         }
-
+#ifdef CONFIG_ENABLE_OLED
         // Displaying LSA Bar on OLED
         display_lsa(line_sensor_readings, &oled_config);
-
+#endif
         // Displaying Information logs - final lsa readings
         ESP_LOGI(TAG, "LSA_1: %d \t LSA_2: %d \t LSA_3: %d \t LSA_4: %d", line_sensor_readings.adc_reading[0], line_sensor_readings.adc_reading[1], line_sensor_readings.adc_reading[2], line_sensor_readings.adc_reading[3]);
         // delay of 1s after each log

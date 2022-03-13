@@ -88,12 +88,13 @@ void balance_task(void *arg)
 
 	// Pitch angle where you want to go - pitch_cmd, setpoint and mpu_offsets are linked to one another
 	float pitch_cmd = 0.0f;
-
+#ifdef CONFIG_ENABLE_OLED
 	// Declaring the required OLED struct
     u8g2_t oled_config;
 
     // Initialising the OLED
     ESP_ERROR_CHECK(init_oled(&oled_config));
+#endif
 
 	// Ensure successful initialisation of MPU-6050
 	if (enable_mpu6050() == ESP_OK)
@@ -149,11 +150,11 @@ void balance_task(void *arg)
 				//ESP_LOGI("debug","left_duty_cycle:  %f    ::  right_duty_cycle :  %f  :: error :  %f  correction  :  %f  \n",left_duty_cycle, right_duty_cycle, error, correction);
 				ESP_LOGI("debug", "KP: %f ::  KI: %f  :: KD: %f :: Setpoint: %0.2f :: Roll: %0.2f | Pitch: %0.2f | PitchError: %0.2f", read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, read_pid_const().setpoint, euler_angle[0], euler_angle[1], pitch_error);
 				// ESP_LOGI("debug", "Pitch: %0.2f", pitch_angle);
-
+#ifdef CONFIG_ENABLE_OLED
 				// Diplaying kp, ki, kd values on OLED 
-        		display_pid_values(read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, &oled_config);
-				
-				vTaskDelay(100 / portTICK_PERIOD_MS);
+				display_pid_values(read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, &oled_config);
+#endif				
+				vTaskDelay(10 / portTICK_PERIOD_MS);
 			}
 		}
 	}

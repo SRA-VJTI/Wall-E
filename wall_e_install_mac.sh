@@ -56,9 +56,9 @@ fi
 cd ~
 
 # creating the esp directory
-if mkdir esp | grep -q 'File exists'; then
+if [ -d ~/esp ]; then
     echo "reinstalling the esp";
-    rm -R esp
+    rm -rf "$HOME"/esp
     mkdir esp
 fi
 
@@ -72,8 +72,7 @@ git clone -b v4.2 --recursive https://github.com/espressif/esp-idf.git
 export new="python3"
 cd ~/esp/esp-idf/tools 
 sed -i idf_tools.py "1 s/python/$new/g" idf_tools.py
-cd ~/Developer/
-
+cd ~
 # installing espressif
 . $HOME/esp/esp-idf/install.sh
 
@@ -86,4 +85,3 @@ elif echo $0 | grep -q "bash"; then
 fi
 
 echo "INSTALLATION IS COMPLETE"
-

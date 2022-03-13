@@ -43,7 +43,7 @@
 ## About the Workshop
 <p align="center">
   <img src="documentation/images/wall_E_bot.JPG"/>
-  <a href="https://github.com/MOLOCH-dev/Wall-E-Sim">
+  <a href="https://github.com/SRA-VJTI/Wall-E-Sim">
   <h3 align="center"> Wall-E bot simulation </h3>
   </a>
 </p>

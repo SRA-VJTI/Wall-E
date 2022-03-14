@@ -32,9 +32,11 @@ typedef struct pid_const
     float kp;
     float ki;
     float kd;
+    bool val_changed;
 } pid_const_t;
 
 pid_const_t read_pid_const();
+void reset_val_changed_pid_const();
 void start_tuning_http_server();
 
 #endif

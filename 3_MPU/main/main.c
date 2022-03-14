@@ -17,10 +17,12 @@ void mpu_task(void *arg)
     // Euler angle buffer includes two floats - Roll angle and Pitch angle
     float euler_angle[2], mpu_offset[2] = {0.0f, 0.0f};
 
+#ifdef CONFIG_ENABLE_OLED
     // Declaring the required OLED struct
     u8g2_t oled_config;
     // Initialising the OLED
     ESP_ERROR_CHECK(init_oled(&oled_config));
+#endif
 
     while (1)
     {
@@ -39,9 +41,10 @@ void mpu_task(void *arg)
             {
                 // Logging information of roll and pitch angles
                 ESP_LOGI(TAG, "Roll: %0.2f | Pitch: %0.2f", euler_angle[0], euler_angle[1]);
-
+#ifdef CONFIG_ENABLE_OLED
                 // Displaying pitch and roll on OLED
                 display_mpu(euler_angle[1], euler_angle[0], &oled_config);
+#endif
             }
         }
         // Logging Error

@@ -38,5 +38,10 @@ pushd esp-idf
 popd
 popd
 
-echo "alias get_idf='. $HOME/esp/esp-idf/export.sh'" >> $HOME/"$_shell_".rc
+#Check if installation is successfull 
+. $HOME/esp/esp-idf/export.sh 
+idf.py --version | (grep "v4.2" && echo "Installation successfull") \
+    || (echo "installation failed" && exit 1) 
+
+echo "alias get_idf='. \$HOME/esp/esp-idf/export.sh'" >> $HOME/"$_shell_".rc
 source "$HOME"/"$_shell_".rc

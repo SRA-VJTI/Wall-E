@@ -103,7 +103,7 @@ sudo chmod +x wall_e_install.sh
 
 ## For MacOS
 ### STEP 1 : Installing the necessary file
-- Download the file "wall_e_install_mac.sh" given in the root folder itself and put it in the "Downloads" folder
+- Download the file "wall_e_install.sh" given in the root folder itself and put it in the "Downloads" folder
 - Download the driver by clicking on this [link](https://www.silabs.com/documents/public/software/Mac_OSX_VCP_Driver.zip) , unzip it, then install it on the system
 
 ### STEP 2 : Opening The Terminal
@@ -114,7 +114,7 @@ Open the terminal by pressing command+space and then typing terminal.
 ### STEP 3 : Installing the Pre-Requisites 
 Copy this command in the command in the terminal , then press return 
 ```sh
- source ~/Downloads/wall_e_install_mac.sh
+ source ~/Downloads/wall_e_install.sh
 ```
 Note:- when you are asked to type the password in the terminal, password will not be visible to you. Just type the password and then press return.
 
@@ -146,6 +146,14 @@ This is the basic procedure for compiling and flashing a code on the ESP32
 ### Step 1 : Start a Project
 Now you are ready to prepare your application for ESP32.
 * For Linux/MacOS -
+  
+```sh
+get_idf # To use esp-idf commands 
+```
+<p align="center">
+  <img src="./documentation/Assets/Installation/16.jpeg">
+</p>
+
 ```sh
 cd ~/esp
 cp -r ~/esp/esp-idf/examples/get-started/hello_world .
@@ -185,7 +193,7 @@ idf.py menuconfig # Command for Opening the Configuration Menu
 ```
 * For Windows -
 ```sh
-cd examples\get-started\hello_world #Navigating to the file
+cd %userprofile%\Desktop\Wall-E\hello_world #Navigating to the file
 idf.py set-target esp32 #Command for Setting the Target
 idf.py menuconfig #Command for Opening the Configuration
 ```

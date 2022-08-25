@@ -94,7 +94,7 @@ Run the following commands for a quick install on Linux-based systems:
 ```sh
 cd $HOME/Wall-E
 sudo chmod +x wall_e_install.sh
-./wall_e_install.sh
+./wall_e_install.sh && source $HOME/."${SHELL#${SHELL%/*}/}"rc 
 ```
 <p align="center">
   <img src="./documentation/Assets/Installation/13.png">
@@ -181,7 +181,29 @@ xcopy /e /i %IDF_PATH%\examples\get-started\hello_world hello_world
 Connect your ESP32 board to the computer and check under what serial port the board is visible.
 * Linux : `/dev/tty`
 * MacOS : `/dev/cu`
-* Windows : `COM1`
+* Windows : `eg: COM1`
+  * After **connecting** the sra board, to check The port for Windows, Go to device manager (search it in the taskbar) It should look like this
+  
+<p align="center">
+  <img src="./documentation/Assets/Installation/18.jpg">
+</p> 
+
+* If you see Ports (COM & LPT) and don't see `Silicon Labs CP210x USB to UART Bridge` 
+  * **Fix1**: Click [here](http://silabs.com/developers/usb-to-uart-bridge-vcp-drivers) to install the drivers. 
+    * Go to Downloads section and install this driver, extract and follow the default installation for x64 
+<p align="center">
+  <img src="./documentation/Assets/Installation/17.png">
+</p> 
+
+<p align="center">
+  <img src="./documentation/Assets/Installation/19.jpeg">
+</p> 
+
+* If you don't see Ports (COM & LPT) after connecting USB: 
+  * Click [here](https://support-bradyid.force.com/s/article/Ports-COM-LPT-Not-Showing-in-Device-Manager) and follow the steps
+
+
+
 
 ### Step 3 : Configure
 
@@ -216,17 +238,18 @@ This command will compile the application and all ESP-IDF components, then it wi
 ### Step 5 : Flash onto the Device
 Flash the binaries that you just built (bootloader.bin, partition-table.bin and hello-world.bin) onto your ESP32 board by running.:
 ```sh
-idf.py -p PORT [-b BAUD] flash 
+idf.py -p PORT flash 
 ```
 * For Linux 
-   * PORT - /dev/ttyUSB0 (`idf.py -p /dev/ttyUSB0 -b 2000000 flash`)
+   * PORT - /dev/ttyUSB0 (`idf.py -p /dev/ttyUSB0 flash`)
 * For MacOS
-   * PORT - /dev/cu.usbserial-0001(`idf.py -p /dev/cu.usbserial-0001 -b 2000000 flash`) 
+   * PORT - /dev/cu.usbserial-0001(`idf.py -p /dev/cu.usbserial-0001 flash`) 
 * For Windows 
-   * PORT - /COM1 (`idf.py -p /COM1 -b 2000000 flash`)
-* Depending on the port you used for connecting the board the port can vary from /dev/ttyUSB0 and Zero can be replaced by any other consecutive number
-and for windows /COM1 one can be replaced by other number depending on the port to which you have connected esp.
+   * PORT - COM1 (`idf.py -p COM1 flash`)
+* Depending on the port you used for connecting the board the port can vary from /dev/ttyUSB0 and **Zero** can be replaced by any other consecutive number
+and for **windows** COM1 can be replaced by other number depending on the port to which you have connected esp.
 * Note : In case you are unable to flash Press Down the Boot Button on ESP32 and then execute the Flash command
+  
 
 ### Step 6 : Flash onto the Device
 * For seeing the output given by esp32 we use this command after flashing

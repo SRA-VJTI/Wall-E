@@ -10,6 +10,8 @@
   - [Reading Gyroscope Data](#reading-gyroscope-data)
   - [Complementary Filter](#complementary-filter)
   - [Reading Register Data](#reading-register-data)
+- [Description of Functions Used](#description-of-functions-used)
+- [Flowchart of Code](#flowchart-of-code)
 
 
 
@@ -147,6 +149,35 @@ There are various terms related with the Pulse Width Modulation:-
 
 
 
+ ## Description of Functions Used
+ 
+* ```c
+    esp_err_t enable_mpu6050()	
+    ```
+    **Description** : MPU6050 comes up in sleep mode upon power-up . It disables the SLEEP_MODE of the MPU by accessing the POWER_MANAGEMENT_1 register
+         and checks if the MPU is initialised correctly.	
+
+    **Parameters** :
+    * `None` 
+
+    **Returns** : esp_err_t returns ESP_OK if MPU is enabled properly.
+    
+
+   
+* ```c
+    esp_err_t read_mpu6050(euler_angle, mpu_offset)
+  ```
+
+  **Description** : Calculates the Roll and Pitch angles of the bot by applying complementary filter to the raw accelerometer and gyroscope values and using the given MPU offset. It stores the Roll angle in euler_angle[0] and the Pitch engle in euler_angle[1].
+
+  **Parameters** : 
+  * `euler_angle` : Array to store euler angles , Pitch and Roll.
+  * `mpu_offset` : Array to specify MPU offsets , Pitch offset ( About Y-axis ) and Roll offset (About X-axis).
 
 
+  **Returns** : esp_err_t returns ESP_OK if it read mpu successfully, else it returns ESP_FAIL.
+    
+    
+ ## Flowchart of Code
 
+  ![Flowchart MPU(8)](https://user-images.githubusercontent.com/111511248/200386895-31b7aea2-8a0f-436d-b0dc-cdfb17058a70.png)

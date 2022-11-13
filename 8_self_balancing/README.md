@@ -102,7 +102,7 @@ Integral Term = ki*(Integral_Error)
 6. Go to Step 1.
 
 ## Flowchart
-![Flowchart-selfbalancing](........)
+![Flowchart-selfbalancing](https://user-images.githubusercontent.com/111555972/201544976-4de384be-b2c6-4136-981a-2124a643dbcc.png)
 
 ## Description of the functions
 

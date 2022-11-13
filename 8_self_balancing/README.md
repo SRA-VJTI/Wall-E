@@ -10,6 +10,7 @@
         * [Intergral Term](#integral-term)
 * [Formula for calucation of pitch-correction](#formula-for-calculation-of-pitch-correction)
 * [Algorithm](#algorithm)
+* [Flowchart](#flowchart)
 * [Description of the Functions](#Description-of-the-functions)
 
 
@@ -99,6 +100,9 @@ Integral Term = ki*(Integral_Error)
     2. If Error <-1 (Bot-front is up) : bot_backward(pwm)
     3. else (bot is balanced) : bot_stop()
 6. Go to Step 1.
+
+## Flowchart
+![Flowchart-selfbalancing](........)
 
 ## Description of the functions
 

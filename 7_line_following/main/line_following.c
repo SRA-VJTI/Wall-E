@@ -5,15 +5,16 @@
 #include "tuning_http_server.h"
 
 #define MODE NORMAL_MODE
-#define BLACK_MARGIN 400
-#define WHITE_MARGIN 2000
+#define BLACK_MARGIN 4095
+#define WHITE_MARGIN 0
 #define bound_LSA_LOW 0
 #define bound_LSA_HIGH 1000
+#define BLACK_BOUNDARY 700
 
 /*
  * weights given to respective line sensor
  */
-const int weights[4] = {3,1,-1,-3};
+const int weights[5] = {3, 1, 0, -1, -3};
 
 /*
  * Motor value boundts
@@ -35,12 +36,12 @@ line_sensor_array line_sensor_readings;
 
 
 void lsa_to_bar()
-{   
+{
     uint8_t var = 0x00;                     
     bool number[8] = {0,0,0,0,0,0,0,0};
-    for(int i = 0; i < 4; i++)
+    for(int i = 0; i < 5; i++)
     {
-        number[7-i] = (line_sensor_readings.adc_reading[i] < BLACK_MARGIN) ? 0 : 1; //If adc value is less than black margin, then set that bit to 0 otherwise 1. 
+        number[8-i] = (line_sensor_readings.adc_reading[i] < BLACK_BOUNDARY) ? 0 : 1; //If adc value is less than black boundary, then set that bit to 0 otherwise 1. 
         var = bool_to_uint8(number);  //A helper function to convert bool array to unsigned int.
         ESP_ERROR_CHECK(set_bar_graph(var)); //Setting bar graph led with unsigned int value.
     }
@@ -64,9 +65,9 @@ void calculate_error()
     float weighted_sum = 0, sum = 0; 
     float pos = 0;
     
-    for(int i = 0; i < 4; i++)
+    for(int i = 0; i < 5; i++)
     {
-        if(line_sensor_readings.adc_reading[i] > BLACK_MARGIN)
+        if(line_sensor_readings.adc_reading[i] > BLACK_BOUNDARY)
         {
             all_black_flag = 0;
         }
@@ -112,10 +113,11 @@ void line_follow_task(void* arg)
     while(true)
     {
         line_sensor_readings = read_line_sensor();
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < 5; i++)
         {
-            line_sensor_readings.adc_reading[i] = bound(line_sensor_readings.adc_reading[i], BLACK_MARGIN, WHITE_MARGIN);
-            line_sensor_readings.adc_reading[i] = map(line_sensor_readings.adc_reading[i], BLACK_MARGIN, WHITE_MARGIN, bound_LSA_LOW, bound_LSA_HIGH);
+            line_sensor_readings.adc_reading[i] = bound(line_sensor_readings.adc_reading[i], WHITE_MARGIN, BLACK_MARGIN);
+            line_sensor_readings.adc_reading[i] = map(line_sensor_readings.adc_reading[i], WHITE_MARGIN, BLACK_MARGIN, bound_LSA_LOW, bound_LSA_HIGH);
+            line_sensor_readings.adc_reading[i] = 1000 - line_sensor_readings.adc_reading[i];
         }
         
         calculate_error();

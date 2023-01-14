@@ -41,7 +41,7 @@ popd
 
 #Check if installation is successfull 
 . $HOME/esp/esp-idf/export.sh 
-idf.py --version | (grep "v4.2" && echo "Installation successfull") \
+idf.py --version | (grep "v4.2" && echo "Installation successfull! Please restart your computer for the changes to take effect.") \
     || (echo "installation failed" && exit 1) 
 
 echo "alias get_idf='. $HOME/esp/esp-idf/export.sh'" >> $HOME/."$_shell_"rc

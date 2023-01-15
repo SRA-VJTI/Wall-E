@@ -33,7 +33,7 @@ mkdir -p "$HOME/esp"
 pushd "$HOME"/esp || (echo "Error: Cannot Make Directory" && exit 1)
 
 #ESP Toolchain & ESP-IDF
-git clone -b release/v4.4 --recursive https://github.com/espressif/esp-idf.git
+git clone -b v4.4.3 --recursive https://github.com/espressif/esp-idf.git
 pushd esp-idf
 ./install.sh
 popd

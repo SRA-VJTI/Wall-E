@@ -45,4 +45,4 @@ jobs:
 
     - name: Install ESPIDF
       run: |
-        bash wall_e_install.sh -D
+        bash wall_e_install.sh

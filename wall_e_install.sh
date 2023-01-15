@@ -33,7 +33,7 @@ mkdir -p "$HOME/esp"
 pushd "$HOME"/esp || (echo "Error: Cannot Make Directory" && exit 1)
 
 #ESP Toolchain & ESP-IDF
-git clone -b v4.4.3 --recursive https://github.com/espressif/esp-idf.git
+git clone -b release/v4.4 --recursive https://github.com/espressif/esp-idf.git
 pushd esp-idf
 ./install.sh
 popd
@@ -41,7 +41,7 @@ popd
 
 #Check if installation is successfull 
 . $HOME/esp/esp-idf/export.sh 
-idf.py --version | (grep "v4.2" && echo "Installation successfull! Please restart your computer for the changes to take effect.") \
+idf.py --version | (grep "v4.4" && echo "Installation successfull! Please restart your computer for the changes to take effect.") \
     || (echo "installation failed" && exit 1) 
 
 echo "alias get_idf='. $HOME/esp/esp-idf/export.sh'" >> $HOME/."$_shell_"rc

@@ -1,0 +1,53 @@
+name: test-install-script
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - '.github/workflows/test-install-script.yml'
+      - 'wall_e_install.sh'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - '.github/workflows/test-install-script.yml'
+      - 'wall_e_install.sh'
+
+jobs:
+  linux:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Ubuntu 22.04
+            host_runner: ubuntu-latest
+            package_manager: apt
+            docker_image: ubuntu:22.04
+          - name: Ubuntu 20.04
+            host_runner: ubuntu-latest
+            package_manager: apt
+            docker_image: ubuntu:20.04
+          - name: Ubuntu 18.04
+            host_runner: ubuntu-latest
+            package_manager: apt
+            docker_image: ubuntu:18.04
+         
+            
+      name: ${{ matrix.name }}
+      runs-on: ${{ matrix.host_runner }}
+      container:
+        image: ${{ matrix.docker_image }}
+    
+    steps: 
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Install ESP-IDF
+      run: |
+        bash wall_e_install.sh

@@ -28,10 +28,7 @@ jobs:
             host_runner: ubuntu-latest
             package_manager: apt
             docker_image: ubuntu:20.04
-            python_package: python2 python3
-            python2_ex: python2
-            python3_ex: python3
-            extra_setup_command: echo "No extra command"
+            
             
       name: ${{ matrix.name }}
       runs-on: ${{ matrix.host_runner }}
@@ -39,10 +36,10 @@ jobs:
         image: ${{ matrix.docker_image }}
     
     steps: 
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
-    - name: Install ESPIDF
+    - name: Install ESP-IDF
       run: |
         bash wall_e_install.sh

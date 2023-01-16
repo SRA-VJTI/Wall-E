@@ -38,7 +38,6 @@
 - [Contribution](#contribution)
 - [License](#license)
 
-- [Acknowledgements](#acknowledgements)
 
 ## About the Workshop
 <p align="center">

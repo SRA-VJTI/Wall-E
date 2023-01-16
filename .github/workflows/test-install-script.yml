@@ -38,10 +38,10 @@ jobs:
             docker_image: ubuntu:18.04
          
             
-      name: ${{ matrix.name }}
-      runs-on: ${{ matrix.host_runner }}
-      container:
-        image: ${{ matrix.docker_image }}
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.host_runner }}
+    container:
+      image: ${{ matrix.docker_image }}
     
     steps: 
     - uses: actions/checkout@v3

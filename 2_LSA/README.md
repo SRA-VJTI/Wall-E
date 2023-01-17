@@ -26,8 +26,7 @@
 | Component   | Description   | Quantity |
 | ----------- | ------------- | -------- |
 | LED         | Emits light   |  5       |
-| PhotoDiode  | Absorbs light |  5       |
-| IC LM324    | Op.Amp. IC    |  1       |  
+| PhotoDiode  | Absorbs light |  5       |  
 | Resistors   | Limit Current |  10       |
 
 ### Function of Components

@@ -518,31 +518,6 @@
         text-align: center;
       }
 
-      .stars, .twinkling, .clouds {
-        position:absolute;
-        display:block;
-        top:0; bottom:0;
-        left:0; right:0;
-        width:100%; height:100%;
-      }
-
-      .stars {
-        z-index: -102;
-        background: #000 url('https://image.ibb.co/mjnygo/stars.png') repeat top center;
-      }
-
-      .twinkling{
-        z-index: -101;
-        background:transparent url('https://image.ibb.co/ir1DE8/twinkling.png') repeat top center;
-        animation: move-twink-back 200s linear infinite;
-      }
-
-      .clouds{
-        z-index: -100;
-          background:transparent url('https://image.ibb.co/bT4N7T/clouds.png') repeat top center;
-        animation: move-clouds-back 200s linear infinite;
-      }
-
       @keyframes move-twink-back {
         from {background-position:0 0;}
         to {background-position:-10000px 5000px;}
@@ -704,8 +679,5 @@
         </div>
       </div>
     </div>
-    <div class='stars'></div>
-    <div class='twinkling'></div>
-    <div class='clouds'></div>  
   </body>
 </html>

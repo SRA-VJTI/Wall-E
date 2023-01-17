@@ -36,18 +36,17 @@ jobs:
             host_runner: ubuntu-latest
             package_manager: apt
             docker_image: ubuntu:18.04
-         
-            
-      name: ${{ matrix.name }}
-      runs-on: ${{ matrix.host_runner }}
-      container:
-        image: ${{ matrix.docker_image }}
-    
-    steps: 
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
 
-    - name: Install ESP-IDF
-      run: |
-        bash wall_e_install.sh
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.host_runner }}
+    container:
+      image: ${{ matrix.docker_image }}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install ESP-IDF
+        run: |
+          bash wall_e_install.sh

@@ -68,6 +68,6 @@ jobs:
       - name: Install ESP-IDF
         run: |
           brew uninstall --ignore-dependencies python3
-          brew cleanup --prune
+          brew cleanup --prune=1 -s
           brew install python@3.10
           bash wall_e_install.sh

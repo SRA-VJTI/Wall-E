@@ -50,3 +50,22 @@ jobs:
       - name: Install ESP-IDF
         run: |
           bash wall_e_install.sh
+  
+  macos:
+    strategy:
+      matrix:
+        include:
+          - name: MacOS-latest
+            host_runner: macos-latest
+            package_manager: brew
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.host_runner }}
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Install ESP-IDF
+      run: |
+        bash wall_e_install.sh

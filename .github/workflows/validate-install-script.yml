@@ -3,8 +3,12 @@ name: Validate-YAML
 on:
   push:
     branches: [ master ]
+    paths:
+      - '.github/workflows/test-install-script.yml'
   pull_request:
     branches: [ master ]
+    paths:
+      - '.github/workflows/test-install-script.yml'
 
 jobs:
   validate-yaml:

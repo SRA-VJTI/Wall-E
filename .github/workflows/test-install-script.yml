@@ -67,5 +67,7 @@ jobs:
 
       - name: Install ESP-IDF
         run: |
-          pip3 install gevent
+          brew uninstall --ignore-dependencies python3
+          brew cleanup --prune
+          brew install python@3.10
           bash wall_e_install.sh

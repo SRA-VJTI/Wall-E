@@ -50,7 +50,7 @@ jobs:
       - name: Install ESP-IDF
         run: |
           bash wall_e_install.sh
-  
+
   macos:
     strategy:
       matrix:
@@ -62,10 +62,10 @@ jobs:
     runs-on: ${{ matrix.host_runner }}
 
     steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-    - name: Install ESP-IDF
-      run: |
-        bash wall_e_install.sh
+      - name: Install ESP-IDF
+        run: |
+          bash wall_e_install.sh

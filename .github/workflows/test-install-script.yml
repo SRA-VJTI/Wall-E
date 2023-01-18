@@ -67,4 +67,5 @@ jobs:
 
       - name: Install ESP-IDF
         run: |
+          pip3 install gevent
           bash wall_e_install.sh

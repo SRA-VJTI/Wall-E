@@ -69,5 +69,6 @@ jobs:
         run: |
           brew uninstall --ignore-dependencies python3
           brew cleanup --prune=1 -s
+          sudo rm -rf /Library/Frameworks/Python.framework/Versions/
           brew install python@3.10
           bash wall_e_install.sh

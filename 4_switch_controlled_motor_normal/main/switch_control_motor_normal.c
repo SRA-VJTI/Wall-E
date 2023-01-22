@@ -9,7 +9,7 @@ void drive_task(void *arg)
 {
 	/**
 	 * activate gpio pins SWITCH_1, SWITCH_2, SWITCH_3, SWITCH_4 .. 
-	 * swtiches coorespond to following gpio pins
+	 * swtiches correspond to following gpio pins
 	 * SWITCH_1 : 4
 	 * SWITCH_2 : 2
 	 * SWITCH_3 : 17
@@ -56,7 +56,7 @@ void drive_task(void *arg)
 		}
 		else
 		{
-			// if neither of switch 1 or switch 2 is pressed on then stop the motor A_0
+			// if neither of switch 1 or switch 2 is pressed, stop the motor A_0
 			set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
 		}
 
@@ -82,7 +82,7 @@ void drive_task(void *arg)
 		}
 		else
 		{
-			// if neither of switch 3 or switch 4 is pressed on then stop the motor A_1
+			//if neither of switch 3 or switch 4 is pressed, stop the motor A_1
 			set_motor_speed(MOTOR_A_1, MOTOR_STOP, 0);
 		}
 		/**

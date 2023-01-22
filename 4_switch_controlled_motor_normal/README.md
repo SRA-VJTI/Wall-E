@@ -24,7 +24,7 @@
 - ### **Working**
     - Activates GPIO pins for swtiches 
     - Activates the TB6612FNG driver
-    - runs the bot motors in Normal mode and controls the motors according to the switches activated.
+    - Runs the bot motors in normal mode and controls the motors according to the switches activated.
     <br></br>
     The following flowchart represents the flow of code 
     <br></br>

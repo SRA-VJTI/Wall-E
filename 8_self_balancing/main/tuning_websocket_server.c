@@ -223,7 +223,6 @@ void plot_graph(float p_term, float d_term, float i_term, float pitch_corr, floa
     strcat(n, n3_buf);
     strcat(n, ",");
     strcat(n, n4_buf);
-    ESP_LOGI("debug", ": %s", n);
     sprintf(out, "%s", n);
     len = strlen(n);
     ws_server_send_text_all(n, len);

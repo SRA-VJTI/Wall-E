@@ -18,10 +18,12 @@ void mpu_task(void *arg)
     float euler_angle[2], mpu_offset[2] = {0.0f, 0.0f};
 
 #ifdef CONFIG_ENABLE_OLED
-    // Declaring the required OLED struct
-    u8g2_t oled_config;
     // Initialising the OLED
-    ESP_ERROR_CHECK(init_oled(&oled_config));
+    ESP_ERROR_CHECK(init_oled());
+    vTaskDelay(100);
+
+    // Clearing the screen
+    lv_obj_clean(lv_scr_act());
 #endif
 
     while (1)
@@ -43,7 +45,7 @@ void mpu_task(void *arg)
                 ESP_LOGI(TAG, "Roll: %0.2f | Pitch: %0.2f", euler_angle[0], euler_angle[1]);
 #ifdef CONFIG_ENABLE_OLED
                 // Displaying pitch and roll on OLED
-                display_mpu(euler_angle[1], euler_angle[0], &oled_config);
+                display_mpu(euler_angle[1], euler_angle[0]);
 #endif
             }
         }

@@ -1,8 +1,22 @@
 #!/usr/bin/env bash
+set -e
 
 echo "installing ESP IDF"
 
 _shell_="${SHELL#${SHELL%/*}/}"
+
+_sudo(){
+    if ! command -v sudo &> /dev/null
+    then
+        if ! [ $(id -u) = 0 ]; then
+           echo "The script need to be run as root." >&2
+           exit 1
+        fi
+        "$@"
+    else
+        sudo "$@"
+    fi
+}
 
 # Check whether esp-idf has already been installed
 if [ -d $HOME/esp/esp-idf ]; then
@@ -12,9 +26,9 @@ fi
 unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)
-        sudo apt update && sudo apt upgrade -y
-        sudo usermod -a -G dialout $USER
-        sudo apt install git wget flex bison gperf python3 python3-pip python3-setuptools cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 -y
+        export DEBIAN_FRONTEND=noninteractive
+        _sudo apt update && _sudo apt upgrade -y
+        _sudo apt install git wget flex bison gperf python3 python3-pip python3-setuptools cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 -y
         ;;
     Darwin*)
         if brew --version | grep -q 'Homebrew'; then

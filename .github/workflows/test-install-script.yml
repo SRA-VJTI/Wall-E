@@ -50,3 +50,25 @@ jobs:
       - name: Install ESP-IDF
         run: |
           bash wall_e_install.sh
+
+  macos:
+    strategy:
+      matrix:
+        include:
+          - name: MacOS-latest
+            host_runner: macos-latest
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.host_runner }}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install ESP-IDF
+        run: |
+          brew uninstall --ignore-dependencies python3
+          brew cleanup --prune=1 -s
+          sudo rm -rf /Library/Frameworks/Python.framework/Versions/
+          brew install python@3.10
+          bash wall_e_install.sh

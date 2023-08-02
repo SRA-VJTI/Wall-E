@@ -32,6 +32,17 @@ typedef struct pid_const
     float kp;
     float ki;
     float kd;
+
+    float kp_pitch;
+    float ki_pitch;
+    float kd_pitch;
+
+    float kp_yaw;
+    float ki_yaw;
+    float kd_yaw;
+
+    float setpoint;
+    
     bool val_changed;
 } pid_const_t;
 

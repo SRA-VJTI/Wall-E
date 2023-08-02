@@ -5,7 +5,7 @@
 
 //Components
 #include "sra_board.h"
-#include "tuning_websocket_server.h"
+#include "tuning_http_server.h"
 
 //FreeRTOS
 #include "freertos/FreeRTOS.h"
@@ -187,7 +187,7 @@ void calculate_pitch_error(float set_point)
     pitch_correction = pitch_kP * pitch_error + pitchCumulativeError*pitch_kI + pitch_kD * pitchDifference;
     prevpitch_error = pitch_error;
 
-    absolute_pitch_correction = absolute(pitch_correction);
+    absolute_pitch_correction = abs(pitch_correction);
     absolute_pitch_correction = bound(absolute_pitch_correction,0,MAX_PITCH_CORRECTION);
     
 }
@@ -213,8 +213,6 @@ void balance_with_line_follow_task(void *arg)
 	 * mpu_offsets are the initial accelerometer angles at rest position
 	*/
 	float euler_angle[2], mpu_offset[2] = {0.0f, 0.0f};
-
-	float pitch_angle, pitch_error;
 
     //SELF BALANCING AND LINE FOLLOWING
     while (1) 

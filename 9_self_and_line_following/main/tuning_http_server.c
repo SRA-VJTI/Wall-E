@@ -238,5 +238,5 @@ void start_tuning_http_server()
     ESP_ERROR_CHECK(init_fs());
     ESP_ERROR_CHECK(start_tuning_http_server_private());
     
-    vTaskD_pitchelete(NULL);
+    vTaskDelete(NULL);
 }

@@ -77,23 +77,46 @@
 	</head>
 	<body>
 		<main>
-			<h1>Line Following and Self Balancing 101</h1>
 			<div class="button-group">
-				<h3>Kp</h3>
+				<h3>Kp_pitch</h3>
 				<button>&lt;</button>
-				<input type="number" value="0.000" id="kp" />
+				<input type="number" value="0.000" id="kp_pitch" />
 				<button>&gt;</button>
 			</div>
 			<div class="button-group">
-				<h3>Ki</h3>
+				<h3>Ki_pitch</h3>
 				<button>&lt;</button>
-				<input type="number" value="0.000" id="ki" />
+				<input type="number" value="0.000" id="ki_pitch" />
 				<button>&gt;</button>
 			</div>
 			<div class="button-group">
-				<h3>Kd</h3>
+				<h3>Kd_pitch</h3>
 				<button>&lt;</button>
-				<input type="number" value="0.000" id="kd" />
+				<input type="number" value="0.000" id="kd_pitch" />
+				<button>&gt;</button>
+			</div>
+			<div class="button-group">
+				<h3>Kp_yaw</h3>
+				<button>&lt;</button>
+				<input type="number" value="0.000" id="kp_yaw" />
+				<button>&gt;</button>
+			</div>
+			<div class="button-group">
+				<h3>Ki_yaw</h3>
+				<button>&lt;</button>
+				<input type="number" value="0.000" id="ki_yaw" />
+				<button>&gt;</button>
+			</div>
+			<div class="button-group">
+				<h3>Kd_yaw</h3>
+				<button>&lt;</button>
+				<input type="number" value="0.000" id="kd_yaw" />
+				<button>&gt;</button>
+			</div>
+			<div class="button-group">
+				<h3>Setpoint</h3>
+				<button>&lt;</button>
+				<input type="number" value="0.000" id="setpoint" />
 				<button>&gt;</button>
 			</div>
 		</main>
@@ -101,9 +124,13 @@
 			let inpArray = document.querySelectorAll("input[type='number']");
 			function submitVals() {
 				const data = {};
-				data["kp"] = parseFloat(document.getElementById("kp").value);
-				data["ki"] = parseFloat(document.getElementById("ki").value);
-				data["kd"] = parseFloat(document.getElementById("kd").value);
+				data["kp_pitch"] = parseFloat(document.getElementById("kp_pitch").value);
+				data["ki_pitch"] = parseFloat(document.getElementById("ki_pitch").value);
+				data["kd_pitch"] = parseFloat(document.getElementById("kd_pitch").value);
+				data["kp_yaw"] = parseFloat(document.getElementById("kp_yaw").value);
+				data["ki_yaw"] = parseFloat(document.getElementById("ki_yaw").value);
+				data["kd_yaw"] = parseFloat(document.getElementById("kd_yaw").value);
+				data["setpoint"] = parseFloat(document.getElementById("setpoint").value);
 				let finaldata = JSON.stringify(data);
 				console.log(finaldata);
 

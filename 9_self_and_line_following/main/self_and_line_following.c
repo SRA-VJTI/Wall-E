@@ -23,8 +23,11 @@
 #define MAX_PITCH_CORRECTION 90
 #define MAX_PITCH_CUMULATIVE_ERROR 850
 
-#define MAX_PWM 100
-#define MIN_PWM 60
+#define MAX_PITCH_AREA (850.0f)
+#define MAX_PITCH_RATE (850.0f)
+
+#define MAX_PWM 65
+#define MIN_PWM 45
 
 #define MAX_PITCH_ERROR -2.5
 
@@ -36,9 +39,9 @@ const int weights[5] = {-5, -3, 1, 3, 5};
 /*
  * Motor value boundts
  */
-int optimum_duty_cycle = 63;
-int lower_duty_cycle = 50;
-int higher_duty_cycle = 76;
+int optimum_duty_cycle = 45;
+int lower_duty_cycle = 30;
+int higher_duty_cycle = 60;
 float left_duty_cycle = 0, right_duty_cycle = 0;
 
 /*
@@ -52,16 +55,16 @@ float yaw_kI= 0;
 float yaw_kD= 1.7;
 
 //Self Balancing Tuning Parameters
-float pitch_kP=  15.1;//5.85;       
-float pitch_kI=  0.075;//95;          
-float pitch_kD=  9;
+float pitch_kP=  10;//5.85;       
+float pitch_kI=  0;//95;          
+float pitch_kD=  7;
 
-float setpoint = -5.0	;//-3.5***-2.5
+float setpoint = 0	;//-3.5***-2.5
 float initial_acce_angle = 0;
 float forward_angle = 0;
 
 float forward_offset = 0.25;//0.75***-2.251
-float forward_buffer = 3;
+float forward_buffer = 18;
 
 //FOR BALANCING
 bool balanced = false;
@@ -78,7 +81,6 @@ float yaw_error=0, yaw_prev_error=0, yaw_difference=0, yaw_cumulative_error=0, y
 float motor_pwm = 0;
 float left_pwm  = 0;
 float right_pwm = 0;
-
 
 void lsa_to_bar()
 {   
@@ -155,185 +157,199 @@ static void calculate_yaw_correction()
     yaw_difference = (yaw_error - yaw_prev_error);
     yaw_cumulative_error += yaw_error;
     
-    if(yaw_cumulative_error > 30)
-    {
-        yaw_cumulative_error = 30;
-    }
-    
-    else if(yaw_cumulative_error < -30)
-    {
-        yaw_cumulative_error = -30;
-    }
+    yaw_cumulative_error = bound(yaw_cumulative_error, -30, 30);
 
-    yaw_correction = yaw_kP*yaw_error + yaw_kI*yaw_cumulative_error + yaw_kD*yaw_difference;
+    yaw_correction = read_pid_const().kp_yaw*yaw_error + read_pid_const().ki_yaw*yaw_cumulative_error + read_pid_const().kd_yaw*yaw_difference;
     yaw_prev_error = yaw_error;
 }
 
-void calculate_pitch_error(float set_point)
+// Calculate the motor inputs according to angle of the MPU
+void calculate_motor_command(const float pitch_error, float *motor_cmd)
 {
-    pitch_error = euler_angle[1] - set_point; 
-    pitchDifference = (pitch_error - prevpitch_error);
-    pitchCumulativeError += pitch_error;
+	
+	/** Error values **/
+	// Stores pitch error of previous iteration
+	static float prev_pitch_error = 0.0f;
+	// Stores sum of product of errors with time interval obtained during each iteration
+	static float pitch_area = 0.0f;
+	// Stores difference between current error and previous iteration error
+	float pitch_error_difference = 0.0f;
 
-    if(pitchCumulativeError > MAX_PITCH_CUMULATIVE_ERROR)
-    {
-        pitchCumulativeError = MAX_PITCH_CUMULATIVE_ERROR;
-    }
-    else if(pitchCumulativeError < (-MAX_PITCH_CUMULATIVE_ERROR))
-    {
-        pitchCumulativeError = -MAX_PITCH_CUMULATIVE_ERROR;
-    }
-    
-    pitch_correction = pitch_kP * pitch_error + pitchCumulativeError*pitch_kI + pitch_kD * pitchDifference;
-    prevpitch_error = pitch_error;
+	/** Correction values **/
+	// Variables for storing corrected values
+	float pitch_correction = 0.0f, absolute_pitch_correction = 0.0f;
+	// Helper variables for calculating integral and derivative correction
+	float pitch_rate = 0.0f;
 
-    absolute_pitch_correction = abs(pitch_correction);
-    absolute_pitch_correction = bound(absolute_pitch_correction,0,MAX_PITCH_CORRECTION);
-    
+	// Variables storing correction values of different error terms
+	float P_term = 0.0f, I_term = 0.0f, D_term = 0.0f;
+
+	// Evaluated delta(error)
+	pitch_error_difference = pitch_error - prev_pitch_error;
+
+	// Evaluated area of the graph error vs time (cumulative error)
+	pitch_area += (pitch_error);
+	// evaluated delta(error)/delta(time) to calculate rate of change in error w.r.t time
+	pitch_rate = pitch_error_difference;
+
+	// Calculating p,i and d terms my multuplying corresponding proportional constants
+	P_term = read_pid_const().kp_pitch * pitch_error;
+	I_term = read_pid_const().ki_pitch * bound(pitch_area, -MAX_PITCH_AREA, MAX_PITCH_AREA);
+	D_term = read_pid_const().kd_pitch * bound(pitch_rate, -MAX_PITCH_RATE, MAX_PITCH_RATE);
+
+	pitch_correction = P_term + I_term + D_term;
+
+    // plot_graph(P_term, D_term, I_term, pitch_correction, pitch_error);
+	/**
+	 * Calculating absolute value of pitch_correction since duty cycle can't be negative. 
+	 * Since it is a floating point variable, fabsf was used instead of abs
+	*/
+	absolute_pitch_correction = fabsf(pitch_correction);
+
+	*motor_cmd = bound(absolute_pitch_correction, 0, MAX_PITCH_CORRECTION);
+	prev_pitch_error = pitch_error;
 }
 
 //Task for line following while self balancing
 void balance_with_line_follow_task(void *arg)
 {
 
-    ESP_ERROR_CHECK(enable_motor_driver(a, NORMAL_MODE));
-    ESP_ERROR_CHECK(enable_line_sensor());
-    ESP_ERROR_CHECK(enable_bar_graph());
-#ifdef CONFIG_ENABLE_OLED
-    // Initialising the OLED
-    ESP_ERROR_CHECK(init_oled());
-    vTaskDelay(100);
+    enable_motor_driver(a, NORMAL_MODE);
+    enable_line_sensor();
+    enable_mpu6050();
+    enable_bar_graph();
+    float motor_cmd=0.0f;
+// #ifdef CONFIG_ENABLE_OLED
+//     // Initialising the OLED
+//     ESP_ERROR_CHECK(init_oled());
+//     vTaskDelay(100);
 
-    // Clearing the screen
-    lv_obj_clean(lv_scr_act());
+//     // Clearing the screen
+//     lv_obj_clean(lv_scr_act());
 
-#endif
+// #endif
 	/**
 	 * euler_angles are the complementary pitch and roll angles obtained from mpu6050
 	 * mpu_offsets are the initial accelerometer angles at rest position
 	*/
-	float euler_angle[2], mpu_offset[2] = {0.0f, 0.0f};
 
-    //SELF BALANCING AND LINE FOLLOWING
-    while (1) 
-    {
+    
+	if (enable_mpu6050() == ESP_OK)
+	{
 
-        if(read_mpu6050(euler_angle, mpu_offset) == ESP_OK){
-
-            //Calulate PITCH and YAW yaw_error
-            // To read PID setpoint from tuning_http_server
-            initial_acce_angle = 0;
-            setpoint = read_pid_const().setpoint;
-            calculate_pitch_error(initial_acce_angle);
-            calc_sensor_values();
-            calculate_yaw_error();
-            calculate_yaw_correction();
-
-            if(!balanced)
-            {
-
-				//bound PWM values between max and min
-				motor_pwm = bound((absolute_pitch_correction), MIN_PWM, MAX_PWM);
-
-				// Bot tilts upwards
-				if (pitch_error > 1)
-				{
-					// setting motor A0 with definite speed(duty cycle of motor driver PWM) in Backward direction
-					set_motor_speed(MOTOR_A_0, MOTOR_BACKWARD, motor_pwm);
-					// setting motor A1 with definite speed(duty cycle of motor driver PWM) in Backward direction
-					set_motor_speed(MOTOR_A_1, MOTOR_BACKWARD, motor_pwm);
-				}
-
-				// Bot tilts downwards
-				else if (pitch_error < -1)
-				{
-					// setting motor A0 with definite speed(duty cycle of motor driver PWM) in Forward direction
-					set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, motor_pwm);
-					// setting motor A1 with definite speed(duty cycle of motor driver PWM) in Forward direction
-					set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, motor_pwm);
-				}
-
-				// Bot remains in desired region for vertical balance
-				else
-				{
-					// stopping motor A0
-					set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
-					// stopping motor A1
-					set_motor_speed(MOTOR_A_1, MOTOR_STOP, 0);
-                    // Setting the state to balanced
-                    balanced = true;
-				}
-
-            }
-
-            else
-            {
-                forward_angle = initial_acce_angle + forward_offset;
-
-                //bound PWM values between max and min values
-                right_pwm = bound((absolute_pitch_correction + yaw_correction), MIN_PWM, MAX_PWM);
-                left_pwm = bound((absolute_pitch_correction - yaw_correction), MIN_PWM, MAX_PWM);
-
-                //Extra yaw correction during turns
-                if(yaw_error>10)
-                {
-                    right_pwm+=15;
-                    left_pwm-=15;   
-                }
-                else if(yaw_error<-10)
-                {
-                    left_pwm+=15;
-                    right_pwm-=15;
-                }
-
-                // SET DIRECTION OF BOT FOR BALANCING
-                if (pitch_error > 0)
-                {
-					// setting motor A0 with definite speed(duty cycle of motor driver PWM) in Forward direction
-                    set_motor_speed(MOTOR_A_0, MOTOR_BACKWARD, left_pwm);
-					// setting motor A0 with definite speed(duty cycle of motor driver PWM) in Backward direction
-                    set_motor_speed(MOTOR_A_1, MOTOR_BACKWARD, right_pwm);
-                }
-
-                else if (pitch_error < 0)
-                {
-					// setting motor A0 with definite speed(duty cycle of motor driver PWM) in Forward direction
-                    set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, left_pwm);
-					// setting motor A1 with definite speed(duty cycle of motor driver PWM) in Forward direction
-                    set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, right_pwm);    
-                }
-                else
-                { 
-					// stopping motor A0
-					set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
-					// stopping motor A1
-					set_motor_speed(MOTOR_A_1, MOTOR_STOP, 0);
-                }
-
-                // Change intial_acce_angle back to setpoint if bot exceeds forward_angle buffer
-                if( pitch_error > forward_buffer || pitch_error < MAX_PITCH_ERROR)
-                {
-                    initial_acce_angle = setpoint;
-                    balanced = false;
-                }
-
-            }
-        } // End of MPU successfull reading
-
-        //ESP_LOGI("debug","left_duty_cycle:  %f    ::  right_duty_cycle :  %f  :: error :  %f  correction  :  %f  \n",left_duty_cycle, right_duty_cycle, error, correction);
-        ESP_LOGI("debug", "KP: %f ::  KI: %f  :: KD: %f", read_pid_const().kp, read_pid_const().ki, read_pid_const().kd);
-
-#ifdef CONFIG_ENABLE_OLED
-        // Diplaying kp, ki, kd values on OLED 
-        if (read_pid_const().val_changed)
+        //SELF BALANCING AND LINE FOLLOWING
+        while (1) 
         {
-            display_pid_values(read_pid_const().kp, read_pid_const().ki, read_pid_const().kd);
-            reset_val_changed_pid_const();
-        }
-#endif
 
-        vTaskDelay(10 / portTICK_PERIOD_MS);
-    }   //End of While Loop
+            if(read_mpu6050(euler_angle, mpu_offset) == ESP_OK){
+
+                //Calulate PITCH and YAW yaw_error
+                // To read PID setpoint from tuning_http_server
+                initial_acce_angle = euler_angle[1];
+                setpoint = read_pid_const().setpoint;
+                pitch_error = setpoint - initial_acce_angle;
+                calc_sensor_values();
+				calculate_motor_command((pitch_error), &motor_cmd);
+                calculate_yaw_error();
+                calculate_yaw_correction();
+
+                if(!balanced)
+                {
+
+                    // ESP_LOGI("Bot is Not Balanced.... Now, Just Balancing\n");
+
+                    //bound PWM values between max and min
+                    motor_pwm = bound((motor_cmd), MIN_PWM, MAX_PWM);
+
+                    ESP_LOGI("debug", "MOTOR_PWM :: %lf", motor_pwm);
+                    // Bot tilts upwards
+                    if (pitch_error > 1)
+                    {
+                        // setting motor A0 with definite speed(duty cycle of motor driver PWM) in Backward direction
+                        set_motor_speed(MOTOR_A_0, MOTOR_BACKWARD, motor_pwm);
+                        // setting motor A1 with definite speed(duty cycle of motor driver PWM) in Backward direction
+                        set_motor_speed(MOTOR_A_1, MOTOR_BACKWARD, motor_pwm);
+                    }
+
+                    // Bot tilts downwards
+                    else if (pitch_error < -1)
+                    {
+                        // setting motor A0 with definite speed(duty cycle of motor driver PWM) in Forward direction
+                        set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, motor_pwm);
+                        // setting motor A1 with definite speed(duty cycle of motor driver PWM) in Forward direction
+                        set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, motor_pwm);
+                    }
+
+                    // Bot remains in desired region for vertical balance
+                    else
+                    {
+                        // stopping motor A0
+                        set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
+                        // stopping motor A1
+                        set_motor_speed(MOTOR_A_1, MOTOR_STOP, 0);
+                        // Setting the state to balanced
+                        balanced = true;
+                    }   
+
+                }
+
+                else
+                {
+
+
+                    // ESP_LOGI("Bot is Balanced.... Now, Following the line\n");
+                    forward_angle = initial_acce_angle + forward_offset;
+
+                    ESP_LOGI("debug","Yaw correction %lf", yaw_correction);
+
+                    //bound PWM values between max and min values
+                    right_pwm = bound((motor_cmd - yaw_correction), MIN_PWM, MAX_PWM);
+                    left_pwm = bound((motor_cmd + yaw_correction), MIN_PWM, MAX_PWM);
+
+                    //Extra yaw correction during turns
+                    if(yaw_error>10 && right_pwm <= 85)
+                    {
+                        right_pwm+=15;
+                        left_pwm-=15;   
+                    }
+                    else if(yaw_error<-10 && left_pwm <=85)
+                    {
+                        left_pwm+=15;
+                        right_pwm-=15;
+                    }
+
+                    ESP_LOGI("debug", "RIGHT_PWM :: %lf, LEFT_PWM :: %lf", right_pwm, left_pwm);
+                    // setting motor A0 with definite speed(duty cycle of motor driver PWM) in Forward direction
+                    set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, right_pwm);
+                    // setting motor A1 with definite speed(duty cycle of motor driver PWM) in Forward direction
+                    set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, left_pwm);    
+                    // Change intial_acce_angle back to setpoint if bot exceeds forward_angle buffer
+                    ESP_LOGI("debug","pitch correction %lf", pitch_error);
+                    if( -pitch_error > forward_buffer || pitch_error > 0)
+                    {
+                        initial_acce_angle = setpoint;
+                        balanced = false;
+                    }
+
+                }
+            } // End of MPU successfull reading
+
+            // ESP_LOGI("debug","left_duty_cycle:  %f    ::  right_duty_cycle :  %f  :: error :  %f  correction  :  %f  \n",left_duty_cycle, right_duty_cycle, error, correction);
+            ESP_LOGI("debug", "KP: %f ::  KI: %f  :: KD: %f", read_pid_const().kp_pitch, read_pid_const().ki_pitch, read_pid_const().kp_pitch);
+
+    // #ifdef CONFIG_ENABLE_OLED
+    //         // Diplaying kp, ki, kd values on OLED 
+    //         if (read_pid_const().val_changed)
+    //         {
+    //             display_pid_values(read_pid_const().kp, read_pid_const().ki, read_pid_const().kd);
+    //             reset_val_changed_pid_const();
+    //         }
+    // #endif
+
+            vTaskDelay(10 / portTICK_PERIOD_MS);
+        }   //End of While Loop
+
+    }
 
     vTaskDelete(NULL);
 
@@ -342,5 +358,6 @@ void balance_with_line_follow_task(void *arg)
 void app_main()
 {
     xTaskCreate(&balance_with_line_follow_task, "self_bal_and_line_follow_task", 4096, NULL, 1, NULL);
+    // vTaskDelay(10 / portTICK_PERIOD_MS);
     start_tuning_http_server();
 }

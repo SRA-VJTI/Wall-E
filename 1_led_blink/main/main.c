@@ -18,12 +18,12 @@ void app_main()
             ESP_ERROR_CHECK(set_bar_graph(0xFF));
             //0xFF = 1111 1111(all leds are on)
             // setting values of all 8 leds to 1
-            vTaskDelay(1000 / portTICK_RATE_MS);
+            vTaskDelay(1000 / portTICK_PERIOD_MS);
             //delay of 1s
             ESP_ERROR_CHECK(set_bar_graph(0x00));
             //0x00 = 0000 0000(all leds are off)
             // setting values of all 8 leds to 0
-            vTaskDelay(1000 / portTICK_RATE_MS);
+            vTaskDelay(1000 / portTICK_PERIOD_MS);
             //delay of 1s
         }
 

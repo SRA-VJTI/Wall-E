@@ -2,5 +2,5 @@
 	path = components/sra-board-component
 	url = https://github.com/SRA-VJTI/sra-board-component.git
 [submodule "8_self_balancing/components/websocket"]
-	path = 8_self_balancing/components/websocket
+	path = 7_self_balancing/components/websocket
 	url = https://github.com/Molorius/esp32-websocket.git

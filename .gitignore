@@ -1,4 +1,9 @@
 ### C ###
+# build files
+sdkconfig*
+build/
+managed_components/
+*.lock
 # Prerequisites
 *.d
 

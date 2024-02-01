@@ -23,7 +23,9 @@ void drive_task(void *arg)
 	 * The ESP has two TB6612FNG drivers which can run upto 2 motors each, the a refers to the first driver
 	 * more details can be found in https://github.com/SRA-VJTI/sra-board-component/blob/9f28700759ac816660c18859d65303d6540e8732/src/motor_driver.c#L7-L57 
 	 */
-	enable_motor_driver(a, NORMAL_MODE); // Enable motor driver A in Normal Mode
+	motor_handle_t motor_a_0, motor_a_1;
+	ESP_ERROR_CHECK(enable_motor_driver(&motor_a_0, MOTOR_A_0));
+	ESP_ERROR_CHECK(enable_motor_driver(&motor_a_1, MOTOR_A_1));
 
 	//infinite loop to get LSA readings continuously
 	while (1)
@@ -40,20 +42,20 @@ void drive_task(void *arg)
 			 * runs the first motor A_0 for 80 duty cylces forward or backward according to LSA input
 			 * more details can be found at https://github.com/SRA-VJTI/sra-board-component/blob/9f28700759ac816660c18859d65303d6540e8732/src/motor_driver.c#L195
 			 */
-			set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, 80);
+			set_motor_speed(motor_a_0, MOTOR_FORWARD, 80);
 
 			// Display logs - final LSA readings
 			ESP_LOGI(TAG_SWITCH_CONTROL_MOTOR, "MOTOR_A_0 FORWARD");
 		}
 		else if (read_switch(SWITCH_2))
 		{
-			set_motor_speed(MOTOR_A_0, MOTOR_BACKWARD, 80);
+			set_motor_speed(motor_a_0, MOTOR_BACKWARD, 80);
 			ESP_LOGI(TAG_SWITCH_CONTROL_MOTOR, "MOTOR_A_0 BACKWARD");
 		}
 		else
 		{
 			// if there is no input from  LSA for first motor then stop the motor, this stops the motor if the previous 80 duty cycles are not completed
-			set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
+			set_motor_speed(motor_a_0, MOTOR_STOP, 0);
 		}
 
 		if (read_switch(SWITCH_3))
@@ -62,20 +64,20 @@ void drive_task(void *arg)
 			 * runs the second motor A_1 for 80 duty cylces forward or backward according to LSA input
 			 * more details can be found at https://github.com/SRA-VJTI/sra-board-component/blob/9f28700759ac816660c18859d65303d6540e8732/src/motor_driver.c#L195
 			 */
-			set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, 80);
+			set_motor_speed(motor_a_1, MOTOR_FORWARD, 80);
 
 			//Displaying Logs - final LSA readings
 			ESP_LOGI(TAG_SWITCH_CONTROL_MOTOR, "MOTOR_A_1 FORWARD");
 		}
 		else if (read_switch(SWITCH_4))
 		{
-			set_motor_speed(MOTOR_A_1, MOTOR_BACKWARD, 80);
+			set_motor_speed(motor_a_1, MOTOR_BACKWARD, 80);
 			ESP_LOGI(TAG_SWITCH_CONTROL_MOTOR, "MOTOR_A_1 BACKWARD");
 		}
 		else
 		{
 			//if there is no input from LSA for the second motor then stop the motor
-			set_motor_speed(MOTOR_A_1, MOTOR_STOP, 0);
+			set_motor_speed(motor_a_1, MOTOR_STOP, 0);
 		}
 		/**
 		 * Delay the task for a specific amount of freeRTOS ticks

@@ -1,9 +1,9 @@
-name: SRA Board component
+name: Test Build of Wall-E
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build-test:
-    name: Test Build of component
+    name: Test Build of Wall-E
     runs-on: ubuntu-latest
     container:
       image: espressif/idf:release-v5.1

@@ -85,7 +85,7 @@ void balance_task(void *arg)
 	                  giving actual correction velocity to the motors
 	*/
 	float motor_cmd, motor_pwm = 0.0f;
-
+	motor_handle_t motor_a_0, motor_a_1;
 	// Pitch angle where you want to go - pitch_cmd, setpoint and mpu_offsets are linked to one another
 	float pitch_cmd = 0.0f;
 #ifdef CONFIG_ENABLE_OLED
@@ -101,7 +101,8 @@ void balance_task(void *arg)
 	if (enable_mpu6050() == ESP_OK)
 	{
 		// Function to enable Motor driver A in Normal Mode
-		enable_motor_driver(a, NORMAL_MODE);
+		enable_motor_driver(&motor_a_0, MOTOR_A_0);
+		enable_motor_driver(&motor_a_1, MOTOR_A_1);
 		while (1)
 		{
 			/**
@@ -125,27 +126,27 @@ void balance_task(void *arg)
 				if (pitch_error > 1)
 				{
 					// setting motor A0 with definite speed(duty cycle of motor driver PWM) in Backward direction
-					set_motor_speed(MOTOR_A_0, MOTOR_BACKWARD, motor_pwm);
+					set_motor_speed(motor_a_0, MOTOR_BACKWARD, motor_pwm);
 					// setting motor A1 with definite speed(duty cycle of motor driver PWM) in Backward direction
-					set_motor_speed(MOTOR_A_1, MOTOR_BACKWARD, motor_pwm);
+					set_motor_speed(motor_a_1, MOTOR_BACKWARD, motor_pwm);
 				}
 
 				// Bot tilts downwards
 				else if (pitch_error < -1)
 				{
 					// setting motor A0 with definite speed(duty cycle of motor driver PWM) in Forward direction
-					set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, motor_pwm);
+					set_motor_speed(motor_a_0, MOTOR_FORWARD, motor_pwm);
 					// setting motor A1 with definite speed(duty cycle of motor driver PWM) in Forward direction
-					set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, motor_pwm);
+					set_motor_speed(motor_a_1, MOTOR_FORWARD, motor_pwm);
 				}
 
 				// Bot remains in desired region for vertical balance
 				else
 				{
 					// stopping motor A0
-					set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
+					set_motor_speed(motor_a_0, MOTOR_STOP, 0);
 					// stopping motor A1
-					set_motor_speed(MOTOR_A_1, MOTOR_STOP, 0);
+					set_motor_speed(motor_a_1, MOTOR_STOP, 0);
 				}
 
 				//ESP_LOGI("debug","left_duty_cycle:  %f    ::  right_duty_cycle :  %f  :: error :  %f  correction  :  %f  \n",left_duty_cycle, right_duty_cycle, error, correction);

@@ -82,12 +82,12 @@ void websocket_callback(uint8_t num, WEBSOCKET_TYPE_t type, char *msg, uint64_t 
     }
 }
 
-void plot_graph_task(void* plot_data_queue){
+void plot_graph_task(void *plot_data_queue){
     /*
         Try to read from the queue, if it is not empty and we successfully receive a value then call plot_graph function
         If the queue is empty then wait for 10ms and try again 
     */
-    plot_graph_data_t* pg_data;
+    plot_graph_data_t *pg_data;
     while(1){
         if(xQueueReceive((QueueHandle_t) plot_data_queue, &pg_data, (TickType_t) 10) == pdPASS){
             if (pg_data != NULL)

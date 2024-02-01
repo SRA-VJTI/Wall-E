@@ -47,7 +47,7 @@ typedef struct plot_graph_data {
     float pitch_err;
 } plot_graph_data_t;
 
-void plot_graph_task(void* plot_data_queue);
+void plot_graph_task(void *plot_data_queue);
 
 pid_const_t read_pid_const();
 void reset_val_changed_pid_const();

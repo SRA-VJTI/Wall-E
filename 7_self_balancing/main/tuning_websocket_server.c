@@ -266,6 +266,6 @@ void start_websocket_server()
 
     // ESP_ERROR_CHECK(init_fs());
     ws_server_start();
-    xTaskCreatePinnedToCore(&server_task, "server_task", 3000, NULL, 9, NULL, 1);
-    xTaskCreatePinnedToCore(&server_handle_task, "server_handle_task", 4000, NULL, 6, NULL, 1);
+    xTaskCreatePinnedToCore(&server_task, "server_task", 3000, NULL, 4, NULL, 1);
+    xTaskCreatePinnedToCore(&server_handle_task, "server_handle_task", 4000, NULL, 3, NULL, 1);
 }

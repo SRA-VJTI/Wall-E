@@ -187,7 +187,7 @@ void app_main()
  	// Starts tuning server for wireless control
 	start_websocket_server();
 	// xTaskCreate -> Create a new task to start plotting the graph
-	xTaskCreatePinnedToCore(&plot_graph_task, "plot graph task", 4096, (void *)plot_graph_queue, 1, NULL, 1);
+	xTaskCreatePinnedToCore(&plot_graph_task, "plot graph task", 4096, (void *)plot_graph_queue, 6, NULL, 1);
 
 	// xTaskCreate -> Create a new task and add it to the list of tasks that are ready to run
 	xTaskCreatePinnedToCore(&balance_task, "balance task", 4096, NULL, 1, NULL, 0);

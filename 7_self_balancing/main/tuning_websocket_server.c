@@ -5,7 +5,7 @@ static const char *TAG = "tuning_websocket_server";
 static pid_const_t pid_constants = {.kp = 27.0, .ki = 0.0, .kd = 2.0, .setpoint = 2.0, .offset = 0.0, .val_changed = true};
 
 static QueueHandle_t client_queue;
-const static int client_queue_size = 15;
+const static int client_queue_size = 10;
 
 static void initialise_mdns(void)
 {
@@ -79,6 +79,21 @@ void websocket_callback(uint8_t num, WEBSOCKET_TYPE_t type, char *msg, uint64_t 
     case WEBSOCKET_PONG:
         ESP_LOGI(TAG, "client %i responded to the ping", num);
         break;
+    }
+}
+
+void plot_graph_task(void* plot_data_queue){
+    /*
+        Try to read from the queue, if it is not empty and we successfully receive a value then call plot_graph function
+        If the queue is empty then wait for 10ms and try again 
+    */
+    plot_graph_data_t* pg_data;
+    while(1){
+        if(xQueueReceive((QueueHandle_t) plot_data_queue, &pg_data, (TickType_t) 10) == pdPASS){
+            if (pg_data != NULL)
+                plot_graph(pg_data->p_term, pg_data->d_term, pg_data->i_term, pg_data->pitch_corr, pg_data->pitch_err);
+        }
+        vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
 
@@ -251,6 +266,6 @@ void start_websocket_server()
 
     // ESP_ERROR_CHECK(init_fs());
     ws_server_start();
-    xTaskCreate(&server_task, "server_task", 3000, NULL, 9, NULL);
-    xTaskCreate(&server_handle_task, "server_handle_task", 4000, NULL, 6, NULL);
+    xTaskCreatePinnedToCore(&server_task, "server_task", 3000, NULL, 9, NULL, 1);
+    xTaskCreatePinnedToCore(&server_handle_task, "server_handle_task", 4000, NULL, 6, NULL, 1);
 }

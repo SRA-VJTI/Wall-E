@@ -20,6 +20,8 @@
 float forward_offset = 2.51f;
 float forward_buffer = 3.1f;
 */
+plot_graph_data_t pg_data;
+QueueHandle_t plot_graph_queue = NULL;
 
 // Calculate the motor inputs according to angle of the MPU
 void calculate_motor_command(const float pitch_error, float *motor_cmd)
@@ -57,7 +59,15 @@ void calculate_motor_command(const float pitch_error, float *motor_cmd)
 
 	pitch_correction = P_term + I_term + D_term;
 
-    plot_graph(P_term, D_term, I_term, pitch_correction, pitch_error);
+	pg_data.p_term = P_term;
+	pg_data.d_term = D_term;
+	pg_data.i_term = I_term;
+	pg_data.pitch_corr = pitch_correction;
+	pg_data.pitch_err = pitch_error;
+	
+	plot_graph_data_t *pg_data_handle = &pg_data;
+
+	xQueueSend(plot_graph_queue, (void *) &pg_data_handle, (TickType_t) 0);
 	/**
 	 * Calculating absolute value of pitch_correction since duty cycle can't be negative. 
 	 * Since it is a floating point variable, fabsf was used instead of abs
@@ -171,9 +181,13 @@ void balance_task(void *arg)
 
 void app_main()
 {
-  // Starts tuning server for wireless control
+	//init a queue to send pointers to plot_graph_data_t structs
+	plot_graph_queue = xQueueCreate(10, sizeof( &pg_data));
+ 	// Starts tuning server for wireless control
 	start_websocket_server();
+	// xTaskCreate -> Create a new task to start plotting graph
+	xTaskCreatePinnedToCore(&plot_graph_task, "plot graph task", 4096, (void *)plot_graph_queue, 1, NULL, 1);
 
 	// xTaskCreate -> Create a new task and add it to the list of tasks that are ready to run
-	xTaskCreate(&balance_task, "balance task", 4096, NULL, 1, NULL);
+	xTaskCreatePinnedToCore(&balance_task, "balance task", 4096, NULL, 1, NULL, 0);
 }

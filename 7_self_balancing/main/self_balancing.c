@@ -16,9 +16,10 @@
 #define MAX_PWM (80.0f)
 #define MIN_PWM (60.0f)
 
-/* Self Balancing Tuning Parameters
-float forward_offset = 2.51f;
-float forward_buffer = 3.1f;
+/**
+* Self Balancing Tuning Parameters
+* float forward_offset = 2.51f;
+* float forward_buffer = 3.1f;
 */
 plot_graph_data_t pg_data;
 QueueHandle_t plot_graph_queue = NULL;

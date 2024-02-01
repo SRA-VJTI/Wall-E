@@ -9,7 +9,7 @@
 #define WHITE_MARGIN 0
 #define bound_LSA_LOW 0
 #define bound_LSA_HIGH 1000
-#define BLACK_BOUNDARY  700    // Boundary value to distinguish between black and white readings
+#define BLACK_BOUNDARY  930    // Boundary value to distinguish between black and white readings
 
 /*
  * weights given to respective line sensor
@@ -19,9 +19,9 @@ const int weights[5] = {-5, -3, 1, 3, 5};
 /*
  * Motor value boundts
  */
-int optimum_duty_cycle = 63;
-int lower_duty_cycle = 50;
-int higher_duty_cycle = 76;
+int optimum_duty_cycle = 57;
+int lower_duty_cycle = 45;
+int higher_duty_cycle = 65;
 float left_duty_cycle = 0, right_duty_cycle = 0;
 
 /*
@@ -107,7 +107,9 @@ void calculate_error()
 
 void line_follow_task(void* arg)
 {
-    ESP_ERROR_CHECK(enable_motor_driver(a, NORMAL_MODE));
+    motor_handle_t motor_a_0, motor_a_1;
+    ESP_ERROR_CHECK(enable_motor_driver(&motor_a_0, MOTOR_A_0));
+    ESP_ERROR_CHECK(enable_motor_driver(&motor_a_1, MOTOR_A_1));
     ESP_ERROR_CHECK(enable_line_sensor());
     ESP_ERROR_CHECK(enable_bar_graph());
 #ifdef CONFIG_ENABLE_OLED
@@ -137,8 +139,8 @@ void line_follow_task(void* arg)
         left_duty_cycle = bound((optimum_duty_cycle + correction), lower_duty_cycle, higher_duty_cycle);
         right_duty_cycle = bound((optimum_duty_cycle - correction), lower_duty_cycle, higher_duty_cycle);
 
-        set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, left_duty_cycle);
-        set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, right_duty_cycle);
+        set_motor_speed(motor_a_0, MOTOR_FORWARD, left_duty_cycle);
+        set_motor_speed(motor_a_1, MOTOR_FORWARD, right_duty_cycle);
 
 
         //ESP_LOGI("debug","left_duty_cycle:  %f    ::  right_duty_cycle :  %f  :: error :  %f  correction  :  %f  \n",left_duty_cycle, right_duty_cycle, error, correction);

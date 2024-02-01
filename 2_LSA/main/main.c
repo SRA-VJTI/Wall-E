@@ -23,7 +23,8 @@ static const char *TAG = "LSA_READINGS";
 void app_main(void)
 {
     // enable line sensor after checking optimal working state of ESP
-    ESP_ERROR_CHECK(enable_line_sensor());
+    adc_handle_t line_sensor;
+    ESP_ERROR_CHECK(enable_line_sensor(&line_sensor));
 
     // Union containing line sensor readings
     line_sensor_array line_sensor_readings;
@@ -41,7 +42,7 @@ void app_main(void)
     while (1)
     {
         // get line sensor readings from the LSA sensors
-        line_sensor_readings = read_line_sensor();
+        line_sensor_readings = read_line_sensor(line_sensor);
         for (int i = 0; i < 5; i++)
         {
             // constrain lsa readings between BLACK_MARGIN and WHITE_MARGIN

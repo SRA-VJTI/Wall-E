@@ -39,6 +39,16 @@ typedef struct pid_const
     bool val_changed;
 } pid_const_t;
 
+typedef struct plot_graph_data {
+    float p_term;
+    float d_term;
+    float i_term;
+    float pitch_corr;
+    float pitch_err;
+} plot_graph_data_t;
+
+void plot_graph_task(void *plot_data_queue);
+
 pid_const_t read_pid_const();
 void reset_val_changed_pid_const();
 void start_websocket_server();

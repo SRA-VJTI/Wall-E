@@ -16,10 +16,13 @@
 #define MAX_PWM (80.0f)
 #define MIN_PWM (60.0f)
 
-/* Self Balancing Tuning Parameters
-float forward_offset = 2.51f;
-float forward_buffer = 3.1f;
+/**
+* Self Balancing Tuning Parameters
+* float forward_offset = 2.51f;
+* float forward_buffer = 3.1f;
 */
+plot_graph_data_t pg_data;
+QueueHandle_t plot_graph_queue = NULL;
 
 // Calculate the motor inputs according to angle of the MPU
 void calculate_motor_command(const float pitch_error, float *motor_cmd)
@@ -57,7 +60,15 @@ void calculate_motor_command(const float pitch_error, float *motor_cmd)
 
 	pitch_correction = P_term + I_term + D_term;
 
-    plot_graph(P_term, D_term, I_term, pitch_correction, pitch_error);
+	pg_data.p_term = P_term;
+	pg_data.d_term = D_term;
+	pg_data.i_term = I_term;
+	pg_data.pitch_corr = pitch_correction;
+	pg_data.pitch_err = pitch_error;
+	
+	plot_graph_data_t *pg_data_handle = &pg_data;
+
+	xQueueSend(plot_graph_queue, (void *)&pg_data_handle, (TickType_t)0);
 	/**
 	 * Calculating absolute value of pitch_correction since duty cycle can't be negative. 
 	 * Since it is a floating point variable, fabsf was used instead of abs
@@ -85,7 +96,7 @@ void balance_task(void *arg)
 	                  giving actual correction velocity to the motors
 	*/
 	float motor_cmd, motor_pwm = 0.0f;
-
+	motor_handle_t motor_a_0, motor_a_1;
 	// Pitch angle where you want to go - pitch_cmd, setpoint and mpu_offsets are linked to one another
 	float pitch_cmd = 0.0f;
 #ifdef CONFIG_ENABLE_OLED
@@ -101,7 +112,8 @@ void balance_task(void *arg)
 	if (enable_mpu6050() == ESP_OK)
 	{
 		// Function to enable Motor driver A in Normal Mode
-		enable_motor_driver(a, NORMAL_MODE);
+		enable_motor_driver(&motor_a_0, MOTOR_A_0);
+		enable_motor_driver(&motor_a_1, MOTOR_A_1);
 		while (1)
 		{
 			/**
@@ -125,27 +137,27 @@ void balance_task(void *arg)
 				if (pitch_error > 1)
 				{
 					// setting motor A0 with definite speed(duty cycle of motor driver PWM) in Backward direction
-					set_motor_speed(MOTOR_A_0, MOTOR_BACKWARD, motor_pwm);
+					set_motor_speed(motor_a_0, MOTOR_BACKWARD, motor_pwm);
 					// setting motor A1 with definite speed(duty cycle of motor driver PWM) in Backward direction
-					set_motor_speed(MOTOR_A_1, MOTOR_BACKWARD, motor_pwm);
+					set_motor_speed(motor_a_1, MOTOR_BACKWARD, motor_pwm);
 				}
 
 				// Bot tilts downwards
 				else if (pitch_error < -1)
 				{
 					// setting motor A0 with definite speed(duty cycle of motor driver PWM) in Forward direction
-					set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, motor_pwm);
+					set_motor_speed(motor_a_0, MOTOR_FORWARD, motor_pwm);
 					// setting motor A1 with definite speed(duty cycle of motor driver PWM) in Forward direction
-					set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, motor_pwm);
+					set_motor_speed(motor_a_1, MOTOR_FORWARD, motor_pwm);
 				}
 
 				// Bot remains in desired region for vertical balance
 				else
 				{
 					// stopping motor A0
-					set_motor_speed(MOTOR_A_0, MOTOR_STOP, 0);
+					set_motor_speed(motor_a_0, MOTOR_STOP, 0);
 					// stopping motor A1
-					set_motor_speed(MOTOR_A_1, MOTOR_STOP, 0);
+					set_motor_speed(motor_a_1, MOTOR_STOP, 0);
 				}
 
 				//ESP_LOGI("debug","left_duty_cycle:  %f    ::  right_duty_cycle :  %f  :: error :  %f  correction  :  %f  \n",left_duty_cycle, right_duty_cycle, error, correction);
@@ -170,9 +182,13 @@ void balance_task(void *arg)
 
 void app_main()
 {
-  // Starts tuning server for wireless control
+	// Create a queue to send PID values to plot graph task
+	plot_graph_queue = xQueueCreate(10, sizeof(&pg_data));
+ 	// Starts tuning server for wireless control
 	start_websocket_server();
+	// xTaskCreate -> Create a new task to start plotting the graph
+	xTaskCreatePinnedToCore(&plot_graph_task, "plot graph task", 4096, (void *)plot_graph_queue, 6, NULL, 1);
 
 	// xTaskCreate -> Create a new task and add it to the list of tasks that are ready to run
-	xTaskCreate(&balance_task, "balance task", 4096, NULL, 1, NULL);
+	xTaskCreatePinnedToCore(&balance_task, "balance task", 4096, NULL, 1, NULL, 0);
 }

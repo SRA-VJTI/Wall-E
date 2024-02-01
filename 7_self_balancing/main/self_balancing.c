@@ -67,7 +67,7 @@ void calculate_motor_command(const float pitch_error, float *motor_cmd)
 	
 	plot_graph_data_t *pg_data_handle = &pg_data;
 
-	xQueueSend(plot_graph_queue, (void *) &pg_data_handle, (TickType_t) 0);
+	xQueueSend(plot_graph_queue, (void *)&pg_data_handle, (TickType_t)0);
 	/**
 	 * Calculating absolute value of pitch_correction since duty cycle can't be negative. 
 	 * Since it is a floating point variable, fabsf was used instead of abs
@@ -182,7 +182,7 @@ void balance_task(void *arg)
 void app_main()
 {
 	// Create a queue to send PID values to plot graph task
-	plot_graph_queue = xQueueCreate(10, sizeof( &pg_data));
+	plot_graph_queue = xQueueCreate(10, sizeof(&pg_data));
  	// Starts tuning server for wireless control
 	start_websocket_server();
 	// xTaskCreate -> Create a new task to start plotting the graph

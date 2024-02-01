@@ -89,7 +89,7 @@ void plot_graph_task(void *plot_data_queue){
     */
     plot_graph_data_t *pg_data;
     while(1){
-        if(xQueueReceive((QueueHandle_t) plot_data_queue, &pg_data, (TickType_t) 10) == pdPASS){
+        if(xQueueReceive((QueueHandle_t)plot_data_queue, &pg_data, (TickType_t)10) == pdPASS){
             if (pg_data != NULL)
                 plot_graph(pg_data->p_term, pg_data->d_term, pg_data->i_term, pg_data->pitch_corr, pg_data->pitch_err);
         }

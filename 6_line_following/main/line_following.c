@@ -110,7 +110,8 @@ void line_follow_task(void* arg)
     motor_handle_t motor_a_0, motor_a_1;
     ESP_ERROR_CHECK(enable_motor_driver(&motor_a_0, MOTOR_A_0));
     ESP_ERROR_CHECK(enable_motor_driver(&motor_a_1, MOTOR_A_1));
-    ESP_ERROR_CHECK(enable_line_sensor());
+    adc_handle_t line_sensor;
+    ESP_ERROR_CHECK(enable_line_sensor(&line_sensor));
     ESP_ERROR_CHECK(enable_bar_graph());
 #ifdef CONFIG_ENABLE_OLED
     // Initialising the OLED
@@ -124,7 +125,7 @@ void line_follow_task(void* arg)
 
     while(true)
     {
-        line_sensor_readings = read_line_sensor();
+        line_sensor_readings = read_line_sensor(line_sensor);
         for(int i = 0; i < 5; i++)
         {
             line_sensor_readings.adc_reading[i] = bound(line_sensor_readings.adc_reading[i], WHITE_MARGIN, BLACK_MARGIN);

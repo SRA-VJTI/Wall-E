@@ -71,11 +71,11 @@ void calculate_error()
         {
             all_black_flag = 0;
         }
-        if(line_sensor_readings.adc_reading[i] > 700)
+        if(line_sensor_readings.adc_reading[i] > BLACK_BOUNDARY)
         {
             k = 1;
         }
-        if(line_sensor_readings.adc_reading[i] < 700)
+        if(line_sensor_readings.adc_reading[i] < BLACK_BOUNDARY)
         {
             k = 0;
         }

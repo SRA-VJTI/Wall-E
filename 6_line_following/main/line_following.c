@@ -34,19 +34,6 @@ float error=0, prev_error=0, difference, cumulative_error, correction;
  */
 line_sensor_array line_sensor_readings;
 
-
-void lsa_to_bar()
-{   
-    uint8_t var = 0x00;                     
-    bool number[8] = {0,0,0,0,0,0,0,0};
-    for(int i = 0; i < 5; i++)
-    {
-        number[7-i] = (line_sensor_readings.adc_reading[i] < BLACK_BOUNDARY) ? 0 : 1; //If adc value is less than black margin, then set that bit to 0 otherwise 1.
-        var = bool_to_uint8(number);  //A helper function to convert bool array to unsigned int.
-        ESP_ERROR_CHECK(set_bar_graph(var)); //Setting bar graph led with unsigned int value.
-    }
-}
-
 void calculate_correction()
 {
     error = error*10;  // we need the error correction in range 0-100 so that we can send it directly as duty cycle paramete
@@ -71,11 +58,11 @@ void calculate_error()
         {
             all_black_flag = 0;
         }
-        if(line_sensor_readings.adc_reading[i] > 700)
+        if(line_sensor_readings.adc_reading[i] > BLACK_BOUNDARY)
         {
             k = 1;
         }
-        if(line_sensor_readings.adc_reading[i] < 700)
+        if(line_sensor_readings.adc_reading[i] < BLACK_BOUNDARY)
         {
             k = 0;
         }
@@ -135,7 +122,6 @@ void line_follow_task(void* arg)
 
         calculate_error();
         calculate_correction();
-        lsa_to_bar();
 
         left_duty_cycle = bound((optimum_duty_cycle + correction), lower_duty_cycle, higher_duty_cycle);
         right_duty_cycle = bound((optimum_duty_cycle - correction), lower_duty_cycle, higher_duty_cycle);

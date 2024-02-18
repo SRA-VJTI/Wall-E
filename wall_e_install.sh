@@ -4,7 +4,7 @@ echo "installing ESP IDF"
 _shell_="${SHELL#${SHELL%/*}/}"
 # Check whether esp-idf has already been installed
 if [ -d $HOME/esp/esp-idf ]; then
-    echo "You already have installed esp-idf!"
+    echo "You have already installed esp-idf!"
 else
     # System Detection and ESP-IDF Installation
     unameOut="$(uname -s)"
@@ -53,5 +53,5 @@ if [ ! -d "$HOME/Wall-E" ]; then
     echo "Cloning Wall-E"
     git clone --recursive https://github.com/SRA-VJTI/Wall-E.git
 else 
-    echo "You already have Cloned esp-idf!"
+    echo "You have already Cloned Wall-E Repository!"
 fi

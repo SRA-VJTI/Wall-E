@@ -74,14 +74,15 @@ The Wall-E workshop focuses on the concepts of line-following and self-balancing
 
 |                  TOPIC                  |                                                        Link                                                         |                                          Description                                           |
 | :-------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
-|                LED Blink                |              [LED_Blink](https://github.com/SRA-VJTI/Wall-E/blob/dev/1_led_blink/README.md)               |                     Performing LED Blink by connecting the LED with esp32                      |
-|           Light Sensing Array           |                    [LSA](https://github.com/SRA-VJTI/Wall-E/blob/dev/2_LSA/README.md)                     |        Sensing Array that uses different Light Sensors, majorly used for Line-Following        |
-|                 MPU6050                 |                    [MPU](https://github.com/SRA-VJTI/Wall-E/blob/dev/3_MPU/README.md)                     |           Motion controlled MPU measures angles with respect to 6 Degrees of Freedom           |
-| Switch controlled motor in normal mode  |   [Normal_Mode](https://github.com/SRA-VJTI/Wall-E/blob/dev/4_switch_controlled_motor_normal/readme.md)   |         Controls the movement of Bot manually using switches connected in normal mode          |
-| Switch controlled motor in parallel mode | [Parallel_Mode](https://github.com/SRA-VJTI/Wall-E/blob/dev/5_switch_controlled_motor_parallel/README.md) |        Controls the movement of bot manually using switches connected in parallel mode         |
-|         Pulse Width Modulation          |                    [PWM](https://github.com/SRA-VJTI/Wall-E/blob/dev/6_PWM/README.md)                     |                    Calculate average voltage and controls speed accordingly                    |
-|             Line-Following              |              [Line_Following](https://github.com/SRA-VJTI/Wall-E/tree/dev/7_line_following)               |         Line-Following algorithm that enables the bot to follow the path of white line         |
-|             Self-Balancing              |         [Self_Balancing](https://github.com/SRA-VJTI/Wall-E/blob/dev/8_self_balancing/README.md)          | Self-Balancing algorithm that enables the bot to balance its weight under the force of gravity |
+|                LED Blink                |              [LED_Blink](https://github.com/SRA-VJTI/Wall-E/blob/master/1_led_blink/README.md)               |                     Performing LED Blink by connecting the LED with esp32                      |
+|           Light Sensing Array           |                    [LSA](https://github.com/SRA-VJTI/Wall-E/blob/master/2_LSA/README.md)                     |        Sensing Array that uses different Light Sensors, majorly used for Line-Following        |
+|                 MPU6050                 |                    [MPU](https://github.com/SRA-VJTI/Wall-E/blob/master/3_MPU/README.md)                     |           Motion controlled MPU measures angles with respect to 6 Degrees of Freedom           |
+| Switch controlled motor in normal mode  |   [Normal_Mode](https://github.com/SRA-VJTI/Wall-E/blob/master/4_switch_controlled_motor_normal/README.md)   |         Controls the movement of Bot manually using switches connected in normal mode          |
+|         Pulse Width Modulation          |                    [PWM](https://github.com/SRA-VJTI/Wall-E/blob/master/5_PWM/README.md)                     |                    Calculate average voltage and controls speed accordingly                    |
+|             Line-Following              |              [Line_Following](https://github.com/SRA-VJTI/Wall-E/tree/master)                                |         Line-Following algorithm that enables the bot to follow the path of white line         |
+|             Self-Balancing              |         [Self_Balancing](https://github.com/SRA-VJTI/Wall-E/blob/master/7_self_balancing/README.md)          | Self-Balancing algorithm that enables the bot to balance its weight under the force of gravity |
+
+
 
 <!-- ROADMAP -->
 

@@ -38,8 +38,6 @@ esac
     git clone -b release/v5.1 --recursive https://github.com/espressif/esp-idf.git
     cd $HOME/esp/esp-idf
     ./install.sh esp32
-    popd
-    popd
 
     # Check if installation is successful
     . $HOME/esp/esp-idf/export.sh 

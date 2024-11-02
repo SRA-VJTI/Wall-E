@@ -41,7 +41,7 @@ esac
 
     # Check if installation is successful
     . $HOME/esp/esp-idf/export.sh 
-    idf.py --version | (grep "v5.1.2" && echo "Installation successful! Please restart your computer for the changes to take effect.") \
+    idf.py --version | (grep "v5.1" && echo "Installation successful! Please restart your computer for the changes to take effect.") \
         || (echo "Installation failed" && exit 1) 
     # Set IDF Alias
     echo "alias get_idf='. $HOME/esp/esp-idf/export.sh'" >> $HOME/."$_shell_"rc

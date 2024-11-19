@@ -6,7 +6,7 @@ jobs:
     name: Test Build of Wall-E
     runs-on: ubuntu-latest
     container:
-      image: espressif/idf:release-v5.1.5
+      image: espressif/idf:release-v5.1
     strategy:
       matrix:
         test-apps: [1_led_blink, 2_LSA, 3_MPU, 4_switch_controlled_motor_normal, 5_PWM, 6_line_following, 7_self_balancing]

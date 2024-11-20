@@ -79,7 +79,7 @@ The Wall-E workshop focuses on the concepts of line-following and self-balancing
 |                 MPU6050                 |                    [MPU](https://github.com/SRA-VJTI/Wall-E/blob/master/3_MPU/README.md)                     |           Motion controlled MPU measures angles with respect to 6 Degrees of Freedom           |
 | Switch controlled motor in normal mode  |   [Normal_Mode](https://github.com/SRA-VJTI/Wall-E/blob/master/4_switch_controlled_motor_normal/README.md)   |         Controls the movement of Bot manually using switches connected in normal mode          |
 |         Pulse Width Modulation          |                    [PWM](https://github.com/SRA-VJTI/Wall-E/blob/master/5_PWM/README.md)                     |                    Calculate average voltage and controls speed accordingly                    |
-|             Line-Following              |              [Line_Following](https://github.com/SRA-VJTI/Wall-E/tree/master)                                |         Line-Following algorithm that enables the bot to follow the path of white line         |
+|             Line-Following              |              [Line_Following](https://github.com/SRA-VJTI/Wall-E/tree/master/6_line_following/)     |         Line-Following algorithm that enables the bot to follow the path of white line         |
 |             Self-Balancing              |         [Self_Balancing](https://github.com/SRA-VJTI/Wall-E/blob/master/7_self_balancing/README.md)          | Self-Balancing algorithm that enables the bot to balance its weight under the force of gravity |
 
 

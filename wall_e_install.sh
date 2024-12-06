@@ -14,7 +14,7 @@ case "${unameOut}" in
     Linux*)
         su -c "apt update && apt install sudo -y"
         sudo apt update && sudo apt upgrade -y
-        sudo usermod -aG sudo $USER
+        which sudo 
         sudo usermod -aG dialout $USER
         sudo apt install git wget flex bison gperf python3 python3-pip python3-setuptools cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 -y
         sudo apt install python3-venv

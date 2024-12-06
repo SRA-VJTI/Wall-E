@@ -17,7 +17,7 @@ case "${unameOut}" in
         which sudo 
         sudo usermod -aG dialout $USER || echo "Failed to add user to dialout group"
         sudo apt install git wget flex bison gperf python3 python3-pip python3-setuptools cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 -y
-        sudo apt install python3-venv
+        sudo apt install python3-venv -y
         ;;
     Darwin*)
         if brew --version | grep -q 'Homebrew'; then

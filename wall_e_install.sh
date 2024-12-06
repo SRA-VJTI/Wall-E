@@ -12,9 +12,14 @@ else
     unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)
-        su -c "apt update && apt install sudo -y"
+
         sudo apt update && sudo apt upgrade -y
-        which sudo 
+        # Set timezone non-interactively
+        export DEBIAN_FRONTEND=noninteractive
+        sudo ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime
+        echo "Etc/UTC" | sudo tee /etc/timezone > /dev/null
+        sudo dpkg-reconfigure --frontend noninteractive tzdata
+        
         sudo usermod -aG dialout $USER || echo "Failed to add user to dialout group"
         sudo apt install git wget flex bison gperf python3 python3-pip python3-setuptools cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 -y
         sudo apt install python3-venv -y

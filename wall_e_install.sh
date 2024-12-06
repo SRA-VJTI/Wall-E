@@ -12,8 +12,7 @@ else
     unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)
-
-        sudo apt update && sudo apt upgrade -y
+        su -c "apt update && apt install sudo -y"
         # Set timezone non-interactively
         export DEBIAN_FRONTEND=noninteractive
         sudo ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime

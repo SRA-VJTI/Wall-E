@@ -32,10 +32,6 @@ jobs:
             host_runner: ubuntu-latest
             package_manager: apt
             docker_image: ubuntu:20.04
-          - name: Ubuntu 18.04
-            host_runner: ubuntu-latest
-            package_manager: apt
-            docker_image: ubuntu:18.04
 
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.host_runner }}

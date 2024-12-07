@@ -93,7 +93,7 @@ There are various terms related with the Pulse Width Modulation:-
 
 * The roll and pitch angles are calculated from the accelerometer using the [formula](https://www.digikey.com/en/articles/using-an-accelerometer-for-inclination-sensing) below :
   
-<img src="https://render.githubusercontent.com/render/math?math=\theta = \arctan(\frac{A_{X.OUT}}{A_{Y.OUT}})">
+$$\theta = \arctan\left(\frac{A_{X.OUT}}{A_{Y.OUT}}\right)$$
    
   
 

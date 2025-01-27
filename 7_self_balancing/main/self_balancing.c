@@ -134,7 +134,7 @@ void balance_task(void *arg)
 				motor_pwm = bound((motor_cmd), MIN_PWM, MAX_PWM);
 
 				// Bot tilts upwards
-				if (pitch_error > 1)
+				if (pitch_error > -1)
 				{
 					// setting motor A0 with definite speed(duty cycle of motor driver PWM) in Backward direction
 					set_motor_speed(motor_a_0, MOTOR_BACKWARD, motor_pwm);
@@ -143,7 +143,7 @@ void balance_task(void *arg)
 				}
 
 				// Bot tilts downwards
-				else if (pitch_error < -1)
+				else if (pitch_error < 1)
 				{
 					// setting motor A0 with definite speed(duty cycle of motor driver PWM) in Forward direction
 					set_motor_speed(motor_a_0, MOTOR_FORWARD, motor_pwm);

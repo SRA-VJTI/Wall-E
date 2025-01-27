@@ -9,7 +9,7 @@
 #define WHITE_MARGIN 0
 #define bound_LSA_LOW 0
 #define bound_LSA_HIGH 1000
-#define BLACK_BOUNDARY  930    // Boundary value to distinguish between black and white readings
+#define BLACK_BOUNDARY  820    // Boundary value to distinguish between black and white readings
 
 /*
  * weights given to respective line sensor

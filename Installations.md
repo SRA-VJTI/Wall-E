@@ -62,7 +62,7 @@ We recommend to keep the default installation path and click next.
 </p>
 
 ### Step 8: Cloning the Wall-E Git Repo
-To clone the Repo just execute the following command on ESP-IDF Command Prompt. We are making the project folder in our home directory. Instead we can directly build in the desktop so we would just change the folder where we clone our paths to `%userprofile$\Desktop\` instead of `~/`.
+To clone the Repo just execute the following command on ESP-IDF Command Prompt. We are making the project folder in our home directory. 
 
 ```powershell
 cd ~
@@ -210,7 +210,7 @@ idf.py menuconfig # Command for Opening the Configuration Menu
 ```
 * For Windows -
 ```powershell
-cd ~/Projects/Wall-E/hello_world #Navigating to the file
+cd ~/Projects/Wall-E/1_led_blink #Navigating to the file
 idf.py set-target esp32 #Command for Setting the Target
 idf.py menuconfig #Command for Opening the Configuration
 ```

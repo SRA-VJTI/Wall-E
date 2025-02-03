@@ -7,7 +7,7 @@
 # For Windows
 The first step is to install the ESP-IDF v4.2. 
 
-## Step 1:Download the installer from [here](https://dl.espressif.com/dl/esp-idf/?idf=4.4)
+## Step 1:Download the installer from [here](https://dl.espressif.com/dl/esp-idf/?idf=5.2)
 Please download the **offline** version pointed by the
 arrow
 <p align="center">
@@ -49,23 +49,26 @@ We recommend to keep the default installation path and click next.
   <img src="./documentation/Assets/Installation/6.png">
 </p>
 
-### Step 6: Once you click On Finish, this is what you should be getting. 
+### Step 6: Once you click On Finish, this is what you should be getting.
 
 <p align="center">
-  <img src="./documentation/Assets/Installation/7.png">
+    <img src="./documentation/Assets/Installation/7.png">
 </p>
 
- ### Step 7: Open ESP-IDF 4.2 CMD which should be on your desktop
+### Step 7: Open ESP-IDF 5.2 PowerShell which should be on your desktop
 
 <p align="center">
   <img src="./documentation/Assets/Installation/esp-idf.jpeg">
 </p>
 
 ### Step 8: Cloning the Wall-E Git Repo
-To clone the Repo just execute the following command on ESP-IDF Command Prompt. We are making the project folder in Desktop 
-```sh
-cd %userprofile%\Desktop 
-git clone https://github.com/SRA-VJTI/Wall-E.git --recurse-submodules
+To clone the Repo just execute the following command on ESP-IDF Command Prompt. We are making the project folder in our home directory. 
+
+```powershell
+cd ~
+mkdir Projects
+cd Projects
+git clone https://github.com/SRA-VJTI/Wall-E --recursive --depth 1
 cd Wall-E
 ```
 
@@ -74,7 +77,7 @@ cd Wall-E
 </p>
 
 **Pro Tip**: 
-`cd %userprofile%\Desktop\Wall-E` takes you to the Wall-E directory which contains all the required code 
+`cd ~/Projects/Wall-E` takes you to the Wall-E directory which contains all the required code 
 
 ## For Linux 
 
@@ -164,18 +167,10 @@ ls
 </p>
 
 * For Windows -
-```sh
-cd %userprofile%\Desktop\Wall-E
+```powershell
+cd ~/Projects/Wall-E
 xcopy /e /i %IDF_PATH%\examples\get-started\hello_world hello_world
 ``` 
-<p align="center">
-  <img src="./documentation/Assets/Installation/10.jpeg">
-</p> 
-
-<p align="center">
-  <img src="./documentation/Assets/Installation/12.jpeg">
-</p> 
-
 
 ### Step 2 : Connect Your Device
 Connect your ESP32 board to the computer and check under what serial port the board is visible.
@@ -214,8 +209,8 @@ idf.py set-target esp32 #Command for Setting the Target
 idf.py menuconfig # Command for Opening the Configuration Menu
 ```
 * For Windows -
-```sh
-cd %userprofile%\Desktop\Wall-E\hello_world #Navigating to the file
+```powershell
+cd ~/Projects/Wall-E/1_led_blink #Navigating to the file
 idf.py set-target esp32 #Command for Setting the Target
 idf.py menuconfig #Command for Opening the Configuration
 ```

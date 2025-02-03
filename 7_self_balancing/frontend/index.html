@@ -434,6 +434,14 @@
         }
       }
 
+      document.querySelectorAll('input[name="ftext"]').forEach((input, index) => {
+        input.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter') {
+            event.preventDefault();  // Prevent form submission
+            document.querySelectorAll('button')[index].click();
+          }
+        });
+      });
 
       updateData();
     };

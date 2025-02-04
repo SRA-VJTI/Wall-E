@@ -1,9 +1,9 @@
 <p align="center">
   <img src="documentation/images/logo.png"/>
   
-  <h3 align="center"> Wall-E version 2.3 </h3>
+  <h3 align="center"> Wall-E version 2.6 </h3>
   <p align="center">
-    Code repository for <a href="https://github.com/SRA-VJTI/Wall-E">Wall-E_v2.3</a>
+    Code repository for <a href="https://github.com/SRA-VJTI/Wall-E">Wall-E_v2.6</a>
     <br />
     <br />
     <a href="https://github.com/SRA-VJTI/Wall-E/issues">Report Bug</a>

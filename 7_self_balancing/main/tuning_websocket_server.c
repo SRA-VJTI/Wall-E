@@ -2,7 +2,7 @@
 
 static const char *TAG = "tuning_websocket_server";
 
-static pid_const_t pid_constants = {.kp = 27.0, .ki = 0.0, .kd = 2.0, .setpoint = 2.0, .offset = 0.0, .val_changed = true};
+static pid_const_t pid_constants = {.kp = 11.0, .ki = 0.0, .kd = 4.0, .setpoint = 9.0, .offset = 0.0, .val_changed = true};
 
 static QueueHandle_t client_queue;
 const static int client_queue_size = 10;

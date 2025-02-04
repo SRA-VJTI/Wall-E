@@ -1,674 +1,661 @@
 <html>
-  <head>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-      crossorigin="anonymous"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400&display=swap" rel="stylesheet">
-    <script
-    type="text/javascript"
-    src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"
-    ></script>
-    <script>
-      Chart.defaults.global.defaultFontColor = "#FFF";
-      Chart.defaults.global.defaultFontFamily = "Oswald";
-      var websocket = new WebSocket("ws://" + location.hostname + "/");
 
-      function send_Text_kp(text) {
-        websocket.send("P" + text);
-      }
-      function send_Text_kd(text) {
-        websocket.send("D" + text);
-      }
-      function send_Text_ki(text) {
-        websocket.send("I" + text);
-      }
-      function send_Text_setpoint(text) {
-        websocket.send("S" + text);
-      }
-      function send_Text_offset(text) {
-        websocket.send("O" + text);
-      }
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400&display=swap" rel="stylesheet">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+  <script>
+    Chart.defaults.global.defaultFontColor = "#FFF";
+    Chart.defaults.global.defaultFontFamily = "Oswald";
+    var websocket = new WebSocket("ws://" + location.hostname + "/");
 
-      window.onload = function () {
-        console.log("LOADED");
-        var ws = new WebSocket("ws://" + location.hostname + "/");
+    function send_Text_kp(text) {
+      websocket.send("P" + text);
+    }
+    function send_Text_kd(text) {
+      websocket.send("D" + text);
+    }
+    function send_Text_ki(text) {
+      websocket.send("I" + text);
+    }
+    function send_Text_setpoint(text) {
+      websocket.send("S" + text);
+    }
+    function send_Text_offset(text) {
+      websocket.send("O" + text);
+    }
 
-        //Configuration variables
-        var updateInterval = 1000; //in ms
-        var numberElements = 500;
+    window.onload = function () {
+      console.log("LOADED");
+      var ws = new WebSocket("ws://" + location.hostname + "/");
 
-        //Globals
-        var updateCount = 0;
+      //Configuration variables
+      var updateInterval = 1000; //in ms
+      var numberElements = 500;
 
-        // Chart Objects
-        var xAccelChart = $("#xAccelChart");
-        var yAccelChart = $("#yAccelChart");
-        var zAccelChart = $("#zAccelChart");
-        var rollChart = $("#rollChart");
-        var pitchChart = $("#pitchChart");
-        //chart instances & configuration
+      //Globals
+      var updateCount = 0;
 
-        var commonOptions = {
-          scales: {
-            xAxes: [
-              {
-                type: "time",
-                time: {
-                  unit: 'minute',
-                },
-                ticks: {
-                    display: false 
-                },
-                gridLines: { color: "#C6C6C6" },
+      // Chart Objects
+      var xAccelChart = $("#xAccelChart");
+      var yAccelChart = $("#yAccelChart");
+      var zAccelChart = $("#zAccelChart");
+      var rollChart = $("#rollChart");
+      var pitchChart = $("#pitchChart");
+      //chart instances & configuration
+
+      var commonOptions = {
+        scales: {
+          xAxes: [
+            {
+              type: "time",
+              time: {
+                unit: 'minute',
               },
-            ],
-            yAxes: [
-              {
-                ticks: {
-                  suggestedMin: -50, // minimum will be 0, unless there is a lower value.
-                  suggestedMax: 50, // maximum will be
-                },
-                gridLines: { color: "#C6C6C6" },
+              ticks: {
+                display: false
               },
-            ],
-          },
-          legend: { display: false },
-          tooltips: {
-            enabled: false,
-          },
-        };
-        var xAccelChartInstance = new Chart(xAccelChart, {
-          type: "line",
-          data: {
-            datasets: [
-              {
-                label: "X Acceleration",
-                fill: false,
-                borderColor: "#FFF",
-                borderWidth: 2,
-                fontColor: "#FFF",
-              },
-            ],
-          },
-          options: Object.assign({}, commonOptions, {
-            title: {
-              display: true,
-              text: "P-TERM",
-              fontSize: 18,
-              fontFamily: "Oswald",
-              fontColor: "#FFF",
+              gridLines: { color: "#C6C6C6" },
             },
-            elements: {
-              point: {
-                radius: 0,
+          ],
+          yAxes: [
+            {
+              ticks: {
+                suggestedMin: -50, // minimum will be 0, unless there is a lower value.
+                suggestedMax: 50, // maximum will be
               },
+              gridLines: { color: "#C6C6C6" },
             },
-          }),
-          scales: {
-            xAxes: [
-              {
-                type: "time",
-                time: {
-                  displayFormats: {
-                    millisecond: "S",
-                  },
-                },
-                gridLines: { color: "#FFF" },
-              },
-            ],
-            yAxes: [
-              {
-                ticks: {
-                  suggestedMin: -50, // minimum will be 0, unless there is a lower value.
-                  suggestedMax: 50, // maximum will be
-                },
-                gridLines: { color: "#FFF" },
-              },
-            ],
-          },
-          legend: { display: false },
-          tooltips: {
-            enabled: false,
-          },
-        });
-
-        var yAccelChartInstance = new Chart(yAccelChart, {
-          type: "line",
-          data: {
-            datasets: [
-              {
-                label: "Y Acceleration",
-                data: 0,
-                fill: false,
-                borderColor: "#FFF",
-                borderWidth: 2,
-                fontColor: "#FFF",
-              },
-            ],
-          },
-          options: Object.assign({}, commonOptions, {
-            title: {
-              display: true,
-              text: "D-TERM",
-              fontSize: 18,
-              fontFamily: "Oswald",
-              fontColor: "#FFF",
-            },
-            elements: {
-              point: {
-                radius: 0,
-              },
-            },
-          }),
-          scales: {
-            xAxes: [
-              {
-                type: "time",
-                time: {
-                  displayFormats: {
-                    millisecond: "S",
-                  },
-                },
-                gridLines: { color: "#FFF" },
-              },
-            ],
-            yAxes: [
-              {
-                ticks: {
-                  suggestedMin: -1000,
-                  suggestedMax: 1000,
-                },
-                gridLines: { color: "#FFF" },
-              },
-            ],
-          },
-          legend: { display: false },
-          tooltips: {
-            enabled: false,
-          },
-        });
-
-        var zAccelChartInstance = new Chart(zAccelChart, {
-          type: "line",
-          data: {
-            datasets: [
-              {
-                label: "Z Acceleration",
-                data: 0,
-                fill: false,
-                borderColor: "#FFF",
-                borderWidth: 2,
-                fontColor: "#FFF",
-              },
-            ],
-          },
-          options: Object.assign({}, commonOptions, {
-            title: {
-              display: true,
-              text: "I-TERM",
-              fontSize: 18,
-              fontFamily: "Oswald",
-              fontColor: "#FFF",
-            },
-            elements: {
-              point: {
-                radius: 0,
-              },
-            },
-          }),
-          scales: {
-            xAxes: [
-              {
-                type: "time",
-                time: {
-                  displayFormats: {
-                    millisecond: "S",
-                  },
-                },
-                gridLines: { color: "#FFF" },
-              },
-            ],
-            yAxes: [
-              {
-                ticks: {
-                  suggestedMin: -1000,
-                  suggestedMax: 1000,
-                },
-                gridLines: { color: "#FFF" },
-              },
-            ],
-          },
-          legend: { display: false },
-          tooltips: {
-            enabled: false,
-          },
-        });
-
-        var rollChartInstance = new Chart(rollChart, {
-          type: "line",
-          data: {
-            datasets: [
-              {
-                label: "Roll",
-                data: 0,
-                fill: false,
-                borderColor: "#FFF",
-                borderWidth: 2,
-                fontColor: "#FFF",
-              },
-            ],
-          },
-          options: Object.assign({}, commonOptions, {
-            title: {
-              display: true,
-              text: "PITCH CORRECTION",
-              fontSize: 18,
-              fontFamily: "Oswald",
-              fontColor: "#FFF",
-            },
-            elements: {
-              point: {
-                radius: 0,
-              },
-            },
-          }),
-          scales: {
-            xAxes: [
-              {
-                type: "time",
-                time: {
-                  displayFormats: {
-                    millisecond: "S",
-                  },
-                },
-                gridLines: { color: "#FFF" },
-              },
-            ],
-            yAxes: [
-              {
-                ticks: {
-                  suggestedMin: -1000,
-                  suggestedMax: 1000,
-                },
-                gridLines: { color: "#FFF" },
-              },
-            ],
-          },
-          legend: { display: false },
-          tooltips: {
-            enabled: false,
-          },
-        });
-
-        var pitchChartInstance = new Chart(pitchChart, {
-          type: "line",
-          data: {
-            datasets: [
-              {
-                label: "Pitch",
-                data: 0,
-                fill: false,
-                borderColor: "#FFF",
-                borderWidth: 2,
-                fontColor: "#FFF",
-              },
-            ],
-          },
-          options: Object.assign({}, commonOptions, {
-            title: {
-              display: true,
-              text: "CORRECTED TERM",
-              fontSize: 18,
-              fontFamily: "Oswald",
-              fontColor: "#FFF"
-            },
-            elements: {
-              point: {
-                radius: 0,
-              },
-            },
-          }),
-          scales: {
-            xAxes: [
-              {
-                type: "time",
-                time: {
-                  displayFormats: {
-                    millisecond: "S",
-                  },
-                },
-                gridLines: { color: "#FFF" },
-              },
-            ],
-            yAxes: [
-              {
-                ticks: {
-                  suggestedMin: -1000,
-                  suggestedMax: 1000,
-                },
-                gridLines: { color: "#FFF" },
-              },
-            ],
-          },
-          legend: { display: false },
-          tooltips: {
-            enabled: false,
-          },
-        });
-
-        function addData(data) {
-          console.log(data);
-          var new_data = data
-            .split(",")
-            .filter((x) => x.trim().length && !isNaN(x))
-            .map(Number);
-          var new_data_1 = data.split(",");
-          var temp = new_data_1[4];
-          temp = temp.replace(/\D/g, "");
-          temp = parseInt(temp, 10);
-          data = new_data.concat(temp);
-          console.log(data[0]);
-          console.log(data[1]);
-          console.log(data[2]);
-          console.log(data[3]);
-          console.log(data[4]);
-
-          if (data) {
-            xAccelChartInstance.data.labels.push(new Date());
-            xAccelChartInstance.data.datasets.forEach((dataset) => {
-              dataset.data.push(data[0]);
-            });
-            yAccelChartInstance.data.labels.push(new Date());
-            yAccelChartInstance.data.datasets.forEach((dataset) => {
-              dataset.data.push(data[1]);
-            });
-            zAccelChartInstance.data.labels.push(new Date());
-            zAccelChartInstance.data.datasets.forEach((dataset) => {
-              dataset.data.push(data[2]);
-            });
-            rollChartInstance.data.labels.push(new Date());
-            rollChartInstance.data.datasets.forEach((dataset) => {
-              dataset.data.push(data[3]);
-            });
-            pitchChartInstance.data.labels.push(new Date());
-            pitchChartInstance.data.datasets.forEach((dataset) => {
-              dataset.data.push(data[4]);
-            });
-
-            if (updateCount > numberElements) {
-              xAccelChartInstance.data.labels.shift();
-              xAccelChartInstance.data.datasets[0].data.shift();
-              yAccelChartInstance.data.labels.shift();
-              yAccelChartInstance.data.datasets[0].data.shift();
-              zAccelChartInstance.data.labels.shift();
-              zAccelChartInstance.data.datasets[0].data.shift();
-              rollChartInstance.data.labels.shift();
-              rollChartInstance.data.datasets[0].data.shift();
-              pitchChartInstance.data.labels.shift();
-              pitchChartInstance.data.datasets[0].data.shift();
-            } else updateCount++;
-            xAccelChartInstance.update();
-            yAccelChartInstance.update();
-            zAccelChartInstance.update();
-            rollChartInstance.update();
-            pitchChartInstance.update();
-          }
-        }
-
-        function updateData() {
-          if ("WebSocket" in window) {
-            ws.onerror = function (err) {
-              console.error(
-                "Socket encountered error: ",
-                err.message,
-                "Closing socket"
-              );
-              // window.location.reload();
-            };
-            webSocket = ws;
-            ws.onmessage = function (evt) {
-              var data = evt.data;
-              // console.log(data);
-              addData(data);
-            };
-          }
-        }
-        
-
-        updateData();
+          ],
+        },
+        legend: { display: false },
+        tooltips: {
+          enabled: false,
+        },
       };
-    </script>
+      var xAccelChartInstance = new Chart(xAccelChart, {
+        type: "line",
+        data: {
+          datasets: [
+            {
+              label: "X Acceleration",
+              fill: false,
+              borderColor: "#FFF",
+              borderWidth: 2,
+              fontColor: "#FFF",
+            },
+          ],
+        },
+        options: Object.assign({}, commonOptions, {
+          title: {
+            display: true,
+            text: "P-TERM",
+            fontSize: 18,
+            fontFamily: "Oswald",
+            fontColor: "#FFF",
+          },
+          elements: {
+            point: {
+              radius: 0,
+            },
+          },
+        }),
+        scales: {
+          xAxes: [
+            {
+              type: "time",
+              time: {
+                displayFormats: {
+                  millisecond: "S",
+                },
+              },
+              gridLines: { color: "#FFF" },
+            },
+          ],
+          yAxes: [
+            {
+              ticks: {
+                suggestedMin: -50, // minimum will be 0, unless there is a lower value.
+                suggestedMax: 50, // maximum will be
+              },
+              gridLines: { color: "#FFF" },
+            },
+          ],
+        },
+        legend: { display: false },
+        tooltips: {
+          enabled: false,
+        },
+      });
 
-    <style>
-      @import "susy";
-      @import "compass/reset";
+      var yAccelChartInstance = new Chart(yAccelChart, {
+        type: "line",
+        data: {
+          datasets: [
+            {
+              label: "Y Acceleration",
+              data: 0,
+              fill: false,
+              borderColor: "#FFF",
+              borderWidth: 2,
+              fontColor: "#FFF",
+            },
+          ],
+        },
+        options: Object.assign({}, commonOptions, {
+          title: {
+            display: true,
+            text: "D-TERM",
+            fontSize: 18,
+            fontFamily: "Oswald",
+            fontColor: "#FFF",
+          },
+          elements: {
+            point: {
+              radius: 0,
+            },
+          },
+        }),
+        scales: {
+          xAxes: [
+            {
+              type: "time",
+              time: {
+                displayFormats: {
+                  millisecond: "S",
+                },
+              },
+              gridLines: { color: "#FFF" },
+            },
+          ],
+          yAxes: [
+            {
+              ticks: {
+                suggestedMin: -1000,
+                suggestedMax: 1000,
+              },
+              gridLines: { color: "#FFF" },
+            },
+          ],
+        },
+        legend: { display: false },
+        tooltips: {
+          enabled: false,
+        },
+      });
 
-      body{
-        font-family: Oswald, sans-serif;
-        color: #FFF;
-        background: #000;
+      var zAccelChartInstance = new Chart(zAccelChart, {
+        type: "line",
+        data: {
+          datasets: [
+            {
+              label: "Z Acceleration",
+              data: 0,
+              fill: false,
+              borderColor: "#FFF",
+              borderWidth: 2,
+              fontColor: "#FFF",
+            },
+          ],
+        },
+        options: Object.assign({}, commonOptions, {
+          title: {
+            display: true,
+            text: "I-TERM",
+            fontSize: 18,
+            fontFamily: "Oswald",
+            fontColor: "#FFF",
+          },
+          elements: {
+            point: {
+              radius: 0,
+            },
+          },
+        }),
+        scales: {
+          xAxes: [
+            {
+              type: "time",
+              time: {
+                displayFormats: {
+                  millisecond: "S",
+                },
+              },
+              gridLines: { color: "#FFF" },
+            },
+          ],
+          yAxes: [
+            {
+              ticks: {
+                suggestedMin: -1000,
+                suggestedMax: 1000,
+              },
+              gridLines: { color: "#FFF" },
+            },
+          ],
+        },
+        legend: { display: false },
+        tooltips: {
+          enabled: false,
+        },
+      });
+
+      var rollChartInstance = new Chart(rollChart, {
+        type: "line",
+        data: {
+          datasets: [
+            {
+              label: "Roll",
+              data: 0,
+              fill: false,
+              borderColor: "#FFF",
+              borderWidth: 2,
+              fontColor: "#FFF",
+            },
+          ],
+        },
+        options: Object.assign({}, commonOptions, {
+          title: {
+            display: true,
+            text: "PITCH CORRECTION",
+            fontSize: 18,
+            fontFamily: "Oswald",
+            fontColor: "#FFF",
+          },
+          elements: {
+            point: {
+              radius: 0,
+            },
+          },
+        }),
+        scales: {
+          xAxes: [
+            {
+              type: "time",
+              time: {
+                displayFormats: {
+                  millisecond: "S",
+                },
+              },
+              gridLines: { color: "#FFF" },
+            },
+          ],
+          yAxes: [
+            {
+              ticks: {
+                suggestedMin: -1000,
+                suggestedMax: 1000,
+              },
+              gridLines: { color: "#FFF" },
+            },
+          ],
+        },
+        legend: { display: false },
+        tooltips: {
+          enabled: false,
+        },
+      });
+
+      var pitchChartInstance = new Chart(pitchChart, {
+        type: "line",
+        data: {
+          datasets: [
+            {
+              label: "Pitch",
+              data: 0,
+              fill: false,
+              borderColor: "#FFF",
+              borderWidth: 2,
+              fontColor: "#FFF",
+            },
+          ],
+        },
+        options: Object.assign({}, commonOptions, {
+          title: {
+            display: true,
+            text: "CORRECTED TERM",
+            fontSize: 18,
+            fontFamily: "Oswald",
+            fontColor: "#FFF"
+          },
+          elements: {
+            point: {
+              radius: 0,
+            },
+          },
+        }),
+        scales: {
+          xAxes: [
+            {
+              type: "time",
+              time: {
+                displayFormats: {
+                  millisecond: "S",
+                },
+              },
+              gridLines: { color: "#FFF" },
+            },
+          ],
+          yAxes: [
+            {
+              ticks: {
+                suggestedMin: -1000,
+                suggestedMax: 1000,
+              },
+              gridLines: { color: "#FFF" },
+            },
+          ],
+        },
+        legend: { display: false },
+        tooltips: {
+          enabled: false,
+        },
+      });
+
+      function addData(data) {
+        console.log(data);
+        var new_data = data
+          .split(",")
+          .filter((x) => x.trim().length && !isNaN(x))
+          .map(Number);
+        var new_data_1 = data.split(",");
+        var temp = new_data_1[4];
+        temp = temp.replace(/\D/g, "");
+        temp = parseInt(temp, 10);
+        data = new_data.concat(temp);
+        console.log(data[0]);
+        console.log(data[1]);
+        console.log(data[2]);
+        console.log(data[3]);
+        console.log(data[4]);
+
+        if (data) {
+          xAccelChartInstance.data.labels.push(new Date());
+          xAccelChartInstance.data.datasets.forEach((dataset) => {
+            dataset.data.push(data[0]);
+          });
+          yAccelChartInstance.data.labels.push(new Date());
+          yAccelChartInstance.data.datasets.forEach((dataset) => {
+            dataset.data.push(data[1]);
+          });
+          zAccelChartInstance.data.labels.push(new Date());
+          zAccelChartInstance.data.datasets.forEach((dataset) => {
+            dataset.data.push(data[2]);
+          });
+          rollChartInstance.data.labels.push(new Date());
+          rollChartInstance.data.datasets.forEach((dataset) => {
+            dataset.data.push(data[3]);
+          });
+          pitchChartInstance.data.labels.push(new Date());
+          pitchChartInstance.data.datasets.forEach((dataset) => {
+            dataset.data.push(data[4]);
+          });
+
+          if (updateCount > numberElements) {
+            xAccelChartInstance.data.labels.shift();
+            xAccelChartInstance.data.datasets[0].data.shift();
+            yAccelChartInstance.data.labels.shift();
+            yAccelChartInstance.data.datasets[0].data.shift();
+            zAccelChartInstance.data.labels.shift();
+            zAccelChartInstance.data.datasets[0].data.shift();
+            rollChartInstance.data.labels.shift();
+            rollChartInstance.data.datasets[0].data.shift();
+            pitchChartInstance.data.labels.shift();
+            pitchChartInstance.data.datasets[0].data.shift();
+          } else updateCount++;
+          xAccelChartInstance.update();
+          yAccelChartInstance.update();
+          zAccelChartInstance.update();
+          rollChartInstance.update();
+          pitchChartInstance.update();
+        }
       }
 
-      img{
-        filter: grayscale(1) invert(1);
+      function updateData() {
+        if ("WebSocket" in window) {
+          ws.onerror = function (err) {
+            console.error(
+              "Socket encountered error: ",
+              err.message,
+              "Closing socket"
+            );
+            // window.location.reload();
+          };
+          webSocket = ws;
+          ws.onmessage = function (evt) {
+            var data = evt.data;
+            // console.log(data);
+            addData(data);
+          };
+        }
       }
 
-      span.input-group-text{
-        /* background-color: #FFF; */
-        border-radius: 5px 0px 0px 5px;
-        border: 0px solid #ffffff;
+      document.querySelectorAll('input[name="ftext"]').forEach((input, index) => {
+        input.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter') {
+            event.preventDefault();  // Prevent form submission
+            document.querySelectorAll('button')[index].click();
+          }
+        });
+      });
+
+      updateData();
+    };
+  </script>
+
+  <style>
+    @import "susy";
+    @import "compass/reset";
+
+    body {
+      font-family: Oswald, sans-serif;
+      color: #FFF;
+      background: #000;
+    }
+
+    img {
+      filter: grayscale(1) invert(1);
+    }
+
+    span.input-group-text {
+      /* background-color: #FFF; */
+      border-radius: 5px 0px 0px 5px;
+      border: 0px solid #ffffff;
+    }
+
+    .form-control {
+      border-radius: 0px 5px 5px 0px;
+      margin: 0;
+      border: 0px solid #ffffff;
+    }
+
+    .container {
+      display: flex;
+      color: #FFF;
+    }
+
+    .value-container {
+      margin: 2em 2em 2em 5.3em;
+    }
+
+    .label {
+      flex: 1;
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    .x {
+      flex: 3;
+      text-align: center;
+      background-color: rgba(197, 40, 61, 0.55);
+      margin: 10px;
+      border-radius: 15px;
+    }
+
+    .y {
+      flex: 3;
+      text-align: center;
+      background-color: rgba(103, 148, 54, 0.60);
+      margin-top: 10px;
+      margin-bottom: 10px;
+      border-radius: 15px;
+    }
+
+    .z {
+      flex: 3;
+      text-align: center;
+      background-color: rgba(35, 87, 137, 0.64);
+      margin: 10px;
+      border-radius: 15px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    @media (max-width: 1200px) {
+      .value-container {
+        margin-top: 2em;
       }
 
-      .form-control{
-        border-radius: 0px 5px 5px 0px;
-        margin: 0;
-        border: 0px solid #ffffff;
+      .offset-container {
+        margin-left: 23em;
       }
+    }
 
-      .container {
-        display: flex;
-        color: #FFF;
+    @media (min-width: 1200px) {
+      .value-container {
+        margin-top: 2em;
       }
+    }
+  </style>
+</head>
 
-      .value-container{
-        margin: 2em 2em 2em 5.3em;
-      }
-
-      .label {
-        flex: 1;
-        vertical-align: middle;
-        text-align: center;
-      }
-
-      .x {
-        flex: 3;
-        text-align: center;
-        background-color: rgba(197, 40, 61, 0.55);
-        margin: 10px;
-        border-radius: 15px;
-      }
-
-      .y {
-        flex: 3;
-        text-align: center;
-        background-color: rgba(103, 148, 54, 0.60);
-        margin-top: 10px;
-        margin-bottom: 10px;
-        border-radius: 15px;
-      }
-
-      .z {
-        flex: 3;
-        text-align: center;
-        background-color: rgba(35, 87, 137, 0.64);
-        margin: 10px;
-        border-radius: 15px;
-      }
-
-      h1 {
-        text-align: center;
-      }
-
-      @media (max-width: 1200px) {
-			  .value-container{
-				  margin-top: 2em;
-			  }
-			  .offset-container{
-				  margin-left: 23em;
-			  }
-		  }
-		  @media (min-width: 1200px) {
-			  .value-container{
-				  margin-top: 2em;
-			  }
-		  }
-
-    </style>
-  </head>
-
-  <body>
+<body>
   <div id="labelAccel" class="label">
-      <img
-        src="https://drive.google.com/uc?export=view&id=1zkT3u49ixBW_8_TA8xBO0mTogS-rzqpp"
-        width="200"
-        height="120"
-      />
-      <h1>PID TUNING</h1>
-    </div>
+    <img src="https://drive.google.com/uc?export=view&id=1zkT3u49ixBW_8_TA8xBO0mTogS-rzqpp" width="200" height="120" />
+    <h1>PID TUNING</h1>
+  </div>
 
-    <div id="accelContainer" class="container">
-      <div id="xAccel" class="x">
-        <canvas id="xAccelChart"></canvas>
-      </div>
-      <!--xAccel-->
-      <div id="yAccel" class="y">
-        <canvas id="yAccelChart"></canvas>
-      </div>
-      <!--yAccel-->
-      <div id="zAccel" class="z">
-        <canvas id="zAccelChart"></canvas>
-      </div>
-      <!--zAccel-->
+  <div id="accelContainer" class="container">
+    <div id="xAccel" class="x">
+      <canvas id="xAccelChart"></canvas>
     </div>
-
-    <div id="orientationContainer" class="container">
-      <div id="Roll" class="x">
-        <canvas id="rollChart"></canvas>
-      </div>
-      <div id="Pitch" class="y">
-        <canvas id="pitchChart"></canvas>
-      </div>
+    <!--xAccel-->
+    <div id="yAccel" class="y">
+      <canvas id="yAccelChart"></canvas>
     </div>
+    <!--yAccel-->
+    <div id="zAccel" class="z">
+      <canvas id="zAccelChart"></canvas>
+    </div>
+    <!--zAccel-->
+  </div>
 
-    <div style="te">
-      <div class="container value-container">
-        <div class="row">
-          <div class="col-sm">
-            <form id="frm1" action="#">
-              <div style = "width:200px;" class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-default">Kp</span>
-                </div>
-                <input name="ftext" type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+  <div id="orientationContainer" class="container">
+    <div id="Roll" class="x">
+      <canvas id="rollChart"></canvas>
+    </div>
+    <div id="Pitch" class="y">
+      <canvas id="pitchChart"></canvas>
+    </div>
+  </div>
+
+  <div style="te">
+    <div class="container value-container">
+      <div class="row">
+        <div class="col-sm">
+          <form id="frm1" action="#">
+            <div style="width:200px;" class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Kp</span>
               </div>
-              <div style="transform: translateX(70px); margin-top: 10px">
-                <button
-                  type="button"
-                  class="btn btn-secondary btn-block"
-                  onclick="send_Text_kp(document.getElementsByName('ftext')[0].value);"
-                >
-                  Send
-                </button>
+              <input name="ftext" type="number" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div style="transform: translateX(70px); margin-top: 10px">
+              <button type="button" class="btn btn-secondary btn-block"
+                onclick="send_Text_kp(document.getElementsByName('ftext')[0].value);">
+                Send
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="col-sm">
+          <form id="frm2" action="#">
+            <div style="width:200px;" class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Ki</span>
               </div>
-            </form>
-          </div>
-          <div class="col-sm">
-            <form id="frm2" action="#">
-              <div style = "width:200px;" class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-default">Ki</span>
-                </div>
-                <input name="ftext" type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+              <input name="ftext" type="number" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div style="transform: translateX(70px); margin-top: 10px">
+              <button type="button" class="btn btn-secondary btn-block"
+                onclick="send_Text_ki(document.getElementsByName('ftext')[1].value);">
+                Send
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="col-sm">
+          <form id="frm3" action="#">
+            <div style="width:200px;" class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Kd</span>
               </div>
-              <div style="transform: translateX(70px); margin-top: 10px">
-                <button
-                  type="button"
-                  class="btn btn-secondary btn-block"
-                  onclick="send_Text_ki(document.getElementsByName('ftext')[1].value);"
-                >
-                  Send
-                </button>
+              <input name="ftext" type="number" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div style="transform: translateX(70px); margin-top: 10px">
+              <button type="button" class="btn btn-secondary btn-block"
+                onclick="send_Text_kd(document.getElementsByName('ftext')[2].value);">
+                Send
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="col-sm" style="width: 500px">
+          <form id="frm4" action="#">
+            <div style="width:200px;" class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Setpoint</span>
               </div>
-            </form>
-          </div>
-          <div class="col-sm">
-            <form id="frm3" action="#">
-              <div style = "width:200px;" class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-default">Kd</span>
-                </div>
-                <input name="ftext" type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+              <input name="ftext" type="number" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div style="transform: translateX(70px); margin: 10px">
+              <button type="button" class="btn btn-secondary btn-block"
+                onclick="send_Text_setpoint(document.getElementsByName('ftext')[3].value);">
+                Send
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="col-sm offset-container">
+          <form id="frm5" action="#">
+            <div style="width:200px;" class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Offset</span>
               </div>
-              <div style="transform: translateX(70px); margin-top: 10px">
-                <button
-                  type="button"
-                  class="btn btn-secondary btn-block"
-                  onclick="send_Text_kd(document.getElementsByName('ftext')[2].value);"
-                >
-                  Send
-                </button>
-              </div>
-            </form>
-          </div>
-          <div class="col-sm" style="width: 500px">
-            <form id="frm4" action="#">
-              <div style = "width:200px;" class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-default">Setpoint</span>
-                </div>
-                <input name="ftext" type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-              </div>
-              <div style="transform: translateX(70px); margin: 10px">
-                <button
-                  type="button"
-                  class="btn btn-secondary btn-block"
-                  onclick="send_Text_setpoint(document.getElementsByName('ftext')[3].value);"
-                >
-                  Send
-                </button>
-              </div>
-            </form>
-          </div>
-          <div class="col-sm offset-container">
-            <form id="frm5" action="#">
-              <div style = "width:200px;" class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-default">Offset</span>
-                </div>
-                <input name="ftext" type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-              </div>
-              <div style="transform: translateX(70px); margin: 10px">
-                <button
-                  type="button"
-                  class="btn btn-secondary btn-block"
-                  onclick="send_Text_offset(document.getElementsByName('ftext')[4].value);"
-                >
-                  Send
-                </button>
-              </div>
-            </form>
-          </div>
+              <input name="ftext" type="number" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div style="transform: translateX(70px); margin: 10px">
+              <button type="button" class="btn btn-secondary btn-block"
+                onclick="send_Text_offset(document.getElementsByName('ftext')[4].value);">
+                Send
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>

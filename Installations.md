@@ -111,7 +111,7 @@ Open the terminal by pressing command+space and then typing terminal.
 **Note:** If you're an M1 mac os user refer this [link](https://youtu.be/9W8rTTE1WEA) to open the terminal.
 
 ### STEP 2 : Installing the necessary file
-- Download the driver by executing the following command in the terminal. Refer to the next step for opening the terminal and running the command.
+- Download the driver by executing the following command in the terminal.
 ```sh
 curl https://raw.githubusercontent.com/SRA-VJTI/Wall-E/refs/heads/master/wall_e_install.sh -o wall_e_install.sh
 sudo chmod +x wall_e_install.sh

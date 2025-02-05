@@ -5,7 +5,7 @@
     * [For MacOS](#for-macos)
 
 # For Windows
-The first step is to install the ESP-IDF v4.2. 
+The first step is to install the ESP-IDF v5.2. 
 
 ## Step 1:Download the installer from [here](https://dl.espressif.com/dl/esp-idf/?idf=5.2)
 Please download the **offline** version pointed by the
@@ -105,19 +105,17 @@ sudo chmod +x wall_e_install.sh
 
 
 ## For MacOS
-### STEP 1 : Installing the necessary file
-- Download the file "wall_e_install.sh" given in the root folder itself and put it in the "Downloads" folder
-- Download the driver by clicking on this [link](https://www.silabs.com/documents/public/software/Mac_OSX_VCP_Driver.zip) , unzip it, then install it on the system
-
-### STEP 2 : Opening The Terminal
+### STEP 1 : Opening The Terminal
 Open the terminal by pressing command+space and then typing terminal.
 
 **Note:** If you're an M1 mac os user refer this [link](https://youtu.be/9W8rTTE1WEA) to open the terminal.
 
-### STEP 3 : Installing the Pre-Requisites 
-Copy this command in the command in the terminal , then press return 
+### STEP 2 : Installing the necessary file
+- Download the driver by executing the following command in the terminal. Refer to the next step for opening the terminal and running the command.
 ```sh
- source ~/Downloads/wall_e_install.sh
+curl https://raw.githubusercontent.com/SRA-VJTI/Wall-E/refs/heads/master/wall_e_install.sh -o wall_e_install.sh
+sudo chmod +x wall_e_install.sh
+./wall_e_install.sh
 ```
 Note:- when you are asked to type the password in the terminal, password will not be visible to you. Just type the password and then press return.
 
@@ -133,7 +131,7 @@ Cloning the Wall-E Git repo
 To clone the repo,execute the following commands on terminal.
 ```sh
 cd $HOME
-git clone https://github.com/SRA-VJTI/Wall-E.git --recurse-submodules
+git clone https://github.com/SRA-VJTI/Wall-E.git --recurse_submodules
 cd Wall-E
 ```
 <p align="center">
@@ -251,5 +249,3 @@ and for **windows** COM1 can be replaced by other number depending on the port t
 ```sh
 idf.py flash monitor
 ```
-
-

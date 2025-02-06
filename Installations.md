@@ -131,7 +131,7 @@ Cloning the Wall-E Git repo
 To clone the repo,execute the following commands on terminal.
 ```sh
 cd $HOME
-git clone https://github.com/SRA-VJTI/Wall-E.git --recurse_submodules
+git clone https://github.com/SRA-VJTI/Wall-E.git --recursive --depth 1
 cd Wall-E
 ```
 <p align="center">

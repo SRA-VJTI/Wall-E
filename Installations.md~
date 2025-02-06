@@ -166,7 +166,8 @@ ls
 
 * For Windows -
 ```powershell
-cd ~/Projects/Wall-E/1_led_blink
+cd ~/Projects/Wall-E
+xcopy /e /i %IDF_PATH%\examples\get-started\hello_world hello_world
 ``` 
 
 ### Step 2 : Connect Your Device
@@ -207,6 +208,7 @@ idf.py menuconfig # Command for Opening the Configuration Menu
 ```
 * For Windows -
 ```powershell
+cd ~/Projects/Wall-E/1_led_blink #Navigating to the file
 idf.py set-target esp32 #Command for Setting the Target
 idf.py menuconfig #Command for Opening the Configuration
 ```

@@ -81,23 +81,35 @@ cd Wall-E
 
 ## For Linux 
 
-### Step 1 : Cloning the Wall-E Git repo
-Open the terminal to clone the repo,execute the following commands on terminal. Installing the project in the Home folder.
+### Step 1: Getting the Installation script from the Wall-E repository
+Open the terminal and check if you have the `curl` command installed on your machine. If not use your package manager to do so.
+```sh
+which curl
+```
+```sh
+# For Debian / Ubuntu based distributions
+sudo apt install curl
+
+# For Red Hat Enterprise Linux / Fedora based distributions
+sudo dnf install curl
+
+# For Arch based distributions
+sudo pacman -S curl
+```
+After having installed curl, use it to download the installation script to a convenient location in your system and execute it.
 ```sh
 cd $HOME
-git clone https://github.com/SRA-VJTI/Wall-E.git --recurse-submodules
-cd Wall-E 
+curl https://raw.githubusercontent.com/SRA-VJTI/Wall-E/refs/heads/master/wall_e_install.sh -o $HOME/wall_e_install.sh
 ```
 <p align="center">
   <img src="./documentation/Assets/Installation/9.png">
 </p>
 
-### Step 2 : Installing the necessary prerequisites.
-Run the following commands for a quick install on Linux-based systems:
+### Step 2: Execute the Installation script
+Execute the following commands for a quick install on Linux systems. This will install the required toolkit from Espressif and clone the Wall-E repository as well.
 ```sh
-cd $HOME/Wall-E
-sudo chmod +x wall_e_install.sh
-./wall_e_install.sh && source $HOME/."${SHELL#${SHELL%/*}/}"rc 
+chmod +x $HOME/wall_e_install.sh
+./wall_e_install.sh && source $HOME/."${SHELL#${SHELL%/*}/}"rc
 ```
 <p align="center">
   <img src="./documentation/Assets/Installation/13.png">
@@ -111,7 +123,7 @@ Open the terminal by pressing command+space and then typing terminal.
 **Note:** If you're an M1 mac os user refer this [link](https://youtu.be/9W8rTTE1WEA) to open the terminal.
 
 ### STEP 2 : Installing the necessary file
-- Download the driver by executing the following command in the terminal.
+- Download the installation script by executing the following command in the terminal.
 ```sh
 curl https://raw.githubusercontent.com/SRA-VJTI/Wall-E/refs/heads/master/wall_e_install.sh -o wall_e_install.sh
 sudo chmod +x wall_e_install.sh
@@ -126,19 +138,12 @@ cd ~/esp/esp-idf/examples/get-started/hello_world
 idf.py flash monitor
 ```
  
-### STEP 4 : Cloning Wall-E git repo
-Cloning the Wall-E Git repo
-To clone the repo,execute the following commands on terminal.
+### STEP 4 : Going to the cloned Wall-E repository
+The installation script also ensures that the Wall-E repository is cloned to your home directory. So to actually start building the examples present in the Wall-E repository, just change directory over to there and you can start building and flashing. 
 ```sh
 cd $HOME
-git clone https://github.com/SRA-VJTI/Wall-E.git --recursive --depth 1
 cd Wall-E
 ```
-<p align="center">
-  <img src="./documentation/Assets/Installation/15.png">
-</p>
-
- It will take some time to install, make sure you have an active internet connection. It will take around 2GB of data.
 
 # Commands
 This is the basic procedure for compiling and flashing a code on the ESP32

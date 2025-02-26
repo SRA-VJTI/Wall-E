@@ -182,25 +182,13 @@ Connect your ESP32 board to the computer and check under what serial port the bo
   * After **connecting** the sra board, to check The port for Windows, Go to device manager (search it in the taskbar) It should look like this
   
 <p align="center">
-  <img src="./documentation/Assets/Installation/18.jpg">
+  <img src="./documentation/Assets/Installation/17.jpg">
 </p> 
 
-* If you see Ports (COM & LPT) and don't see `Silicon Labs CP210x USB to UART Bridge` 
-  * **Fix1**: Click [here](http://silabs.com/developers/usb-to-uart-bridge-vcp-drivers) to install the drivers. 
-    * Go to Downloads section and install this driver, extract and follow the default installation for x64 
-<p align="center">
-  <img src="./documentation/Assets/Installation/17.png">
-</p> 
-
-<p align="center">
-  <img src="./documentation/Assets/Installation/19.jpeg">
-</p> 
+The USB to UART bridge will be automatically detected after a few seconds of plugging it to your machine.
 
 * If you don't see Ports (COM & LPT) after connecting USB: 
   * Click [here](https://support-bradyid.force.com/s/article/Ports-COM-LPT-Not-Showing-in-Device-Manager) and follow the steps
-
-
-
 
 ### Step 3 : Configure
 

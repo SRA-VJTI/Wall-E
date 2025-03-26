@@ -12,18 +12,45 @@ else
     unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)
-        su -c "apt update && apt install sudo -y"
-        sudo apt install tzdata -y
+		# Check the version of Linux
+		if grep -q "Arch" /etc/os-release; then
+			if [ -z "$(which sudo)" ]; then
+				# Steps to be taken if sudo is not installed
+				su -c "pacman -S sudo"
+				su -c "usermod -aG wheel $USER"
+				su -c "echo 'wheel ALL=(ALL:ALL) ALL' >> /etc/sudoers"
+			fi
+
+			sudo pacman -Syu
+			sudo pacman -S tzdata
+
+			# Time to change the system time
+			currentTimezone="$(readlink /etc/localtime)"
+			sudo ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime
+			sudo hwclock --systohc
+
+			sudo usermod -aG dialout $USER || echo "Failed to add user to dialout group"
+			sudo pacman -S git wget flex bison gperf python python-pip python-setuptools cmake ninja ccache libffi openssl dfu-util libusb
+			sudo pacman -S python-virtualenv
+
+			# Change system time back to original
+			sudo ln -fs "$currentTimezone" /etc/localtime
+
+		elif grep -q -E "Ubuntu\|Debian" /etc/os-release; then
+
+	        su -c "apt update && apt install sudo -y"
+    	    sudo apt install tzdata -y
     
-        # Set timezone non-interactively
-        export DEBIAN_FRONTEND=noninteractive
-        sudo ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime
-        echo "Etc/UTC" | sudo tee /etc/timezone > /dev/null
-        sudo dpkg-reconfigure --frontend noninteractive tzdata
+        	# Set timezone non-interactively
+	        export DEBIAN_FRONTEND=noninteractive
+    	    sudo ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime
+        	echo "Etc/UTC" | sudo tee /etc/timezone > /dev/null
+	        sudo dpkg-reconfigure --frontend noninteractive tzdata
         
-        sudo usermod -aG dialout $USER || echo "Failed to add user to dialout group"
-        sudo apt install git wget flex bison gperf python3 python3-pip python3-setuptools cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 -y
-        sudo apt install python3-venv -y
+    	    sudo usermod -aG dialout $USER || echo "Failed to add user to dialout group"
+        	sudo apt install git wget flex bison gperf python3 python3-pip python3-setuptools cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 -y
+	        sudo apt install python3-venv -y
+		fi
         ;;
     Darwin*)
         if brew --version | grep -q 'Homebrew'; then
@@ -43,7 +70,7 @@ esac
     pushd "$HOME"/esp || (echo "Error: Cannot Make Directory" && exit 1)
 
     # Clone ESP-IDF Repository
-    git clone -b release/v5.1 --recursive https://github.com/espressif/esp-idf.git
+    git clone -b release/v5.1 --recursive https://github.com/espressif/esp-idf.git --depth 1
     cd $HOME/esp/esp-idf
     ./install.sh esp32
 

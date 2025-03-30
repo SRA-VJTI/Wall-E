@@ -37,7 +37,7 @@ case "${unameOut}" in
 			# Change system time back to original
 			sudo ln -fs "$currentTimezone" /etc/localtime
 
-		elif grep -q -E "Ubuntu\|Debian" /etc/os-release; then
+		elif grep -q -E "Ubuntu|Debian" /etc/os-release; then
 
 	        su -c "apt update && apt install sudo -y"
     	    sudo apt install tzdata -y

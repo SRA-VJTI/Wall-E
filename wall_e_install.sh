@@ -29,8 +29,8 @@ case "${unameOut}" in
 			sudo ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime
 			sudo hwclock --systohc
 
-			sudo groupadd -f dialout
-			sudo usermod -aG dialout $USER || echo "Failed to add user to dialout group"
+			sudo groupadd -f uucp
+			sudo usermod -aG uucp $USER || echo "Failed to add user to dialout group"
 			sudo pacman -S git wget flex bison gperf python python-pip python-setuptools cmake ninja ccache libffi openssl dfu-util libusb
 			sudo pacman -S python-virtualenv
 

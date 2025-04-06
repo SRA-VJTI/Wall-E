@@ -30,7 +30,7 @@ case "${unameOut}" in
 			sudo hwclock --systohc
 
 			sudo groupadd -f uucp
-			sudo usermod -aG uucp $USER || echo "Failed to add user to dialout group"
+			sudo usermod -aG uucp $USER || echo "Failed to add user to uucp group"
 			sudo pacman -S git wget flex bison gperf python python-pip python-setuptools cmake ninja ccache libffi openssl dfu-util libusb
 			sudo pacman -S python-virtualenv
 

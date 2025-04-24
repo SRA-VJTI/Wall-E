@@ -50,7 +50,7 @@
 
 <p align="center">
 
-|<img width="333" height="263" src="documentation/Assets/self_balance_demo.gif"> | <img width="463" height="263" src="documentation/Assets/walle_oled.png">|
+|<img width="333" height="263" src="documentation/Assets/self_balance_demo.gif"> | <img width="350" height="263" src="documentation/Assets/walle_oled.png">|
 :-------------------------:|:-------------------------:
  Wall-E Bot Self-Balancing  |  Wall-E Bot with OLED Display
 

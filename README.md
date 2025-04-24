@@ -1,6 +1,6 @@
 <p align="center">
   <img src="documentation/images/logo.png"/>
-  
+
   <h3 align="center"> Wall-E version 2.6 </h3>
   <p align="center">
     Code repository for <a href="https://github.com/SRA-VJTI/Wall-E">Wall-E_v2.6</a>
@@ -13,9 +13,9 @@
     <a href="https://github.com/SRA-VJTI/Wall-E/pulls">Send a Pull Request</a>
   </p>
  </p>
- 
+
  <p align="center">
-  
+
   <a href="https://github.com/SRA-VJTI/Wall-E/network/members">
     <img src="https://img.shields.io/github/forks/SRA-VJTI/Wall-E">
   </a>
@@ -50,11 +50,11 @@
 
 <p align="center">
 
-|<img width="333" height="263" src="documentation/Assets/self_balance_demo.gif"> | <img width="463" height="263" src="documentation/Assets/walle_oled.jpg">|
+|<img width="333" height="263" src="documentation/Assets/self_balance_demo.gif"> | <img width="463" height="263" src="documentation/Assets/walle_oled.png">|
 :-------------------------:|:-------------------------:
- Wall-E Bot Self-Balancing  |  Wall-E Bot with OLED Display 
+ Wall-E Bot Self-Balancing  |  Wall-E Bot with OLED Display
 
-</p> 
+</p>
 
 How do you make a robot follow a line? Now what if the robot has only two wheels. How will it balance and follow the line? This is exactly what is taught in the Wall-E workshop.
 The Wall-E workshop focuses on the concepts of line-following and self-balancing, using ESP32, a powerful micro-controller with features like inbuilt Wi-Fi support and BLE, with extensive application in several domains like IoT, RF, etc. The workshop entails various essential concepts such as PID Control, Embedded Communication Protocols, PWM, Filters, RTOS, etc. and gives its attendees (first-year students) a general idea about the world of robotics and embedded hardware. Following are some of the highlights:
@@ -89,9 +89,9 @@ The Wall-E workshop focuses on the concepts of line-following and self-balancing
 ## Resources
 
 - Please visit and look at our [Custom-made SRA development board](https://github.com/SRA-VJTI/sra-board-hardware-design)
-- Visit ESP-IDF SRA board [Components](https://github.com/SRA-VJTI/sra-board-hardware-design) to have a detailed information about the components of SRA board 
+- Visit ESP-IDF SRA board [Components](https://github.com/SRA-VJTI/sra-board-hardware-design) to have a detailed information about the components of SRA board
 <p align="center">
-  <img src="documentation/images/sra_board.png"/>
+  <img src="documentation/images/new_sra_board.png"/>
   <h3 align="center"> SRA development board </h3>
   </p>
 
@@ -125,6 +125,3 @@ Contributions are what make the open source community such an amazing place to b
 [issues-url]: https://github.com/SRA-VJTI/Wall-E/issues
 [license-shield]: https://img.shields.io/github/license/SRA-VJTI/Wall-E
 [license-url]: https://github.com/SRA-VJTI/Wall-E/blob/master/LICENSE
-
-
-

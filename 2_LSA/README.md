@@ -28,13 +28,13 @@
 ### Components of LSA
 | Component   | Description   | Quantity |
 | ----------- | ------------- | -------- |
-| Infrared Emmiter         | Emits infrared light   |  5       |
+| Infrared Emitter         | Emits infrared light   |  5       |
 | PhotoTransistor  | Absorbs light |  5       |
 | JST Connector   | Connect PCB With Other circuits    |  1       |
 | Resistors   | Limit Current |  10       |
 
 ### Function of Components
-- Infrared Emmitter
+- Infrared Emitter
 	- The specific Infrared Emmitter emit infrared light which is incident on the surface and some of it is absorbed by the surface. The voltage source for the Infrared Emmitter to emit is VCC.
 
 - PhotoTransistor

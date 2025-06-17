@@ -19,7 +19,7 @@ case "${unameOut}" in
 
 			if [ -z "$(sudo --version)" ]; then
 				# Steps to be taken if sudo is not installed
-				su -c "pacman -S sudo"
+				su -c "pacman -S --noconfirm sudo"
 				su -c "usermod -aG wheel $USER"
 				su -c "echo 'wheel ALL=(ALL:ALL) ALL' >> /etc/sudoers"
 			fi

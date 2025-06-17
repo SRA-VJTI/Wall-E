@@ -18,8 +18,8 @@ case "${unameOut}" in
 				echo "Running in Docker Container."
 				# Update the core and extra databases
 				pacman -Sy --noconfirm
-				sudo pacman -S --noconfirm git wget flex bison gperf python python-pip python-setuptools cmake ninja ccache libffi openssl dfu-util libusb
-				sudo pacman -S --noconfirm python-virtualenv
+				pacman -S --noconfirm git wget flex bison gperf python python-pip python-setuptools cmake ninja ccache libffi openssl dfu-util libusb
+				pacman -S --noconfirm python-virtualenv
 				pacman -Syu
 			else
 				echo "Running on Arch Linux host."

@@ -22,7 +22,7 @@ case "${unameOut}" in
 			fi
 
 			sudo pacman -Syu
-			sudo pacman -S tzdata
+			sudo pacman -S --noconfirm tzdata
 
 			# Time to change the system time
 			currentTimezone="$(readlink /etc/localtime)"
@@ -31,8 +31,8 @@ case "${unameOut}" in
 
 			sudo groupadd -f uucp
 			sudo usermod -aG uucp $USER || echo "Failed to add user to uucp group"
-			sudo pacman -S git wget flex bison gperf python python-pip python-setuptools cmake ninja ccache libffi openssl dfu-util libusb
-			sudo pacman -S python-virtualenv
+			sudo pacman -S --noconfirm git wget flex bison gperf python python-pip python-setuptools cmake ninja ccache libffi openssl dfu-util libusb
+			sudo pacman -S --noconfirm python-virtualenv
 
 			# Change system time back to original
 			sudo ln -fs "$currentTimezone" /etc/localtime

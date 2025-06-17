@@ -14,7 +14,7 @@ case "${unameOut}" in
     Linux*)
 		# Check the version of Linux
 		if grep -q "Arch" /etc/os-release; then
-			if [ -z "$(which sudo)" ]; then
+			if [ -z "$(sudo --version)" ]; then
 				# Steps to be taken if sudo is not installed
 				su -c "pacman -S sudo"
 				su -c "usermod -aG wheel $USER"

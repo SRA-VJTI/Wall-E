@@ -32,6 +32,11 @@ jobs:
             host_runner: ubuntu-latest
             package_manager: apt
             docker_image: ubuntu:20.04
+          - name: Arch Latest
+            host_runner: ubuntu-latest
+            package_manager: pacman
+            docker_image: archlinux:latest
+
 
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.host_runner }}

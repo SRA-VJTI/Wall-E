@@ -14,6 +14,9 @@ case "${unameOut}" in
     Linux*)
 		# Check the version of Linux
 		if grep -q "Arch" /etc/os-release; then
+			# First perform an update the core and extra databases
+			su -c "pacman -Sy"
+
 			if [ -z "$(sudo --version)" ]; then
 				# Steps to be taken if sudo is not installed
 				su -c "pacman -S sudo"
@@ -21,7 +24,6 @@ case "${unameOut}" in
 				su -c "echo 'wheel ALL=(ALL:ALL) ALL' >> /etc/sudoers"
 			fi
 
-			sudo pacman -Syu
 			sudo pacman -S --noconfirm tzdata
 
 			# Time to change the system time
@@ -33,6 +35,7 @@ case "${unameOut}" in
 			sudo usermod -aG uucp $USER || echo "Failed to add user to uucp group"
 			sudo pacman -S --noconfirm git wget flex bison gperf python python-pip python-setuptools cmake ninja ccache libffi openssl dfu-util libusb
 			sudo pacman -S --noconfirm python-virtualenv
+			sudo pacman -Syu
 
 			# Change system time back to original
 			sudo ln -fs "$currentTimezone" /etc/localtime

@@ -14,34 +14,46 @@ case "${unameOut}" in
     Linux*)
 		# Check the version of Linux
 		if grep -q "Arch" /etc/os-release; then
-			# First perform an update the core and extra databases
-			su -c "pacman -Sy"
+			if [ "$CI" = "true" ]; then
+				echo "Running in Docker Container."
+				# Update the core and extra databases
+				pacman -Sy --noconfirm
+				sudo pacman -S --noconfirm git wget flex bison gperf python python-pip python-setuptools cmake ninja ccache libffi openssl dfu-util libusb
+				sudo pacman -S --noconfirm python-virtualenv
+				pacman -Syu
+			else
+				echo "Running on Arch Linux host."
+				# Update the core and extra databases
+				su -c "pacman -Sy"
 
-			if [ -z "$(sudo --version)" ]; then
-				# Steps to be taken if sudo is not installed
-				su -c "pacman -S --noconfirm sudo"
-				su -c "usermod -aG wheel $USER"
-				su -c "echo 'wheel ALL=(ALL:ALL) ALL' >> /etc/sudoers"
+				if [ -z "$(sudo --version)" ]; then
+					# Steps to be taken if sudo is not installed
+					su -c "pacman -S --noconfirm sudo"
+					su -c "usermod -aG wheel $USER"
+					su -c "echo 'wheel ALL=(ALL:ALL) ALL' >> /etc/sudoers"
+					echo "Reboot and run this script again for changes to take place"
+					exit 0
+				fi
+
+				sudo pacman -S --noconfirm tzdata
+
+				# Time to change the system time
+				currentTimezone="$(readlink /etc/localtime)"
+				sudo ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime
+				sudo hwclock --systohc
+
+				sudo groupadd -f uucp
+				sudo usermod -aG uucp $USER || echo "Failed to add user to uucp group"
+				sudo pacman -S --noconfirm git wget flex bison gperf python python-pip python-setuptools cmake ninja ccache libffi openssl dfu-util libusb
+				sudo pacman -S --noconfirm python-virtualenv
+				sudo pacman -Syu
+
+				# Change system time back to original
+				sudo ln -fs "$currentTimezone" /etc/localtime
 			fi
-
-			sudo pacman -S --noconfirm tzdata
-
-			# Time to change the system time
-			currentTimezone="$(readlink /etc/localtime)"
-			sudo ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime
-			sudo hwclock --systohc
-
-			sudo groupadd -f uucp
-			sudo usermod -aG uucp $USER || echo "Failed to add user to uucp group"
-			sudo pacman -S --noconfirm git wget flex bison gperf python python-pip python-setuptools cmake ninja ccache libffi openssl dfu-util libusb
-			sudo pacman -S --noconfirm python-virtualenv
-			sudo pacman -Syu
-
-			# Change system time back to original
-			sudo ln -fs "$currentTimezone" /etc/localtime
-
 		elif grep -q -E "Ubuntu|Debian" /etc/os-release; then
 
+			echo "Running on Ubuntu host."
 	        su -c "apt update && apt install sudo -y"
     	    sudo apt install tzdata -y
     

@@ -20,7 +20,7 @@ case "${unameOut}" in
 				pacman -Sy --noconfirm
 				pacman -S --noconfirm git wget flex bison gperf python python-pip python-setuptools cmake ninja ccache libffi openssl dfu-util libusb
 				pacman -S --noconfirm python-virtualenv
-				pacman -Syu
+				pacman -Syu --noconfirm
 			else
 				echo "Running on Arch Linux host."
 				# Update the core and extra databases

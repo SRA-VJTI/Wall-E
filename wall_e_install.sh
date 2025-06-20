@@ -26,7 +26,7 @@ case "${unameOut}" in
 				# Update the core and extra databases
 				su -c "pacman -Sy"
 
-				if [ -z "$(sudo --version)" ]; then
+				if [ -z "$(command -v sudo)" ]; then
 					# Steps to be taken if sudo is not installed
 					su -c "pacman -S --noconfirm sudo"
 					su -c "usermod -aG wheel $USER"

@@ -30,7 +30,7 @@ case "${unameOut}" in
 					# Steps to be taken if sudo is not installed
 					su -c "pacman -S --noconfirm sudo"
 					su -c "usermod -aG wheel $USER"
-					su -c "echo 'wheel ALL=(ALL:ALL) ALL' >> /etc/sudoers"
+					echo 'wheel ALL=(ALL:ALL) ALL' | su -c "EDITOR='tee -a' visudo"
 					echo "Reboot and run this script again for changes to take place"
 					exit 0
 				fi

@@ -1,3 +1,4 @@
+---
 name: test-install-script
 
 concurrency:
@@ -32,6 +33,11 @@ jobs:
             host_runner: ubuntu-latest
             package_manager: apt
             docker_image: ubuntu:20.04
+          - name: Arch Latest
+            host_runner: ubuntu-latest
+            package_manager: pacman
+            docker_image: archlinux:latest
+
 
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.host_runner }}
@@ -39,7 +45,7 @@ jobs:
       image: ${{ matrix.docker_image }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -57,7 +63,7 @@ jobs:
     runs-on: ${{ matrix.host_runner }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 

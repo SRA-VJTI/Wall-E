@@ -1,3 +1,4 @@
+---
 name: Test Build of Wall-E
 on: [push, pull_request, workflow_dispatch]
 

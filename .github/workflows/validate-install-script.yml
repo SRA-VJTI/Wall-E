@@ -1,12 +1,15 @@
+---
 name: Validate-YAML
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
     paths:
       - '.github/workflows/test-install-script.yml'
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
     paths:
       - '.github/workflows/test-install-script.yml'
 
@@ -14,6 +17,6 @@ jobs:
   validate-yaml:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Validate test-install-script.yml
         run: yamllint .github/workflows/test-install-script.yml

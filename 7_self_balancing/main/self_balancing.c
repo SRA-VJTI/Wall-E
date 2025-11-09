@@ -7,6 +7,8 @@
 #include <math.h>
 
 #include "tuning_websocket_server.h"
+#include "esp_netif.h"
+#include "lwip/ip4_addr.h"
 
 //Limiting Variables
 #define MAX_PITCH_CORRECTION (90.0f)
@@ -167,7 +169,9 @@ void balance_task(void *arg)
 				// Diplaying kp, ki, kd values on OLED
 				if (read_pid_const().val_changed)
 				{
-					display_pid_values(read_pid_const().kp, read_pid_const().ki, read_pid_const().kd);
+					esp_netif_ip_info_t ip_info;
+		            esp_netif_get_ip_info(esp_netif_get_handle_from_ifkey("WIFI_STA_DEF"), &ip_info);
+					display_pid_values(read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, &ip_info);
 					reset_val_changed_pid_const();
 				}
 #endif				

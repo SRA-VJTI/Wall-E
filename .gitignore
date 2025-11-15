@@ -101,3 +101,6 @@ _deps
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+
+### macOS ###
+.DS_Store

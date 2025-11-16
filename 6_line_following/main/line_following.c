@@ -3,6 +3,8 @@
 #include "freertos/task.h"
 #include "sra_board.h"
 #include "tuning_http_server.h"
+#include "esp_netif.h"
+#include "lwip/ip4_addr.h"
 
 #define MODE NORMAL_MODE
 #define BLACK_MARGIN 4095
@@ -133,10 +135,15 @@ void line_follow_task(void* arg)
         //ESP_LOGI("debug","left_duty_cycle:  %f    ::  right_duty_cycle :  %f  :: error :  %f  correction  :  %f  \n",left_duty_cycle, right_duty_cycle, error, correction);
         ESP_LOGI("debug", "KP: %f ::  KI: %f  :: KD: %f", read_pid_const().kp, read_pid_const().ki, read_pid_const().kd);
 #ifdef CONFIG_ENABLE_OLED
-        // Diplaying kp, ki, kd values on OLED 
+        // Displaying kp, ki, kd values on OLED 
         if (read_pid_const().val_changed)
         {
-            display_pid_values(read_pid_const().kp, read_pid_const().ki, read_pid_const().kd);
+            esp_netif_ip_info_t ip_info;
+            esp_netif_get_ip_info(esp_netif_get_handle_from_ifkey("WIFI_STA_DEF"), &ip_info);
+
+            const char *ip_str_value = ip4addr_ntoa((const ip4_addr_t *)&ip_info.ip);
+            display_pid_values(read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, ip_str_value);
+
             reset_val_changed_pid_const();
         }
 #endif

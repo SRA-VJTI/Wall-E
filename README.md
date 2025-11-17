@@ -1,9 +1,10 @@
+
 <p align="center">
   <img src="documentation/images/logo.png"/>
   
-  <h3 align="center"> Wall-E version 2.6 </h3>
+  <h3 align="center"> Wall-E version 2.7 </h3>
   <p align="center">
-    Code repository for <a href="https://github.com/SRA-VJTI/Wall-E">Wall-E_v2.6</a>
+    Code repository for <a href="https://github.com/SRA-VJTI/Wall-E">Wall-E_v2.7</a>
     <br />
     <br />
     <a href="https://github.com/SRA-VJTI/Wall-E/issues">Report Bug</a>
@@ -32,19 +33,18 @@
 
 ## Table of Contents
 - [About the Workshop](#about-the-workshop)
+- [Architecture](#architecture)
 - [Installation](#installation)
 - [Examples](#examples)
 - [Resources](#resources)
 - [Contribution](#contribution)
 - [License](#license)
 
-- [Acknowledgements](#acknowledgements)
-
 ## About the Workshop
 <p align="center">
-  <img src="documentation/images/wall_E_bot.JPG"/>
+  <img src="documentation/images/walle_v2.7.jpeg"/>
   <a href="https://github.com/SRA-VJTI/Wall-E-Sim">
-  <h3 align="center"> Wall-E bot simulation </h3>
+  <h3 align="center"> Wall-E </h3>
   </a>
 </p>
 
@@ -54,15 +54,27 @@
 :-------------------------:|:-------------------------:
  Wall-E Bot Self-Balancing  |  Wall-E Bot with OLED Display 
 
-</p> 
+Wall-E is a two-wheeled educational **self balancing** and **line following** robot developed by **SRA-VJTI**, designed to teach embedded robotics concepts such as  **control theory (PID)**, and **embedded communication**. The brain of the robot is an **ESP32** microcontroller paired with a custom-made SRA development board.
 
-How do you make a robot follow a line? Now what if the robot has only two wheels. How will it balance and follow the line? This is exactly what is taught in the Wall-E workshop.
-The Wall-E workshop focuses on the concepts of line-following and self-balancing, using ESP32, a powerful micro-controller with features like inbuilt Wi-Fi support and BLE, with extensive application in several domains like IoT, RF, etc. The workshop entails various essential concepts such as PID Control, Embedded Communication Protocols, PWM, Filters, RTOS, etc. and gives its attendees (first-year students) a general idea about the world of robotics and embedded hardware. Following are some of the highlights:
-- The custom-made SRA Development Board & ESP32.
-- ESP-IDF, the official IoT Development framework by espressif.
-- Motor Control with PWM and PID.
-- Accelerometer , gyroscope and complimentary filter.
-- Communcation protocols ( UART , SPI , I2C )
+This repository hosts the firmware, demo projects, and study material used in SRA VJTI's Wall-E workshop. With features like inbuilt Wi-Fi support and BLE, and extensive application in several domains like IoT, RF, etc, The workshop entails various essential concepts such as PID Control, Embedded Communication Protocols, PWM, Filters, RTOS, etc. and gives its attendees (first-year students) a general idea about the world of robotics and embedded hardware.
+
+## Architecture
+
+### Hardware  
+- **ESP32 Microcontroller**: central processing, sensor reading, control loops  
+- **SRA Development Board**: custom PCB that connects ESP32 to sensors, motor drivers, power supply, etc.
+- **Sensors** 
+  - MPU6050 IMU (gyro + accelerometer) for self balancing  
+  - Light Sensor Array (LSA) for line following  
+- **Actuators**: Dual DC motors (controlled via PWM)  
+- **Communication**: I2C, SPI, UART for peripheral communication  
+- **User Interface** 
+  - (Optional) OLED display for local feedback
+### Software  
+- Built using **ESP-IDF**, leveraging tasks in FreeRTOS.  
+- WebSocket interface for real-time tuning : dynamic tuning via WebSocket without reflashing firmware.  
+
+---
 
 
 ## Installation
@@ -82,16 +94,33 @@ The Wall-E workshop focuses on the concepts of line-following and self-balancing
 |             Line-Following              |              [Line_Following](https://github.com/SRA-VJTI/Wall-E/tree/master/6_line_following/)     |         Line-Following algorithm that enables the bot to follow the path of white line         |
 |             Self-Balancing              |         [Self_Balancing](https://github.com/SRA-VJTI/Wall-E/blob/master/7_self_balancing/README.md)          | Self-Balancing algorithm that enables the bot to balance its weight under the force of gravity |
 
+## Running the Example Projects
 
 
-<!-- ROADMAP -->
+### 1. Choose an Example
+Navigate to one of the examples in the examples directory under Wall-E.
+```bash
+cd components/sra-board-component/examples/<example_name>
+```
+### 2. Configure
+Opens the ESP-IDF configuration menu where you can set project options, enable features, and adjust hardware settings.
+```bash
+idf.py menuconfig
+```
+### 3. Build and Flash
+Builds the project, flashes it to the ESP32, and starts the serial monitor to view real-time logs.
+```bash
+idf.py build
+idf.py flash
+idf.py monitor
+```
 
 ## Resources
 
 - Please visit and look at our [Custom-made SRA development board](https://github.com/SRA-VJTI/sra-board-hardware-design)
 - Visit ESP-IDF SRA board [Components](https://github.com/SRA-VJTI/sra-board-hardware-design) to have a detailed information about the components of SRA board 
 <p align="center">
-  <img src="documentation/images/sra_board.png"/>
+  <img src="documentation/images/board_v2.7.jpeg"/>
   <h3 align="center"> SRA development board </h3>
   </p>
 
@@ -125,6 +154,7 @@ Contributions are what make the open source community such an amazing place to b
 [issues-url]: https://github.com/SRA-VJTI/Wall-E/issues
 [license-shield]: https://img.shields.io/github/license/SRA-VJTI/Wall-E
 [license-url]: https://github.com/SRA-VJTI/Wall-E/blob/master/LICENSE
+
 
 
 

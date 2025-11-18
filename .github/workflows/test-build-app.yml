@@ -10,7 +10,7 @@ jobs:
       image: espressif/idf:release-v5.1
     strategy:
       matrix:
-        test-apps: [1_led_matrix, 2_LSA, 3_MPU, 5_PWM, 6_line_following, 7_self_balancing]
+        test-apps: [1_led_blink, 2_LSA, 3_MPU, 4_PWM, 5_line_following, 6_self_balancing]
     steps:
       - name: Force Install GIT latest
         run: |

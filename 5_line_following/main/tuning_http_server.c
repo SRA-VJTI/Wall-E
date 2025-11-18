@@ -233,6 +233,4 @@ void start_tuning_http_server()
     connect_to_wifi();
     ESP_ERROR_CHECK(init_fs());
     ESP_ERROR_CHECK(start_tuning_http_server_private());
-    
-    vTaskDelete(NULL);
 }

@@ -19,28 +19,9 @@ static void blink_all(led_matrix *m)
 
 static void game_of_life(led_matrix *m, int rows, int cols, TickType_t frame_ms)
 {
-    uint32_t frame = 0;
-
-    if (rows == 5 && cols == 6) {
-        // Fixed pattern chosen to give a long, interesting evolution on a 5x6 toroidal grid
-        frame = 0x0BFE020C;
-    } else if (rows >= 3 && cols >= 3) {
-        // Fallback: a horizontal "blinker" centered in the matrix
-        int r = rows / 2;
-        int c0 = cols / 2 - 1;
-        for (int dc = 0; dc < 3; dc++) {
-            int c = c0 + dc;
-            int idx = r * cols + c;
-            frame |= (1UL << idx);
-        }
-    } else {
-        // Fallback: turn on the middle row
-        int r = rows / 2;
-        for (int c = 0; c < cols; c++) {
-            int idx = r * cols + c;
-            frame |= (1UL << idx);
-        }
-    }
+    // Fixed pattern chosen to give a long, interesting evolution
+    // on the 5x6 toroidal grid used by this project.
+    uint32_t frame = 0x0BFE020C;
     uint32_t next = 0;
 
     while (1) {

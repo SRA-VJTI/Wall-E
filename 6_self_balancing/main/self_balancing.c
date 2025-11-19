@@ -15,8 +15,9 @@
 #define MAX_PITCH_AREA (850.0f)
 #define MAX_PITCH_RATE (850.0f)
 
-#define MAX_PWM (80.0f)
-#define MIN_PWM (60.0f)
+// Updated PWM bounds per bot tuning
+#define MAX_PWM (60.0f)
+#define MIN_PWM (30.0f)
 
 /**
 * Self Balancing Tuning Parameters

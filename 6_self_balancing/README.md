@@ -126,3 +126,10 @@ Integral Term = ki*(Integral_Error)
     * `mpu_offset` : mpu_offsets are the initial accelerometer angles at rest position
 
     **Return** : returns ESP_OK if calculate angles correctly else return ESP_FAIL if any error occurs
+
+## Default PWM Settings (Wall‑Ev2.7)
+
+- Recommended duty cycle bounds for motors while balancing:
+  - `MAX_PWM = 60`
+  - `MIN_PWM = 30`
+- Adjust in code at `6_self_balancing/main/self_balancing.c` if your hardware differs.

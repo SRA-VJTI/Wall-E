@@ -85,6 +85,21 @@ The Wall-E workshop focuses on the concepts of line-following and self-balancing
 
 <!-- ROADMAP -->
 
+## Wall‑Ev2.7 Motor PWM Settings
+
+- Self‑Balancing (duty cycle bounds)
+  - `MAX_PWM = 60`
+  - `MIN_PWM = 30`
+- Line‑Following (base and bounds)
+  - `optimum_duty_cycle = 40`
+  - `lower_duty_cycle = 10`
+  - `higher_duty_cycle = 55`
+
+Code locations for these defaults:
+- Self‑Balancing: `6_self_balancing/main/self_balancing.c`
+- Line‑Following: `5_line_following/main/line_following.c`
+
+
 ## Resources
 
 - Please visit and look at our [Custom-made SRA development board](https://github.com/SRA-VJTI/sra-board-hardware-design)
@@ -124,5 +139,4 @@ Contributions are what make the open source community such an amazing place to b
 [issues-url]: https://github.com/SRA-VJTI/Wall-E/issues
 [license-shield]: https://img.shields.io/github/license/SRA-VJTI/Wall-E
 [license-url]: https://github.com/SRA-VJTI/Wall-E/blob/master/LICENSE
-
 

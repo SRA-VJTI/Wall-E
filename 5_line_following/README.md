@@ -138,3 +138,11 @@ Integral Term = Ki*(Cumulative Error)
     **Description** : Starts an HTTP server that allows remote tuning of PID parameters via a web interface
 
     **Parameters** : None
+
+## Default PWM Settings (Wall‑Ev2.7)
+
+- Recommended base and bounds for motor duty cycles:
+  - `optimum_duty_cycle = 40`
+  - `lower_duty_cycle = 10`
+  - `higher_duty_cycle = 55`
+- Update these in `5_line_following/main/line_following.c` to match your bot.

@@ -21,9 +21,10 @@ const int weights[5] = {-5, -3, 1, 3, 5};
 /*
  * Motor value boundts
  */
-int optimum_duty_cycle = 57;
-int lower_duty_cycle = 45;
-int higher_duty_cycle = 65;
+// Updated PWM settings per bot tuning
+int optimum_duty_cycle = 40;
+int lower_duty_cycle = 10;
+int higher_duty_cycle = 55;
 float left_duty_cycle = 0, right_duty_cycle = 0;
 
 /*

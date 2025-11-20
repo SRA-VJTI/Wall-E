@@ -156,6 +156,6 @@ void line_follow_task(void* arg)
 
 void app_main()
 {
-    xTaskCreate(&line_follow_task, "line_follow_task", 4096, NULL, 1, NULL);
     start_tuning_http_server();
+    xTaskCreate(&line_follow_task, "line_follow_task", 4096, NULL, 1, NULL);
 }

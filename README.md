@@ -42,7 +42,7 @@
 
 ## About the Workshop
 <p align="center">
-  <img src="documentation/images/walle_v2.7.jpeg"/>
+  <img width = 600 src="documentation/images/walle_v2.7.jpeg"/>
   <a href="https://github.com/SRA-VJTI/Wall-E-Sim">
   <h3 align="center"> Wall-E </h3>
   </a>
@@ -50,9 +50,9 @@
 
 <p align="center">
 
-|<img width="333" height="263" src="documentation/Assets/self_balance_demo.gif"> | <img width="463" height="263" src="documentation/Assets/walle_oled.jpg">|
-:-------------------------:|:-------------------------:
- Wall-E Bot Self-Balancing  |  Wall-E Bot with OLED Display 
+| <img height="263" src="documentation/Images/self_balancing.gif"> | <img height="263" src="documentation/Images/oled.jpg"> | <img height="263" src="documentation/Images/led_matrix.gif"> |
+:-------------------------:|:-------------------------:|:-------------------------:
+Wall-E Bot Self-Balancing | Wall-E Bot with OLED Display | Wall-E Bot with LED Matrix
 
 Wall-E is a two-wheeled educational **self balancing** and **line following** robot developed by **SRA-VJTI**, designed to teach embedded robotics concepts such as  **control theory (PID)**, and **embedded communication**. The brain of the robot is an **ESP32** microcontroller paired with a custom-made SRA development board.
 
@@ -73,6 +73,7 @@ This repository hosts the firmware, demo projects, and study material used in SR
 ### Software  
 - Built using **ESP-IDF**, leveraging tasks in FreeRTOS.  
 - WebSocket interface for real-time tuning : dynamic tuning via WebSocket without reflashing firmware.  
+- runs Conway's Game of Life on the SRA Board LED matrix using ESP-IDF
 
 ---
 

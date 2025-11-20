@@ -50,7 +50,7 @@
 
 <p align="center">
 
-| <img height="263" src="documentation/images/self_balancing.gif"> | <img height="263" src="documentation/images/oled.jpg"> | <img height="263" src="documentation/images/led_matrix.gif"> |
+| <img height="350" src="documentation/images/self_balancing.gif"> | <img height="350" src="documentation/images/oled.jpg"> | <img height="350" src="documentation/images/led_matrix.gif"> |
 :-------------------------:|:-------------------------:|:-------------------------:
 Wall-E Bot Self-Balancing | Wall-E Bot with OLED Display | Wall-E Bot with LED Matrix
 
@@ -87,7 +87,7 @@ This repository hosts the firmware, demo projects, and study material used in SR
 
 |                  TOPIC                  |                                                        Link                                                         |                                          Description                                           |
 | :-------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
-|                LED Blink                |              [LED_Blink](https://github.com/SRA-VJTI/Wall-E/blob/master/1_led_blink/README.md)               |                     Performing LED Blink by connecting the LED with esp32                      |
+|                LED Matrix                |              [LED_Matrix](https://github.com/SRA-VJTI/Wall-E/blob/master/1_led_matrix/README.md)               |                     Performing LED Blink by connecting the LED with esp32                      |
 |           Light Sensing Array           |                    [LSA](https://github.com/SRA-VJTI/Wall-E/blob/master/2_LSA/README.md)                     |        Sensing Array that uses different Light Sensors, majorly used for Line-Following        |
 |                 MPU6050                 |                    [MPU](https://github.com/SRA-VJTI/Wall-E/blob/master/3_MPU/README.md)                     |           Motion controlled MPU measures angles with respect to 6 Degrees of Freedom           |
 | Switch controlled motor in normal mode  |   [Normal_Mode](https://github.com/SRA-VJTI/Wall-E/blob/master/4_switch_controlled_motor_normal/README.md)   |         Controls the movement of Bot manually using switches connected in normal mode          |

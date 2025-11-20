@@ -50,7 +50,7 @@
 
 <p align="center">
 
-| <img height="263" src="documentation/Images/self_balancing.gif"> | <img height="263" src="documentation/Images/oled.jpg"> | <img height="263" src="documentation/Images/led_matrix.gif"> |
+| <img height="263" src="documentation/images/self_balancing.gif"> | <img height="263" src="documentation/images/oled.jpg"> | <img height="263" src="documentation/images/led_matrix.gif"> |
 :-------------------------:|:-------------------------:|:-------------------------:
 Wall-E Bot Self-Balancing | Wall-E Bot with OLED Display | Wall-E Bot with LED Matrix
 

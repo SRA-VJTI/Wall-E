@@ -6,7 +6,7 @@
 #include "esp_netif.h"
 #include "lwip/ip4_addr.h"
 #ifdef CONFIG_SAC_JUNCTION_MAZE
-#include "junction_maze.h"
+#include "sac_track_controller.h"
 #endif
 
 #define MODE NORMAL_MODE
@@ -116,7 +116,13 @@ void line_follow_task(void* arg)
 #endif
 
     #ifdef CONFIG_SAC_JUNCTION_MAZE
-    junction_maze_t maze = {0};
+    sac_track_t track = {0};
+#ifdef CONFIG_SAC_MAZE_INVERT_LINE
+    track.inverted = true;
+#endif
+#ifdef CONFIG_SAC_AUTO_POLARITY
+    track.automatic = true;
+#endif
     #endif
 
     while(true)
@@ -133,9 +139,6 @@ void line_follow_task(void* arg)
         uint8_t line_bits = 0;
         for (int i = 0; i < 5; ++i) {
             bool on_line = line_sensor_readings.adc_reading[i] > BLACK_BOUNDARY;
-#ifdef CONFIG_SAC_MAZE_INVERT_LINE
-            on_line = !on_line;
-#endif
 #ifdef CONFIG_SAC_MAZE_REVERSE_SENSORS
             int bit = 4 - i;
 #else
@@ -144,7 +147,12 @@ void line_follow_task(void* arg)
             if (on_line) line_bits |= (uint8_t)(1u << bit);
         }
         uint32_t now_ms = (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS);
-        maze_output_t command = junction_maze_step(&maze, line_bits, now_ms);
+        sac_track_output_t track_output = sac_track_step(&track, line_bits, now_ms);
+        line_bits = track_output.line_bits;
+        maze_output_t command = track_output.motor;
+        if (track_output.switched) {
+            ESP_LOGI("maze", "Line polarity switched; inverted=%d", track.inverted);
+        }
         if (command.reset_pid) {
             error = prev_error = cumulative_error = difference = correction = 0;
         }
@@ -193,7 +201,7 @@ void line_follow_task(void* arg)
         }
 #endif
 
-        vTaskDelay(10 / portTICK_PERIOD_MS);
+        vTaskDelay(pdMS_TO_TICKS(10) ? pdMS_TO_TICKS(10) : 1);
     }
 
     vTaskDelete(NULL);

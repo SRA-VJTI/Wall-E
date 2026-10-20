@@ -9,7 +9,12 @@ jobs:
         run: |
           cc -std=c99 -Wall -Wextra -Werror -fsanitize=address,undefined 5_line_following/tests/test_junction_maze.c -o /tmp/maze-test
           /tmp/maze-test
+          cc -std=c99 -Wall -Wextra -Werror -fsanitize=address,undefined 5_line_following/tests/test_sac_track.c -o /tmp/track-test
+          /tmp/track-test
   maze-firmware:
+    strategy:
+      matrix:
+        polarity: [automatic, manual]
     runs-on: ubuntu-latest
     container:
       image: espressif/idf:release-v5.1
@@ -24,4 +29,11 @@ jobs:
           cd 5_line_following
           cp sdkconfig.defaults sdkconfig.maze
           echo CONFIG_SAC_JUNCTION_MAZE=y >> sdkconfig.maze
+          if [ "${{ matrix.polarity }}" = automatic ]; then
+            echo CONFIG_SAC_AUTO_POLARITY=y >> sdkconfig.maze
+          else
+            echo '# CONFIG_SAC_AUTO_POLARITY is not set' >> sdkconfig.maze
+            echo CONFIG_SAC_MAZE_INVERT_LINE=y >> sdkconfig.maze
+            echo CONFIG_SAC_MAZE_REVERSE_SENSORS=y >> sdkconfig.maze
+          fi
           idf.py -B build-maze -D SDKCONFIG_DEFAULTS=sdkconfig.maze build

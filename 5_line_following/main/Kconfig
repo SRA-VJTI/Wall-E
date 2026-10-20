@@ -7,8 +7,16 @@ menu "SAC Junction Maze"
         help
             For non-looped line mazes. Requires track calibration before use.
             Disabling this preserves the original line follower.
+    config SAC_AUTO_POLARITY
+        bool "Automatically switch line polarity"
+        depends on SAC_JUNCTION_MAZE
+        default y
+        help
+            Confirms a narrow opposite-color interior stripe before switching.
+            Ambiguous junctions can resemble inversion; test your actual course.
+            Disable for fixed polarity or tracks with ambiguous split stripes.
     config SAC_MAZE_INVERT_LINE
-        bool "Invert maze line polarity"
+        bool "Start with inverted maze line polarity"
         depends on SAC_JUNCTION_MAZE
         default n
     config SAC_MAZE_REVERSE_SENSORS

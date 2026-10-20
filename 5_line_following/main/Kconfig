@@ -1,5 +1,22 @@
 menu "Wall-E Configuration"
 
+menu "SAC Junction Maze"
+    config SAC_JUNCTION_MAZE
+        bool "Enable left-hand junction maze exploration"
+        default n
+        help
+            For non-looped line mazes. Requires track calibration before use.
+            Disabling this preserves the original line follower.
+    config SAC_MAZE_INVERT_LINE
+        bool "Invert maze line polarity"
+        depends on SAC_JUNCTION_MAZE
+        default n
+    config SAC_MAZE_REVERSE_SENSORS
+        bool "Reverse physical sensor order"
+        depends on SAC_JUNCTION_MAZE
+        default n
+endmenu
+
 menu "WiFi Config"
     config WIFI_SSID
         string "WiFi SSID"

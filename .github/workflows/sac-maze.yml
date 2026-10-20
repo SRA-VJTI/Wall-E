@@ -1,0 +1,27 @@
+name: SAC maze checks
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  state-machine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile and exercise junction decisions and recovery
+        run: |
+          cc -std=c99 -Wall -Wextra -Werror -fsanitize=address,undefined 5_line_following/tests/test_junction_maze.c -o /tmp/maze-test
+          /tmp/maze-test
+  maze-firmware:
+    runs-on: ubuntu-latest
+    container:
+      image: espressif/idf:release-v5.1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Build enabled maze mode
+        shell: bash
+        run: |
+          . "$IDF_PATH/export.sh"
+          cd 5_line_following
+          cp sdkconfig.defaults sdkconfig.maze
+          echo CONFIG_SAC_JUNCTION_MAZE=y >> sdkconfig.maze
+          idf.py -B build-maze -D SDKCONFIG_DEFAULTS=sdkconfig.maze build

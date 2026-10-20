@@ -5,6 +5,9 @@
 #include "tuning_http_server.h"
 #include "esp_netif.h"
 #include "lwip/ip4_addr.h"
+#ifdef CONFIG_SAC_JUNCTION_MAZE
+#include "junction_maze.h"
+#endif
 
 #define MODE NORMAL_MODE
 #define BLACK_MARGIN 4095
@@ -112,6 +115,10 @@ void line_follow_task(void* arg)
 
 #endif
 
+    #ifdef CONFIG_SAC_JUNCTION_MAZE
+    junction_maze_t maze = {0};
+    #endif
+
     while(true)
     {
         line_sensor_readings = read_line_sensor(line_sensor);
@@ -122,7 +129,45 @@ void line_follow_task(void* arg)
             line_sensor_readings.adc_reading[i] = 1000 - (line_sensor_readings.adc_reading[i]);
         }
 
+#ifdef CONFIG_SAC_JUNCTION_MAZE
+        uint8_t line_bits = 0;
+        for (int i = 0; i < 5; ++i) {
+            bool on_line = line_sensor_readings.adc_reading[i] > BLACK_BOUNDARY;
+#ifdef CONFIG_SAC_MAZE_INVERT_LINE
+            on_line = !on_line;
+#endif
+#ifdef CONFIG_SAC_MAZE_REVERSE_SENSORS
+            int bit = 4 - i;
+#else
+            int bit = i;
+#endif
+            if (on_line) line_bits |= (uint8_t)(1u << bit);
+        }
+        uint32_t now_ms = (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS);
+        maze_output_t command = junction_maze_step(&maze, line_bits, now_ms);
+        if (command.reset_pid) {
+            error = prev_error = cumulative_error = difference = correction = 0;
+        }
+        if (command.decision) ESP_LOGI("maze", "Decision: %c", command.decision);
+        if (command.override) {
+            ESP_ERROR_CHECK(set_motor_speed(motor_a_0,
+                command.left < 0 ? MOTOR_BACKWARD : command.left > 0 ? MOTOR_FORWARD : MOTOR_STOP,
+                command.left < 0 ? -command.left : command.left));
+            ESP_ERROR_CHECK(set_motor_speed(motor_a_1,
+                command.right < 0 ? MOTOR_BACKWARD : command.right > 0 ? MOTOR_FORWARD : MOTOR_STOP,
+                command.right < 0 ? -command.right : command.right));
+            vTaskDelay(pdMS_TO_TICKS(10) ? pdMS_TO_TICKS(10) : 1);
+            continue;
+        }
+        /* Symmetric position estimate for maze mode, including inverted lines. */
+        int count = 0, position = 0;
+        for (int i = 0; i < 5; ++i) {
+            if (line_bits & (1u << i)) { position += (i - 2) * 2; ++count; }
+        }
+        error = count ? (float)position / count : (prev_error > 0 ? 2.5f : -2.5f);
+#else
         calculate_error();
+#endif
         calculate_correction();
 
         left_duty_cycle = bound((optimum_duty_cycle + correction), lower_duty_cycle, higher_duty_cycle);

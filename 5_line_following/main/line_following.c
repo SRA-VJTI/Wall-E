@@ -7,6 +7,7 @@
 #include "lwip/ip4_addr.h"
 #ifdef CONFIG_SAC_JUNCTION_MAZE
 #include "sac_track_controller.h"
+#include "sac_curve_steering.h"
 #endif
 
 #define MODE NORMAL_MODE
@@ -176,13 +177,22 @@ void line_follow_task(void* arg)
 #else
         calculate_error();
 #endif
+#ifdef CONFIG_SAC_JUNCTION_MAZE
+        float curve_position = error; /* calculate_correction scales error by 10. */
+#endif
         calculate_correction();
 
+#ifdef CONFIG_SAC_JUNCTION_MAZE
+        sac_curve_steer(curve_position, correction, optimum_duty_cycle,
+                        higher_duty_cycle, track.maze.phase == MAZE_CLEAR,
+                        &left_duty_cycle, &right_duty_cycle);
+#else
         left_duty_cycle = bound((optimum_duty_cycle + correction), lower_duty_cycle, higher_duty_cycle);
         right_duty_cycle = bound((optimum_duty_cycle - correction), lower_duty_cycle, higher_duty_cycle);
 
-        set_motor_speed(motor_a_0, MOTOR_FORWARD, left_duty_cycle);
-        set_motor_speed(motor_a_1, MOTOR_FORWARD, right_duty_cycle);
+#endif
+        set_motor_speed(motor_a_0, left_duty_cycle > 0 ? MOTOR_FORWARD : MOTOR_STOP, left_duty_cycle);
+        set_motor_speed(motor_a_1, right_duty_cycle > 0 ? MOTOR_FORWARD : MOTOR_STOP, right_duty_cycle);
 
 
         //ESP_LOGI("debug","left_duty_cycle:  %f    ::  right_duty_cycle :  %f  :: error :  %f  correction  :  %f  \n",left_duty_cycle, right_duty_cycle, error, correction);

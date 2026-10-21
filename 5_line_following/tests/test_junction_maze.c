@@ -34,8 +34,26 @@ int main(void) {
     m = (junction_maze_t){0};
     junction_maze_step(&m, 0, 0);
     o = junction_maze_step(&m, 0, 119);
-    assert(!o.override);
+    assert(o.override && !o.decision);
     o = junction_maze_step(&m, 0, 120);
+    assert(o.override && !o.decision);
+    o = junction_maze_step(&m, 0, 300);
+    assert(o.decision == 'B');
+    /* Mirrored recovery, cancellation, PID reset and timer wrap. */
+    for (int side = 0; side < 2; ++side) {
+        m = (junction_maze_t){0};
+        junction_maze_step(&m, side ? 8 : 2, 0);
+        o = junction_maze_step(&m, 0, 10);
+        assert(o.override && !o.decision);
+        assert(side ? o.right == 0 : o.left == 0);
+        o = junction_maze_step(&m, 0, 130);
+        assert(side ? o.left > 0 && o.right < 0 : o.left < 0 && o.right > 0);
+        o = junction_maze_step(&m, 4, 140);
+        assert(!o.override && o.reset_pid && !m.lost);
+    }
+    m = (junction_maze_t){0};
+    junction_maze_step(&m, 0, UINT32_MAX - 100);
+    o = junction_maze_step(&m, 0, 199);
     assert(o.decision == 'B');
     m = (junction_maze_t){0};
     junction_maze_step(&m, 1, UINT32_MAX - 10);

@@ -1,4 +1,5 @@
 #include <assert.h>
+#include "../main/include/sac_curve_steering.h"
 #include "../main/include/sac_track_controller.h"
 int main(void) {
     sac_track_t s = {.automatic = true};
@@ -29,7 +30,7 @@ int main(void) {
     assert(!o.switched && s.maze.phase == MAZE_PROBE);
     s = (sac_track_t){.automatic = true};
     sac_track_step(&s, 0, 0);
-    o = sac_track_step(&s, 0, 120);
+    o = sac_track_step(&s, 0, 300);
     assert(!o.switched && o.motor.decision == 'B');
     s = (sac_track_t){.inverted = true};
     o = sac_track_step(&s, 27, 0);
@@ -59,5 +60,16 @@ int main(void) {
             assert(o.motor.left >= -MAZE_SPEED && o.motor.left <= MAZE_SPEED);
         }
     }
+    float left, right;
+    sac_curve_steer(0, 0, 57, 65, 0, &left, &right);
+    assert(left == 57 && right == 57);
+    sac_curve_steer(4, 36, 57, 65, 0, &left, &right);
+    assert(left == 65 && right == 0);
+    sac_curve_steer(-4, -36, 57, 65, 0, &left, &right);
+    assert(left == 0 && right == 65);
+    sac_curve_steer(0, 0, 57, 65, 1, &left, &right);
+    assert(left == 45 && right == 45);
+    sac_curve_steer(2, 0, 57, 65, 0, &left, &right);
+    assert(left == 51 && right == 51);
     return 0;
 }

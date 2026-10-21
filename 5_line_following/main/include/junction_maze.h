@@ -14,6 +14,7 @@ typedef struct {
     uint32_t since, candidate_since, lost_since, centered_since;
     bool candidate, lost, centered, left, right, departed;
     char turn;
+    int last_direction; /* -1 left, +1 right; retain across centred samples. */
 } junction_maze_t;
 typedef struct {
     bool override;
@@ -25,6 +26,7 @@ typedef struct {
 #define MAZE_SPEED 45
 #define MAZE_DEBOUNCE_MS 20
 #define MAZE_LOST_MS 120
+#define MAZE_SEARCH_MS 180
 #define MAZE_PROBE_MS 120
 #define MAZE_TURN_MIN_MS 100
 #define MAZE_UTURN_MIN_MS 300
@@ -43,11 +45,19 @@ static inline maze_output_t junction_maze_step(junction_maze_t *m,
         return o;
     }
     if (m->phase == MAZE_FOLLOW) {
+        if (bits) {
+            int position = 0;
+            for (int i = 0; i < 5; ++i)
+                if (bits & (1u << i)) position += i - 2;
+            if (position) m->last_direction = position > 0 ? 1 : -1;
+        }
+        bool was_lost = m->lost;
         if (!bits) {
             if (!m->lost) { m->lost = true; m->lost_since = now; }
         } else {
             m->lost = false;
         }
+        if (was_lost && bits) o.reset_pid = true;
         if (edge) {
             if (!m->candidate) { m->candidate = true; m->candidate_since = now; }
             if (now - m->candidate_since >= MAZE_DEBOUNCE_MS) {
@@ -64,7 +74,21 @@ static inline maze_output_t junction_maze_step(junction_maze_t *m,
         } else {
             m->candidate = false;
         }
-        if (m->lost && now - m->lost_since >= MAZE_LOST_MS) {
+        if (m->lost) {
+            /* Slow arc first, then a bounded pivot toward the last seen line.
+             * Unknown direction stays straight initially and searches left later. */
+            uint32_t lost_for = now - m->lost_since;
+            o.override = true;
+            o.reset_pid = true;
+            o.left = o.right = MAZE_SPEED;
+            if (m->last_direction < 0) o.left = 0;
+            if (m->last_direction > 0) o.right = 0;
+            if (lost_for >= MAZE_LOST_MS) {
+                o.left = m->last_direction > 0 ? MAZE_SPEED : -MAZE_SPEED;
+                o.right = -o.left;
+            }
+        }
+        if (m->lost && now - m->lost_since >= MAZE_LOST_MS + MAZE_SEARCH_MS) {
             m->phase = MAZE_TURN;
             m->since = now;
             m->turn = 'B';

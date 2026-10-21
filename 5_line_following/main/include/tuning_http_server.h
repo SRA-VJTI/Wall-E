@@ -2,6 +2,8 @@
 #define TUNING_HTTP_SERVER_H
 
 #include <string.h>
+#include <stdint.h>
+#include <stdbool.h>
 #include <fcntl.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -38,5 +40,13 @@ typedef struct pid_const
 pid_const_t read_pid_const();
 void reset_val_changed_pid_const();
 void start_tuning_http_server();
+
+typedef struct {
+    uint32_t ms;
+    int values[5], bits, phase, inverted, pending, decision, threshold;
+    float left, right;
+    bool ready, maze;
+} lsa_telemetry_t;
+void publish_lsa_telemetry(const lsa_telemetry_t *sample);
 
 #endif

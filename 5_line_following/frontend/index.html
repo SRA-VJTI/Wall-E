@@ -1,175 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Tuning page</title>
-		<style>
-			* {
-				margin: 0;
-				padding: 0;
-				box-sizing: border-box;
-				font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-				outline: none;
-			}
-			button {
-				border: none;
-				background: transparent;
-			}
-			body {
-				width: 100%;
-				height: 100vh;
-
-				background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj48ZGVmcz48cGF0dGVybiBpZD0icGF0dGVybiIgd2lkdGg9IjQ2LjE5IiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMzQuNjQxMDE2MTUxMzc3NTUsMzAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSgxMzUpICI+PHJlY3QgaWQ9InBhdHRlcm4tYmFja2dyb3VuZCIgd2lkdGg9IjQwMCUiIGhlaWdodD0iNDAwJSIgZmlsbD0icmdiYSgyNiwgMzIsIDQ0LDEpIj48L3JlY3Q+IDxwYXRoIGZpbGw9InJnYmEoNDUsIDU1LCA3MiwxKSIgZD0iTS0yMCAtMjAgaDIwMCB2MjAwIGgtMjAwIE0zMy43NyAyNS41TDI1Ljk4IDIxTDE4LjE5IDI1LjVMMTguMTkgMzQuNUwyNS45OCAzOUwzMy43NyAzNC41ek0xNi40NSAyNS41TDguNjYgMjFMMC44NyAyNS41TDAuODcgMzQuNUw4LjY2IDM5TDE2LjQ1IDM0LjV6TTcuNzkgMTAuNUwwIDZMLTcuNzkgMTAuNUwtNy43OSAxOS41TDAgMjRMNy43OSAxOS41ek0xNi40NSAtNC41TDguNjYgLTlMMC44NyAtNC41TDAuODcgNC41TDguNjYgOUwxNi40NSA0LjV6TTMzLjc3IC00LjVMMjUuOTggLTlMMTguMTkgLTQuNUwxOC4xOSA0LjVMMjUuOTggOUwzMy43NyA0LjV6TTQyLjQzIDEwLjVMMzQuNjQgNkwyNi44NSAxMC41TDI2Ljg1IDE5LjVMMzQuNjQgMjRMNDIuNDMgMTkuNXpNMjUuMTEgMTAuNUwxNy4zMiA2TDkuNTMgMTAuNUw5LjUzIDE5LjVMMTcuMzIgMjRMMjUuMTEgMTkuNXoiPjwvcGF0aD48cGF0aCBmaWxsPSJyZ2JhKDE5MCwgMjI3LCAyNDgsMSkiIGQ9Ik0tMjAgLTIwIGgyMDAgdjIwMCBoLTIwMCBNMjQuMjEgMjUuMjVMMTUuOTggMjAuNUw3Ljc1IDI1LjI1TDcuNzUgMzQuNzVMMTUuOTggMzkuNUwyNC4yMSAzNC43NXpNNi44OSAyNS4yNUwtMS4zNCAyMC41TC05LjU3IDI1LjI1TC05LjU3IDM0Ljc1TC0xLjM0IDM5LjVMNi44OSAzNC43NXpNLTEuNzcgMTAuMjVMLTEwIDUuNUwtMTguMjMgMTAuMjVMLTE4LjIzIDE5Ljc1TC0xMCAyNC41TC0xLjc3IDE5Ljc1ek02Ljg5IC00Ljc1TC0xLjM0IC05LjVMLTkuNTcgLTQuNzVMLTkuNTcgNC43NUwtMS4zNCA5LjVMNi44OSA0Ljc1ek0yNC4yMSAtNC43NUwxNS45OCAtOS41TDcuNzUgLTQuNzVMNy43NSA0Ljc1TDE1Ljk4IDkuNUwyNC4yMSA0Ljc1ek0zMi44NyAxMC4yNUwyNC42NCA1LjVMMTYuNDEgMTAuMjVMMTYuNDEgMTkuNzVMMjQuNjQgMjQuNUwzMi44NyAxOS43NXpNNDEuNTMgMjUuMjVMMzMuMyAyMC41TDI1LjA3IDI1LjI1TDI1LjA3IDM0Ljc1TDMzLjMgMzkuNUw0MS41MyAzNC43NXpNMTUuNTUgNDAuMjVMNy4zMiAzNS41TC0wLjkxIDQwLjI1TC0wLjkxIDQ5Ljc1TDcuMzIgNTQuNUwxNS41NSA0OS43NXpNLTEwLjQzIDI1LjI1TC0xOC42NiAyMC41TC0yNi44OSAyNS4yNUwtMjYuODkgMzQuNzVMLTE4LjY2IDM5LjVMLTEwLjQzIDM0Ljc1ek0tMTAuNDMgLTQuNzVMLTE4LjY2IC05LjVMLTI2Ljg5IC00Ljc1TC0yNi44OSA0Ljc1TC0xOC42NiA5LjVMLTEwLjQzIDQuNzV6TTE1LjU1IC0xOS43NUw3LjMyIC0yNC41TC0wLjkxIC0xOS43NUwtMC45MSAtMTAuMjVMNy4zMiAtNS41TDE1LjU1IC0xMC4yNXpNNDEuNTMgLTQuNzVMMzMuMyAtOS41TDI1LjA3IC00Ljc1TDI1LjA3IDQuNzVMMzMuMyA5LjVMNDEuNTMgNC43NXpNMzIuODcgNDAuMjVMMjQuNjQgMzUuNUwxNi40MSA0MC4yNUwxNi40MSA0OS43NUwyNC42NCA1NC41TDMyLjg3IDQ5Ljc1ek0tMS43NyA0MC4yNUwtMTAgMzUuNUwtMTguMjMgNDAuMjVMLTE4LjIzIDQ5Ljc1TC0xMCA1NC41TC0xLjc3IDQ5Ljc1ek0tMTkuMDkgMTAuMjVMLTI3LjMyIDUuNUwtMzUuNTUgMTAuMjVMLTM1LjU1IDE5Ljc1TC0yNy4zMiAyNC41TC0xOS4wOSAxOS43NXpNLTEuNzcgLTE5Ljc1TC0xMCAtMjQuNUwtMTguMjMgLTE5Ljc1TC0xOC4yMyAtMTAuMjVMLTEwIC01LjVMLTEuNzcgLTEwLjI1ek0zMi44NyAtMTkuNzVMMjQuNjQgLTI0LjVMMTYuNDEgLTE5Ljc1TDE2LjQxIC0xMC4yNUwyNC42NCAtNS41TDMyLjg3IC0xMC4yNXpNNTAuMTkgMTAuMjVMNDEuOTYgNS41TDMzLjczIDEwLjI1TDMzLjczIDE5Ljc1TDQxLjk2IDI0LjVMNTAuMTkgMTkuNzV6TTE1LjU1IDEwLjI1TDcuMzIgNS41TC0wLjkxIDEwLjI1TC0wLjkxIDE5Ljc1TDcuMzIgMjQuNUwxNS41NSAxOS43NXoiPjwvcGF0aD48L3BhdHRlcm4+ICA8L2RlZnM+IDxyZWN0IGZpbGw9InVybCgjcGF0dGVybikiIGhlaWdodD0iMTAwJSIgd2lkdGg9IjEwMCUiPjwvcmVjdD48L3N2Zz4=");
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
-			main {
-				background-color: rgba(0, 0, 0, 0.493);
-				/* backdrop-filter: blur(2px); */
-				color: white;
-				min-width: 35%;
-				padding: 2em;
-				height: 90vh;
-				border-radius: 10px;
-				display: flex;
-				flex-direction: column;
-				justify-content: space-around;
-				align-items: center;
-
-				font-weight: 100;
-			}
-			.button-group {
-				margin-bottom: 20px;
-			}
-			h1 {
-				font-weight: normal;
-				margin-bottom: 10px;
-			}
-			.button-group h3 {
-				font-weight: normal;
-				text-align: center;
-				font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-				font-size: 1.4rem;
-				/* margin-bottom: 5px; */
-			}
-			.button-group input {
-				background-color: transparent;
-				border: none;
-				border-bottom: 2px solid white;
-				color: white;
-				text-align: center;
-				font-size: 1.2rem;
-				padding: 5px;
-			}
-			input::-webkit-outer-spin-button,
-			input::-webkit-inner-spin-button {
-				-webkit-appearance: none;
-			}
-
-			.button-group button {
-				color: white;
-				cursor: pointer;
-				font-size: 2rem;
-			}
-		</style>
-	</head>
-	<body>
-		<main>
-			<h1>Line Following</h1>
-			<div class="button-group">
-				<h3>Kp</h3>
-				<button>&lt;</button>
-				<input type="number" value="0.000" id="kp" />
-				<button>&gt;</button>
-			</div>
-			<div class="button-group">
-				<h3>Ki</h3>
-				<button>&lt;</button>
-				<input type="number" value="0.000" id="ki" />
-				<button>&gt;</button>
-			</div>
-			<div class="button-group">
-				<h3>Kd</h3>
-				<button>&lt;</button>
-				<input type="number" value="0.000" id="kd" />
-				<button>&gt;</button>
-			</div>
-		</main>
-		<script>
-			let inpArray = document.querySelectorAll("input[type='number']");
-			function submitVals() {
-				const data = {};
-				data["kp"] = parseFloat(document.getElementById("kp").value);
-				data["ki"] = parseFloat(document.getElementById("ki").value);
-				data["kd"] = parseFloat(document.getElementById("kd").value);
-				let finaldata = JSON.stringify(data);
-				console.log(finaldata);
-
-				let xhr = new XMLHttpRequest();
-
-				// Vedant!
-				let url = "/api/v1/pid";
-
-				// open a connection
-				xhr.open("POST", url, true);
-
-				// Set the request header i.e. which type of content you are sending
-				xhr.setRequestHeader("Content-Type", "application/json");
-				// Create a state change callback
-				xhr.onreadystatechange = function () {
-					if (xhr.readyState === 4) {
-						if (xhr.status == 400) {
-							console.log("Success!");
-						} else {
-							console.log(xhr.status);
-						}
-						// Print received data from server
-					}
-				};
-
-				// Sending data with the request
-				xhr.send(finaldata);
-			}
-			for (let i = 0; i < inpArray.length; i++) {
-				inpArray[i].addEventListener("change", submitVals);
-			}
-
-			let decrementButtons = document.querySelectorAll(
-				".button-group button:first-of-type"
-			);
-			let incrementButtons = document.querySelectorAll(
-				".button-group button:last-of-type"
-			);
-			function decrementVal(e) {
-				let test = e.target.parentNode.children[2].value;
-				if (!isNaN(Number(test))) {
-					e.target.parentNode.children[2].value = String(
-						(Number(test) - 0.01).toFixed(3)
-					);
-					submitVals();
-				} else {
-					e.target.parentNode.children[2].value = "0.000";
-				}
-			}
-			function incrementVal(e) {
-				let test = e.target.parentNode.children[2].value;
-				if (!isNaN(Number(test))) {
-					e.target.parentNode.children[2].value = String(
-						(Number(test) + 0.01).toFixed(3)
-					);
-					submitVals();
-				} else {
-					e.target.parentNode.children[2].value = "0.000";
-				}
-			}
-			for (button of decrementButtons) {
-				button.addEventListener("click", decrementVal);
-			}
-			for (button of incrementButtons) {
-				button.addEventListener("click", incrementVal);
-			}
-		</script>
-	</body>
-</html>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WALL-E · LSA vision</title>
+<style>
+:root{color-scheme:dark;font:16px system-ui;background:#101514;color:#e8eee9}*{box-sizing:border-box}body{margin:0}main{max-width:1050px;margin:auto;padding:32px 20px}header{display:flex;justify-content:space-between;gap:20px;align-items:center}h1{font-size:clamp(28px,5vw,44px);margin:8px 0}h2{font-size:18px;margin:0 0 20px}.muted,small{color:#9aada1}label{display:block}.badge,button{padding:10px 16px;border:1px solid #42604c;border-radius:30px;background:#1b2921;color:#b5f7cd}.grid{display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-top:24px}.card{padding:24px;background:#19201d;border:1px solid #344039;border-radius:18px}.sensors{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.sensor{text-align:center}.bar{height:140px;background:#0c110e;border:1px solid #526056;position:relative;overflow:hidden;border-radius:12px}.fill{position:absolute;bottom:0;width:100%;background:#628c71}.on .fill{background:#a3f2bc}.bar:after{content:"";position:absolute;bottom:82%;left:0;right:0;border-top:2px dashed #ffe09b}.sensor b{display:block;margin:12px 0 4px}.binary{margin-top:20px;letter-spacing:12px;font:24px monospace;color:#b5f7cd}.metrics{display:grid;gap:18px}.metrics strong{display:block;font-size:23px}.wide{grid-column:1/-1}canvas{width:100%;height:190px;background:#0b100d;border-radius:10px}.controls{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}input{width:90px;padding:10px;background:#0b100d;border:1px solid #536358;border-radius:8px;color:white}button{cursor:pointer}button:disabled{opacity:.5;cursor:default}a{color:#b5f7cd}.stale{opacity:.4}#position{margin-top:14px}p{line-height:1.6}@media(max-width:700px){.grid{grid-template-columns:1fr}.card{padding:18px}header{align-items:start}.bar{height:105px}}
+</style></head><body><main>
+<header><div><small>WALL-E / SENSOR TELEMETRY</small><h1>Through the LSA</h1><span class="muted">Five points. The robot's view of the line.</span></div><span id="status" class="badge" role="status">Connecting…</span></header>
+<div class="grid"><section class="card" id="view"><h2>Live sensor array · left → right</h2><div class="sensors" id="sensors"></div><div class="binary" id="bits">— — — — —</div><div id="position">Waiting for sensor data</div><p class="muted">Bars: normalized reflectance, 0–1000. Dashed line: threshold 820. LINE/BG labels use the bot's current polarity.</p></section>
+<section class="card metrics"><div><small>CONTROLLER</small><strong id="phase">—</strong></div><div><small>POLARITY</small><strong id="polarity">—</strong></div><div><small>LAST DECISION</small><strong id="decision">—</strong></div><div><small>COMMAND PWM · LEFT / RIGHT</small><strong id="motors">—</strong><small>Negative means reverse; these are commands, not measured speed.</small></div></section>
+<section class="card wide"><h2>Recent LSA history</h2><canvas id="history" width="900" height="200" aria-label="Scrolling five-sensor line detection history"></canvas><p class="muted">Newest row at bottom. Green = detected line; dark = background. This records samples at about 5 Hz, not a map or camera view.</p><button id="pause">Pause display</button></section>
+<section class="card wide"><h2>PID tuning</h2><p class="muted">Applying values changes the live steering controller.</p><form id="pid"><div class="controls"><label>Kp <input id="kp" type="number" step="0.01" min="0" max="100" value="0.9" required></label><label>Ki <input id="ki" type="number" step="0.01" min="0" max="100" value="0" required></label><label>Kd <input id="kd" type="number" step="0.01" min="0" max="100" value="6.5" required></label></div><button id="apply" disabled>Apply PID</button> <span id="result" role="status">Connect to the bot to tune.</span></form></section></div>
+<p class="muted">Open on the same Wi-Fi as WALL-E. Sensors only see the surface directly below them. Sensor order follows the firmware configuration; verify it physically.</p></main>
+<script>
+const $=id=>document.getElementById(id), phases=['Following','Probing junction','Turning','Clearing junction','FAULT · stopped'];
+for(let i=0;i<5;i++) $('sensors').insertAdjacentHTML('beforeend','<div class="sensor"><small>S'+(i+1)+'</small><div class="bar"><div class="fill"></div></div><b>—</b><small class="label">—</small></div>');
+let paused=false,lastMs=null,lastAdvance=0;const rows=[], ctx=$('history').getContext('2d');
+$('pause').onclick=()=>{paused=!paused;$('pause').textContent=paused?'Resume display':'Pause display';};
+function render(s){
+const bits=Array.from({length:5},(_,i)=>(s.bits>>i)&1);
+[...$('sensors').children].forEach((el,i)=>{el.classList.toggle('on',!!bits[i]);el.querySelector('.fill').style.height=(s.values[i]/10)+'%';el.querySelector('b').textContent=s.values[i];el.querySelector('.label').textContent=bits[i]?'LINE':'BG';});
+$('bits').textContent=bits.join(' ');let n=bits.reduce((a,b)=>a+b,0),pos=bits.reduce((a,b,i)=>a+b*(i-2)*2,0);
+$('position').textContent=n?'Detected position: '+(pos/n).toFixed(2)+' (− left / + right)':'Line not detected';
+$('phase').textContent=s.pending?'Confirming polarity':!s.maze?'Legacy PID':s.phase===0&&!s.bits?'Searching for line':phases[s.phase]||'Unknown';
+$('polarity').textContent=s.inverted?'Inverted':'Normal';
+$('decision').textContent=({76:'Left',83:'Straight',82:'Right',66:'Back / U-turn'})[s.decision]||'None yet';
+$('motors').textContent=s.left.toFixed(0)+'% / '+s.right.toFixed(0)+'%';
+rows.push(bits);if(rows.length>100)rows.shift();ctx.clearRect(0,0,900,200);
+rows.forEach((r,j)=>r.forEach((v,i)=>{ctx.fillStyle=v?'#a3f2bc':'#24312a';ctx.fillRect(i*180+2,200-(rows.length-j)*2,176,2);}));
+}
+async function poll(){
+const abort=new AbortController(),timer=setTimeout(()=>abort.abort(),1800);
+try{const r=await fetch('/api/v1/lsa',{cache:'no-store',signal:abort.signal});if(!r.ok)throw Error();
+const s=await r.json();if(!s.ready)throw Error();
+if(s.ms!==lastMs){lastMs=s.ms;lastAdvance=Date.now();}
+if(Date.now()-lastAdvance>1500)throw Error();
+$('status').textContent=paused?'Live · display paused':'Live · 5 Hz';$('view').classList.remove('stale');$('apply').disabled=false;
+if(!paused)render(s);
+}catch(e){$('status').textContent='Offline / stale data';$('view').classList.add('stale');$('apply').disabled=true;}
+finally{clearTimeout(timer);setTimeout(poll,200);}
+}
+$('pid').onsubmit=async e=>{e.preventDefault();const data=Object.fromEntries(['kp','ki','kd'].map(k=>[k,Number($(k).value)]));if(!Object.values(data).every(v=>Number.isFinite(v)&&v>=0&&v<=100))return;
+$('apply').disabled=true;try{const r=await fetch('/api/v1/pid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});if(!r.ok)throw Error();$('result').textContent='PID applied.';}catch(e){$('result').textContent='Could not apply PID.';}};
+poll();
+</script></body></html>

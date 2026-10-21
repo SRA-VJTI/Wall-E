@@ -128,6 +128,10 @@ void line_follow_task(void* arg)
 
     while(true)
     {
+        lsa_telemetry_t sample = {
+            .ready = true, .threshold = BLACK_BOUNDARY,
+            .ms = (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS)
+        };
         line_sensor_readings = read_line_sensor(line_sensor);
         for(int i = 0; i < 5; i++)
         {
@@ -136,6 +140,14 @@ void line_follow_task(void* arg)
             line_sensor_readings.adc_reading[i] = 1000 - (line_sensor_readings.adc_reading[i]);
         }
 
+        for (int i = 0; i < 5; ++i) {
+            int bit = i;
+#if defined(CONFIG_SAC_JUNCTION_MAZE) && defined(CONFIG_SAC_MAZE_REVERSE_SENSORS)
+            bit = 4 - i;
+#endif
+            sample.values[bit] = line_sensor_readings.adc_reading[i];
+            if (sample.values[bit] > BLACK_BOUNDARY) sample.bits |= 1u << bit;
+        }
 #ifdef CONFIG_SAC_JUNCTION_MAZE
         uint8_t line_bits = 0;
         for (int i = 0; i < 5; ++i) {
@@ -157,8 +169,20 @@ void line_follow_task(void* arg)
         if (command.reset_pid) {
             error = prev_error = cumulative_error = difference = correction = 0;
         }
+        sample.maze = true;
+        sample.bits = line_bits;
+        sample.phase = track.maze.phase;
+        sample.inverted = track.inverted;
+        sample.pending = track.pending;
+        /* Retain last turn decision between 5 Hz dashboard samples. */
+        static int last_decision;
+        if (command.decision) last_decision = command.decision;
+        sample.decision = last_decision;
         if (command.decision) ESP_LOGI("maze", "Decision: %c", command.decision);
         if (command.override) {
+            sample.left = command.left;
+            sample.right = command.right;
+            publish_lsa_telemetry(&sample);
             ESP_ERROR_CHECK(set_motor_speed(motor_a_0,
                 command.left < 0 ? MOTOR_BACKWARD : command.left > 0 ? MOTOR_FORWARD : MOTOR_STOP,
                 command.left < 0 ? -command.left : command.left));
@@ -191,6 +215,9 @@ void line_follow_task(void* arg)
         right_duty_cycle = bound((optimum_duty_cycle - correction), lower_duty_cycle, higher_duty_cycle);
 
 #endif
+        sample.left = left_duty_cycle;
+        sample.right = right_duty_cycle;
+        publish_lsa_telemetry(&sample);
         set_motor_speed(motor_a_0, left_duty_cycle > 0 ? MOTOR_FORWARD : MOTOR_STOP, left_duty_cycle);
         set_motor_speed(motor_a_1, right_duty_cycle > 0 ? MOTOR_FORWARD : MOTOR_STOP, right_duty_cycle);
 

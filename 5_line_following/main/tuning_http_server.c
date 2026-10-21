@@ -1,4 +1,37 @@
 #include "tuning_http_server.h"
+#include <stdio.h>
+#include <math.h>
+
+static portMUX_TYPE telemetry_lock = portMUX_INITIALIZER_UNLOCKED;
+static lsa_telemetry_t telemetry;
+
+void publish_lsa_telemetry(const lsa_telemetry_t *sample)
+{
+    portENTER_CRITICAL(&telemetry_lock);
+    telemetry = *sample;
+    portEXIT_CRITICAL(&telemetry_lock);
+}
+
+static esp_err_t lsa_get_handler(httpd_req_t *req)
+{
+    lsa_telemetry_t s;
+    portENTER_CRITICAL(&telemetry_lock);
+    s = telemetry;
+    portEXIT_CRITICAL(&telemetry_lock);
+    char body[512];
+    int n = snprintf(body, sizeof(body),
+        "{\"ready\":%s,\"ms\":%lu,\"values\":[%d,%d,%d,%d,%d],"
+        "\"bits\":%d,\"phase\":%d,\"inverted\":%d,\"pending\":%d,"
+        "\"decision\":%d,\"threshold\":%d,\"left\":%.2f,\"right\":%.2f,\"maze\":%s}",
+        s.ready ? "true" : "false", (unsigned long)s.ms,
+        s.values[0], s.values[1], s.values[2], s.values[3], s.values[4],
+        s.bits, s.phase, s.inverted, s.pending, s.decision, s.threshold,
+        (double)s.left, (double)s.right, s.maze ? "true" : "false");
+    if (n < 0 || n >= (int)sizeof(body)) return ESP_FAIL;
+    httpd_resp_set_type(req, "application/json");
+    httpd_resp_set_hdr(req, "Cache-Control", "no-store");
+    return httpd_resp_send(req, body, n);
+}
 
 static const char *TAG = "tuning_http_server";
 static char scratch[SCRATCH_BUFSIZE];
@@ -137,7 +170,7 @@ static esp_err_t tuning_pid_post_handler(httpd_req_t *req)
         return ESP_FAIL;
     }
     while (cur_len < total_len) {
-        received = httpd_req_recv(req, buf + cur_len, total_len);
+        received = httpd_req_recv(req, buf + cur_len, total_len - cur_len);
         if (received <= 0) {
             /* Respond with 500 Internal Server Error */
             httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Failed to post control value");
@@ -154,12 +187,17 @@ static esp_err_t tuning_pid_post_handler(httpd_req_t *req)
         return ESP_FAIL;
     }
     
-    if (!cJSON_HasObjectItem(root, "kp") || !cJSON_HasObjectItem(root, "ki") || !cJSON_HasObjectItem(root, "kd"))
-    {
-        ESP_LOGE(TAG, "invalid json response");
-        return ESP_FAIL;
+    const char *keys[] = {"kp", "ki", "kd"};
+    for (int i = 0; i < 3; ++i) {
+        cJSON *v = cJSON_GetObjectItem(root, keys[i]);
+        if (!cJSON_IsNumber(v) || !isfinite(v->valuedouble) ||
+            v->valuedouble < 0 || v->valuedouble > 100) {
+            cJSON_Delete(root);
+            httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "PID must be numeric, 0..100");
+            return ESP_FAIL;
+        }
     }
-    
+
     pid_constants.kp = (float)cJSON_GetObjectItem(root, "kp")->valuedouble;
     pid_constants.ki = (float)cJSON_GetObjectItem(root, "ki")->valuedouble;
     pid_constants.kd = (float)cJSON_GetObjectItem(root, "kd")->valuedouble;
@@ -195,6 +233,11 @@ static esp_err_t start_tuning_http_server_private()
         ESP_LOGE(TAG, "register post uri failed");
         return ESP_FAIL;
     }
+
+    httpd_uri_t lsa_uri = {
+        .uri = "/api/v1/lsa", .method = HTTP_GET, .handler = lsa_get_handler
+    };
+    ESP_ERROR_CHECK(httpd_register_uri_handler(server, &lsa_uri));
 
     httpd_uri_t common_get_uri = {
         .uri = "/*",

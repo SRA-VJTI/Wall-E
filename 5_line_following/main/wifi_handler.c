@@ -81,7 +81,7 @@ void wifi_init_sta(void)
             WIFI_CONNECTED_BIT | WIFI_FAIL_BIT,
             pdFALSE,
             pdFALSE,
-            portMAX_DELAY);
+            pdMS_TO_TICKS(10000));
 
     /* xEventGroupWaitBits() returns the bits before the call returned, hence we can test which event actually
      * happened. */
@@ -95,7 +95,7 @@ void wifi_init_sta(void)
     } 
     else 
     {
-        ESP_LOGE(TAG, "UNEXPECTED EVENT");
+        ESP_LOGW(TAG, "WiFi startup timed out; continuing without an IP");
     }
 
     ESP_ERROR_CHECK(esp_event_handler_instance_unregister(IP_EVENT, IP_EVENT_STA_GOT_IP, instance_got_ip));

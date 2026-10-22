@@ -7,6 +7,18 @@ menu "SAC Junction Maze"
         help
             For non-looped line mazes. Requires track calibration before use.
             Disabling this preserves the original line follower.
+    config SAC_WHITE_STRAIGHT
+        bool "Drive straight across all-white areas (maximum 1 second)"
+        depends on SAC_JUNCTION_MAZE
+        default y
+    config SAC_WHITE_HIGH
+        bool "White surface reads ABOVE threshold on the LSA dashboard"
+        depends on SAC_WHITE_STRAIGHT
+        default n
+        help
+            Check all five readings over white. Enable if all exceed 820.
+            Leave disabled if white readings are at or below 820.
+            This is independent of line polarity.
     config SAC_AUTO_POLARITY
         bool "Automatically switch line polarity"
         depends on SAC_JUNCTION_MAZE

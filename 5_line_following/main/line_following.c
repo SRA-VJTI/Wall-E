@@ -118,6 +118,12 @@ void line_follow_task(void* arg)
 
     #ifdef CONFIG_SAC_JUNCTION_MAZE
     sac_track_t track = {0};
+#ifdef CONFIG_SAC_WHITE_STRAIGHT
+    track.white_straight = true;
+#endif
+#ifdef CONFIG_SAC_WHITE_HIGH
+    track.white_high = true;
+#endif
 #ifdef CONFIG_SAC_MAZE_INVERT_LINE
     track.inverted = true;
 #endif
@@ -171,6 +177,12 @@ void line_follow_task(void* arg)
         }
         sample.maze = true;
         sample.bits = line_bits;
+        static maze_phase_t reported_phase = MAZE_FOLLOW;
+        if (track.maze.phase != reported_phase) {
+            ESP_LOGW("maze", "Phase %d -> %d, bits=%u, PWM=%d/%d",
+                     reported_phase, track.maze.phase, line_bits, command.left, command.right);
+            reported_phase = track.maze.phase;
+        }
         sample.phase = track.maze.phase;
         sample.inverted = track.inverted;
         sample.pending = track.pending;
@@ -218,8 +230,8 @@ void line_follow_task(void* arg)
         sample.left = left_duty_cycle;
         sample.right = right_duty_cycle;
         publish_lsa_telemetry(&sample);
-        set_motor_speed(motor_a_0, left_duty_cycle > 0 ? MOTOR_FORWARD : MOTOR_STOP, left_duty_cycle);
-        set_motor_speed(motor_a_1, right_duty_cycle > 0 ? MOTOR_FORWARD : MOTOR_STOP, right_duty_cycle);
+        ESP_ERROR_CHECK(set_motor_speed(motor_a_0, left_duty_cycle > 0 ? MOTOR_FORWARD : MOTOR_STOP, left_duty_cycle));
+        ESP_ERROR_CHECK(set_motor_speed(motor_a_1, right_duty_cycle > 0 ? MOTOR_FORWARD : MOTOR_STOP, right_duty_cycle));
 
 
         //ESP_LOGI("debug","left_duty_cycle:  %f    ::  right_duty_cycle :  %f  :: error :  %f  correction  :  %f  \n",left_duty_cycle, right_duty_cycle, error, correction);

@@ -11,6 +11,8 @@ jobs:
           /tmp/maze-test
           cc -std=c99 -Wall -Wextra -Werror -fsanitize=address,undefined 5_line_following/tests/test_sac_track.c -o /tmp/track-test
           /tmp/track-test
+          cc -std=c99 -Wall -Wextra -Werror -fsanitize=address,undefined 5_line_following/tests/test_sac_recovery.c -o /tmp/recovery-test
+          /tmp/recovery-test
   maze-firmware:
     strategy:
       matrix:

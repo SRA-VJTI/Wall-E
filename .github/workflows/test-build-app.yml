@@ -9,6 +9,7 @@ jobs:
     container:
       image: espressif/idf:release-v5.1
     strategy:
+      fail-fast: false
       matrix:
         test-apps: [1_led_matrix, 2_LSA, 3_MPU, 4_PWM, 5_line_following, 6_self_balancing]
     steps:

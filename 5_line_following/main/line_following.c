@@ -101,7 +101,6 @@ void line_follow_task(void* arg)
     ESP_ERROR_CHECK(enable_motor_driver(&motor_a_1, MOTOR_A_1));
     adc_handle_t line_sensor;
     ESP_ERROR_CHECK(enable_line_sensor(&line_sensor));
-    ESP_ERROR_CHECK(enable_bar_graph());
 #ifdef CONFIG_ENABLE_OLED
     // Initialising the OLED
     ESP_ERROR_CHECK(init_oled());

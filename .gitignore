@@ -1,6 +1,7 @@
 ### C ###
 # build files
 sdkconfig*
+!sdkconfig.defaults
 build/
 managed_components/
 *.lock

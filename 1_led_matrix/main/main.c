@@ -3,26 +3,27 @@
 #include <esp_log.h>
 #include <esp_err.h>
 #include "led_matrix.h"
+#include "pin_defs.h"
 
 static const char *TAG = "led_matrix";
 
-static void blink_all(led_matrix *m)
+uint8_t rows[LED_MATRIX_HEIGHT] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+static void blink_all(led_matrix_t *m)
 {
-    ESP_ERROR_CHECK(led_matrix_set_data_raw(m, 0xFFFFFFFF));
-    ESP_ERROR_CHECK(led_matrix_write(m, LED_MATRIX_OUTPUT_PAR));
+    ESP_ERROR_CHECK(led_matrix_draw_bitmap(m, rows));
+    ESP_ERROR_CHECK(led_matrix_show(m));
     vTaskDelay(pdMS_TO_TICKS(1500));
 
-    ESP_ERROR_CHECK(led_matrix_set_data_raw(m, 0x00000000));
-    ESP_ERROR_CHECK(led_matrix_write(m, LED_MATRIX_OUTPUT_PAR));
+    ESP_ERROR_CHECK(led_matrix_clear(m));
     vTaskDelay(pdMS_TO_TICKS(200));
 }
 
-static void game_of_life(led_matrix *m, int rows, int cols, TickType_t frame_ms)
+static void game_of_life(led_matrix_t *m, int rows, int cols, TickType_t frame_ms)
 {
     // Fixed pattern chosen to give a long, interesting evolution
-    // on the 5x6 toroidal grid used by this project.
-    uint32_t frame = 0x0BFE020C;
-    uint32_t next = 0;
+    // on the 8x8 toroidal grid used by this project.
+    uint64_t frame = UINT64_C(0x84536184DB32C529);
+    uint64_t next = UINT64_C(0);
 
     while (1) {
         next = 0;
@@ -46,25 +47,33 @@ static void game_of_life(led_matrix *m, int rows, int cols, TickType_t frame_ms)
                 int new_state = alive ? (n == 2 || n == 3) : (n == 3);
 
                 if (new_state) {
-                    next |= (1UL << idx);
+                    next |= (UINT64_C(1) << idx);
                 }
             }
         }
 
         frame = next;
 
-        ESP_ERROR_CHECK(led_matrix_set_data(m, frame));
-        ESP_ERROR_CHECK(led_matrix_write(m, LED_MATRIX_OUTPUT_PAR));
+        uint8_t bitmap[LED_MATRIX_HEIGHT] = {0};
+
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if ((frame >> (r * cols + c)) & UINT64_C(1)) {
+                    bitmap[r] |= (1U << (cols - 1 - c));
+                }
+            }
+        }
+        ESP_ERROR_CHECK(led_matrix_draw_bitmap(m, bitmap));
+        ESP_ERROR_CHECK(led_matrix_show(m));
         vTaskDelay(pdMS_TO_TICKS(frame_ms));
     }
 }
 
 void app_main(void)
 {
-    led_matrix m = led_matrix_init();
-    ESP_LOGI(TAG, "Shift register pins -> SDATA: %d, SRCLK: %d, RCLK: %d",
-             m.config.sdata, m.config.srclk, m.config.rclk);
-
+    led_matrix_t m;
+    ESP_ERROR_CHECK(led_matrix_init(&m));
+    ESP_LOGI(TAG, "MAX7219 pins -> DIN: %d, CLK: %d, LOAD: %d", LED_MATRIX_DIN, LED_MATRIX_CLK, LED_MATRIX_LOAD);
     blink_all(&m);
-    game_of_life(&m, CONFIG_LED_MATRIX_ROWS, CONFIG_LED_MATRIX_COLUMNS, 150);
+    game_of_life(&m, LED_MATRIX_HEIGHT, LED_MATRIX_WIDTH, 150);
 }

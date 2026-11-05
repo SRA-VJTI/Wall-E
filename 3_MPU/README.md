@@ -1,183 +1,203 @@
-# TABLE OF CONTENTS
-- [TABLE OF CONTENTS](#table-of-contents)
-- [MPU6050](#mpu6050)
-- [Inertial Measurement Unit](#inertial-measurement-unit)
-- [Initialising MPU6050](#initialising-mpu6050)
-  - [Accelerometer](#accelerometer)
-  - [Reading Accelerometer Data](#reading-accelerometer-data)
-  - [Accelerometer Euler Angles](#accelerometer-euler-angles)
-  - [Gyroscope](#gyroscope)
-  - [Reading Gyroscope Data](#reading-gyroscope-data)
-  - [Complementary Filter](#complementary-filter)
-  - [Reading Register Data](#reading-register-data)
-- [Description of Functions Used](#description-of-functions-used)
-- [Flowchart of Code](#flowchart-of-code)
+# MPU6050: Orientation Sensing and LED Matrix Visualisation
 
+This example reads an **MPU6050 six-axis IMU** on the SRA board and illustrates two ways to use its measurements:
 
+- **Orientation feedback:** estimate roll and pitch using the board component's complementary filter, print them to the serial monitor, and optionally show them on the OLED.
+- **Accelerometer visualisation:** use raw X/Y acceleration to produce a changing pattern on the **8×8 MAX7219 LED matrix**.
 
-# MPU6050
+The source of this example is [`main/main.c`](main/main.c). It uses the common [SRA board component](../components/sra-board-component) for MPU6050, OLED and LED matrix drivers.
 
-* It is a 6-axis motion tracking device
-* The MPU-6050 is a commonly used chip that combines a MEMS gyroscope and a MEMS accelerometer and uses a standard I2C bus for data transmission
-* The system processor is an I2C master to the MPU6050 (default address is 0x68 but can be changed to 0x69)
-* The MPU6050 can also act as an I2C master and directly accept inputs from an external compass
-* This is 3.3V device and hence is safe to connect to ESP32 pins directly.
+## Contents
 
+- [Hardware and configuration](#hardware-and-configuration)
+- [How the MPU6050 works](#how-the-mpu6050-works)
+- [How this example works](#how-this-example-works)
+- [Accelerometer-to-LED mapping](#accelerometer-to-led-mapping)
+- [Functions used](#functions-used)
+- [Code flowchart](#code-flowchart)
+- [Build and run](#build-and-run)
+- [Notes and limitations](#notes-and-limitations)
 
-![](https://lh5.googleusercontent.com/zS7Xrh9qRU7qUwhcF6BoJwzG7Pex7cvjD3yFqS_rJA35Nuj-rDkpS9uEt6EjqmGwzEEe3k-jNw2ENILxgxKWGLO5hW6j1er4oaKXk-ciVyrCC4GvzMDzwR9l0u5CrtsNRpAI7LRqf7U)
+## Hardware and configuration
 
+The MPU6050 measures acceleration on X, Y and Z and angular velocity about those axes. The ESP32 communicates with it over **I²C**, using the SRA board's wiring. In the checked-in board component the MPU6050 uses address `0x68`, `SCL = GPIO21`, `SDA = GPIO14`, and an I²C clock of 100 kHz. The driver configures the accelerometer range to **±2 g** and the gyroscope range to **±250°/s**.
 
+The default target for this project is `esp32s3` (`sdkconfig.defaults`). The board component provides these Kconfig switches:
 
-# Inertial Measurement Unit
+| Setting | Effect |
+| --- | --- |
+| `CONFIG_ENABLE_LED_MATRIX` | Builds the accelerometer-driven matrix display task. Enabled by default in the board component. |
+| `CONFIG_ENABLE_OLED` | Adds OLED initialisation and displays roll/pitch. Enabled by this example's `sdkconfig.defaults`. |
 
-* These are small devices indicating changing orientation in smartphones, video game remotes, quadcopters, etc.
-* The IMU has both a gyroscope which measures angular rate and an accelerometer which measures linear acceleration, and/or compasses (magnetometers)
-* The number of sensor inputs in an IMU are referred to as ‘DoF’ (Degrees of Freedom), so a chip with a 3-axis gyroscope and a 3-axis accelerometer would be a 6-DOF IMU.
+An 8×8 LED matrix connected through a **MAX7219** is used for the live pattern. Its display driver converts logical bitmap rows into the board-specific hardware register layout; the application does not send MAX7219 registers itself.
 
-# Initialising MPU6050
+![SRA board and the LED matrix](../documentation/images/board_v2.7.jpeg)
 
-* A sample wiring of the device to ESP32 looks as follows:
-![](https://lh5.googleusercontent.com/OiTQl8mZl41Dwa_Nb6PD6yzMigvv6xV7KnY7bfW56dBSoYuK8shYet7VMev0rVWcFWhirvUIenbFn_B6jc_nmTulH4-3vInHrOZX3sW4f2lBvel_HcthTW_O89FAGwankOtBBJ8aLhY)
+## How the MPU6050 works
 
-* When power up, MPU6050 will start in SLEEP mode. To use it, we need to first disable this SLEEP mode 
-* To use the I2C protocol, we send the value 0 to register PWR_MGMT_1 (0x6b)
-* The procedure to do so is as follows :
-   1. Send a start sequence
-   2. Send the I2C address (0x68) of the MPU6050 with the R/W bit high
-   3. Send the internal register number you want to write to (0x6b : PWR_MGMT_1)
-   4. Send the data byte (0x00) - This will power on the device
-   5. Send the stop sequence
+### Reading accelerometer and gyroscope data
 
+The accelerometer reports *specific force*, including gravity. With the configured ±2 g range, approximately **16384 raw counts correspond to 1 g**. The three accelerometer axes occupy six consecutive bytes starting at register `0x3B`; each signed 16-bit sample is assembled from a most-significant and a least-significant byte. The gyroscope samples are likewise read from six bytes starting at register `0x43`.
 
+To read a register over I²C, the controller typically writes the register address, issues a repeated START, then reads the requested bytes. For a write, the address byte uses the *write* direction (`R/W = 0`); for a read, it uses the *read* direction (`R/W = 1`).
 
-![](https://lh5.googleusercontent.com/HsUgcO1ojRlHZgbtl1Pyk7aWiUjs1x7XnhI5oYsa8C2gCqAbfqOGpr9fnjk0TBxWHmoIfJEQLqHUqe4Kh3KsjMLKSHAD6jQMsiEwrNyA3KLSeHiNLC3tDjzjAKN_nENu8FMp0tYS60E)
+### Roll and pitch estimation
 
- The data byte 0x00 sets all the bits of register 107 to 0, thus disabling SLEEP mode and CYCLE mode, and powering on the MPU-6050 
+The accelerometer gives an inclination estimate from gravity, but is sensitive to linear movement. Integrating gyroscope angular velocity gives smooth short-term changes, but introduces drift. The board driver combines both estimates using a complementary filter:
 
-![](https://lh3.googleusercontent.com/4p2RF-ezjP6jtT6S7xBQGfls0bcj7JM27W_ZsgRj5pYGQKBnrHfP85MtPncMeuu5qmSEupHdCSu2qPf4TSSBbejcN5MMqU5gLvLMaUDsw9K-Zp7vwLNIiD42d8xdfBKu0A0qxFaS6jk)
+```text
+fused_angle = alpha * (previous_fused_angle + gyro_delta)
+            + (1 - alpha) * (accelerometer_angle - offset)
+```
 
+For the pinned board component, `alpha = 0.995`. The resulting `euler_angle[0]` is **roll** and `euler_angle[1]` is **pitch**. These angles feed the serial log and optional OLED, **not** the LED matrix calculation.
 
+## How this example works
 
-There are various terms related with the Pulse Width Modulation:- 
-* **Off-Time** :- Duration of time period when the signal is low.
-* **ON-Time**  :- Duration of time period when the signal is high.
-* **Duty cycle** :- It is the percentage of the time period when the signal remains ON during the period of the pulse width modulation signal.
-* **Period** :- It is the sum of off-time and on-time of pulse width modulation signal.
+The application initialises the MPU6050 in `app_main()`, retrying every second until initialisation succeeds. It then starts the measurement task. If the LED matrix option is enabled, it also creates a one-item FreeRTOS queue and starts a display task.
 
-## Accelerometer
+**`mpu_task` — sensor readings**
 
-* An accelerometer is a sensor that measures the **force** of linear acceleration.
-* It's output is in the form of m/s^2 of g-forces on a body. It is highly sensitive to movement in any direction.
-* The MPU6050 uses a MEMS accelerometer, which consists of stationary and movable electrodes acting as **capacitor plates**
-* Acceleration produces change in g-forces on the moving device, which causes displacement of the movable capacitor plates
-* This causes a change in capacitance across the plates, which is detected internally by change in Voltage
-* We then calculate the displacement from the in Capacitance, which helps us infer the value of acceleration
+1. Call `read_mpu6050(euler_angle, mpu_offset)` to obtain fused roll and pitch.
+2. Print both angles to the serial monitor.
+3. With the LED matrix enabled, read six raw accelerometer bytes, combine them into three signed `int16_t` values, and send the array to `accel_queue`.
+4. With the OLED enabled, call `display_mpu(pitch, roll)`.
+5. Repeat as long as the fused sensor-read function returns `ESP_OK`.
 
+**`display_task` — visual output**
 
-![](https://lastminuteengineers.com/wp-content/uploads/arduino/MEMS-Accelerometer-Working.gif)
+1. Initialise the MAX7219 matrix and set brightness to `4` (on a scale of 0–15).
+2. Wait for a raw accelerometer sample from `accel_queue`.
+3. Use X and Y acceleration to calculate a normalised 2D direction.
+4. Calculate whether each of the 64 LEDs should be on using a dot product and hysteresis.
+5. Copy the eight bitmap bytes into the matrix framebuffer with `led_matrix_draw_bitmap()`, then update the display with `led_matrix_show()`.
+6. Pause 20 ms and process the next queued sample.
 
-![](https://lastminuteengineers.com/wp-content/uploads/arduino/Accelerometer-Animation-Labels.png)
+The queue holds **one complete three-axis sample**, not three separate messages. Its length is one, so the producer may block when the display task has not yet consumed the previous sample.
 
+## Accelerometer-to-LED mapping
 
-## Reading Accelerometer Data
+The display uses the following calculations from `display_task()`:
 
-* The acceleration of the three axes, X,Y and Z, are stored in 3 pairs of registers on the MPU6050
-* Each register on the MPU6050 is an 8-bit register
-* In each of these pairs, one register stores the MSB (most significant bit) and the other stores the LSB (least significant bit)
-* These 6 registers are [burst-read](#reading-register-data) and the 8-bit MSB and LSB bytes for each axis are combined to give a single 16-bit float
+```c
+// Raw sensor values use ±2 g accelerometer scaling.
+dir_x = (float)acce_raw_value[0] / 16384.0f;
+dir_y = (float)acce_raw_value[1] / 16384.0f;
 
-![](https://lh4.googleusercontent.com/ePwQEj_TeMRQU83M7t2RsXGJD2q37z-B3kSlcLdU85L4XeKxkefT_fAYHNRpRjGOYI8r0bbQWd64I7emYms9x4ST6jEAdBlcC2wdibE)
+normalizing_factor = sqrtf(dir_x * dir_x + dir_y * dir_y);
+normalized_dir_x = dir_x / normalizing_factor;
+normalized_dir_y = dir_y / normalizing_factor;
 
+// For each matrix row i and column-bit index j:
+float pos_x = 3.5f - i;
+float pos_y = j - 3.5f;
+float score = pos_x * normalized_dir_x + pos_y * normalized_dir_y;
+```
 
-## Accelerometer Euler Angles 
+The dot product is positive on the side of the display pointed to by the acceleration vector. An LED that was **off** turns on when `score > 0.30`; an LED that was **on** stays on until `score <= -0.30`. This hysteresis reduces flickering near the dividing boundary.
 
-* The roll and pitch angles are calculated from the accelerometer using the [formula](https://www.digikey.com/en/articles/using-an-accelerometer-for-inclination-sensing) below :
-  
-$$\theta = \arctan\left(\frac{A_{X.OUT}}{A_{Y.OUT}}\right)$$
-   
-  
+The application sets bits with `rows[i] |= 1 << j`. In the logical bitmap, **bit 7 is the leftmost LED** and bit 0 is the rightmost. Therefore a positive Y raw reading fills the **left** half of the logical display, while positive X fills the **upper** half. The low-level driver transposes the logical rows to match the board's actual MAX7219 wiring.
 
+![Software-generated illustration of the LED matrix for positive and negative accelerometer directions](assets/acceleration_to_matrix.svg)
 
-## Gyroscope
+*Illustration generated from the pixel thresholding logic, starting with all LEDs off; **not a recording of a physical board**. The actual display can retain some previously lit pixels near boundaries because of hysteresis.*
 
-* A gyroscope is a sensor that measures the change in velocity (if at all) of a device rotating around its own axis.
-* A gyroscope measures **changes** in angular velocity.
-* The MPU6050 uses a MEMS gyroscope, which uses [Coriolis effect](https://www.youtube.com/watch?v=ti4HEgd4Fgo&t=236s)
+### Bitmap example
 
+The top four logical rows on, with the bottom four off, can be represented as eight hexadecimal bytes:
 
-## Reading Gyroscope Data
+```c
+uint8_t bitmap[8] = {
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0x00, 0x00, 0x00, 0x00
+};
 
-* The acceleration of the three axes, X,Y and Z, are stored in 3 pairs of registers on the MPU6050
-* Each register on the MPU6050 is an 8-bit register
-* In each of these pairs, one register stores the MSB (most significant bit) and the other stores the LSB (least significant bit)
-* These 6 registers are [burst-read](#reading-register-data) and the 8-bit MSB and LSB bytes for each axis are combined to give a single 16-bit float
-* The gyroscope has a sensitivity factor of about 131, i.e. 1 degree of rotation gives a reading of 131 units
-* Therefore, the degrees of rotation are obtained by dividing the raw readings by 131 
-* Euler angles are calculated by integrating raw readings of each axis over time
+ESP_ERROR_CHECK(led_matrix_draw_bitmap(&matrix, bitmap));
+ESP_ERROR_CHECK(led_matrix_show(&matrix));
+```
 
-![](https://lh3.googleusercontent.com/dQ-SZL7kp5WEnFb-KXFH-FDvF7yv_2J28ycODkipFfFAAMN1lYAk0rPzKg7DaPcNDYk-BdUEJQSzApxxESam_7tnbsIOcLenjofFoUiCpAhsyuMtkWaFMcZPJrK5EMJyX9GCNHSNeeo)
+Every hexadecimal digit represents four adjacent LED bits. `0xFF` (`11111111` in binary) lights every LED in a logical row, while `0x00` (`00000000`) turns that row off.
 
+## Functions used
 
-## Complementary Filter
-* Since gyroscopic drift accumulates over time, it is necessary to reset the rate readings from the gyroscope at frequent intervals, so the drift can be minimised
-* To do this, we combine both the gyroscope and accelerometer readings in a weighted average
-* The value of alpha is determined experimentally
+| Function | Role in this example |
+| --- | --- |
+| `enable_mpu6050()` | Set up I²C and the MPU6050 sensor; select measurement ranges and wake the device. |
+| `read_mpu6050(euler_angle, mpu_offset)` | Read acceleration and gyro data, run the complementary filter, return roll and pitch. |
+| `mpu6050_read_acce(acce_bytes, BUFF_SIZE)` | Read six raw accelerometer bytes (X, Y, Z). |
+| `combine_msb_lsb_raw_data(acce_bytes, acce_raw_value)` | Combine those six bytes into three signed 16-bit samples. |
+| `xQueueCreate(1, sizeof(int16_t) * (BUFF_SIZE / 2))` | Make a single-element FreeRTOS queue that stores one three-axis sample. |
+| `xQueueSend(...)` / `xQueueReceive(...)` | Transfer raw accelerometer samples between the measurement and display tasks. |
+| `led_matrix_init(&matrix)` | Initialise the MAX7219 display and framebuffer. |
+| `led_matrix_set_brightness(&matrix, 4)` | Set display brightness to level 4. |
+| `led_matrix_draw_bitmap(&matrix, rows)` | Copy the generated eight-byte image into the logical framebuffer. |
+| `led_matrix_show(&matrix)` | Transpose as needed for board wiring and send the framebuffer to the LEDs. |
+| `init_oled()` / `display_mpu(pitch, roll)` | Initialise and update the OLED, when enabled. |
 
-![](http://www.pieter-jan.com/images/equations/CompFilter_Eq.gif)
+`mpu_task()` and `display_task()` are defined in [`main/main.c`](main/main.c). The lower-level `mpu6050_*` and `led_matrix_*` APIs live in [`sra-board-component`](../components/sra-board-component).
 
+## Code flowchart
 
-## Reading Register Data
+This chart reflects the actual task creation, queue, and optional display branches in the current example. GitHub renders the Mermaid diagram directly.
 
-* To read/receive data from a slave, the master has to first send a START condition addressing the MPU6050
-* Then the master must WRITE the requested register from which the data is to be read
-* After this, instead of sending a STOP condition to stop the WRITE operation and then sending a consecutive START condition to start the READ operation,
-  the I2C bus provides the **repeated start** functionality, wherein instead of sending a STOP-START condition, we send only a START condition and read the
-  specified number of bytes from the register.
-* The procedure to do so is as follows :
-  1. Send a start sequence
-  2. Send the I2C address (0x68) of the MPU6050 with the R/W bit low - This writes to the device
-  3. Send the Internal register address you want to read from
-  4. Send a start sequence again (repeated start)
-  5. Send the I2C address of the device with the R/W bit high - This reads from the device
-  6. Read the number of the requested data bytes from the registers
-  7. Send the stop sequence.
-  6. All write and read operations (except the last read) are answered with a ACK if successful.
+```mermaid
+flowchart TD
+    A[app_main] --> B{enable_mpu6050 successful?}
+    B -- No --> C[Log failure; delay 1 second]
+    C --> B
+    B -- Yes --> D{LED matrix enabled?}
+    D -- Yes --> E[Create 1-item accelerometer queue]
+    D -- No --> F[Create mpu_task]
+    E --> F
+    F --> G{LED matrix enabled?}
+    G -- Yes --> H[Create display_task]
+    G -- No --> I[Only mpu_task runs]
+    H --> J[Two FreeRTOS tasks run concurrently]
 
- ![](http://www.i2c-bus.org/static/i2c/repeatedstart.gif)
+    subgraph SensorTask [mpu_task]
+        S1[Read fused roll and pitch] --> S2{Read OK?}
+        S2 -- No --> S3[Exit sampling loop]
+        S2 -- Yes --> S4[Log roll and pitch]
+        S4 --> S5{LED matrix enabled?}
+        S5 -- Yes --> S6[Read raw XYZ acceleration and send queue sample]
+        S5 -- No --> S7{OLED enabled?}
+        S6 --> S7
+        S7 -- Yes --> S8[Display pitch and roll on OLED]
+        S7 -- No --> S1
+        S8 --> S1
+    end
 
- ![](https://i.stack.imgur.com/FHPKk.png)
+    subgraph MatrixTask [display_task, if enabled]
+        M1[Initialize matrix and brightness] --> M2[Wait for accelerometer queue sample]
+        M2 --> M3[Normalize raw X and Y acceleration]
+        M3 --> M4[Compute dot products and hysteresis]
+        M4 --> M5[Draw 8 bitmap rows and show]
+        M5 --> M6[Delay 20 ms]
+        M6 --> M2
+    end
 
+    F -.-> S1
+    H -.-> M1
+    S6 -.->|3 signed accelerometer readings| M2
+```
 
+## Build and run
 
- ## Description of Functions Used
- 
-* ```c
-    esp_err_t enable_mpu6050()	
-    ```
-    **Description** : MPU6050 comes up in sleep mode upon power-up . It disables the SLEEP_MODE of the MPU by accessing the POWER_MANAGEMENT_1 register
-         and checks if the MPU is initialised correctly.	
+With the SRA ESP-IDF toolchain activated, run these commands from `3_MPU/`:
 
-    **Parameters** :
-    * `None` 
+```bash
+idf.py menuconfig             # Optional: configure OLED / LED matrix
+idf.py build
+idf.py -p <PORT> flash monitor
+```
 
-    **Returns** : esp_err_t returns ESP_OK if MPU is enabled properly.
-    
+Choose the serial port connected to the board (for example `/dev/ttyUSB0` on many Linux systems). The default build target is **ESP32-S3**; check your board hardware and existing configuration before changing it. In the monitor, look for `Roll: ... | Pitch: ...` readings. Tilting the board should change the LED pattern when the LED matrix is enabled.
 
-   
-* ```c
-    esp_err_t read_mpu6050(euler_angle, mpu_offset)
-  ```
+## Notes and limitations
 
-  **Description** : Calculates the Roll and Pitch angles of the bot by applying complementary filter to the raw accelerometer and gyroscope values and using the given MPU offset. It stores the Roll angle in euler_angle[0] and the Pitch engle in euler_angle[1].
+- This example is a **visualisation**, not a calibrated acceleration or orientation instrument. The LED task uses raw X/Y acceleration independently of the complementary-filter angles.
+- The current implementation does not handle zero X/Y magnitude before normalising. When both values are zero, the division can produce non-finite values; handling this would require a separate firmware change.
+- `mpu_task()` exits its sampling loop when `read_mpu6050()` returns an error, whereas `display_task()` keeps waiting for queued data. There is no automatic recovery inside the measurement task.
+- The source code has no explicit sampling delay in `mpu_task()`. The 20 ms delay applies only to `display_task()`.
 
-  **Parameters** : 
-  * `euler_angle` : Array to store euler angles , Pitch and Roll.
-  * `mpu_offset` : Array to specify MPU offsets , Pitch offset ( About Y-axis ) and Roll offset (About X-axis).
-
-
-  **Returns** : esp_err_t returns ESP_OK if it read mpu successfully, else it returns ESP_FAIL.
-    
-    
- ## Flowchart of Code
-
-  ![Flowchart MPU(8)](https://user-images.githubusercontent.com/111511248/200386895-31b7aea2-8a0f-436d-b0dc-cdfb17058a70.png)
+For the MAX7219 hardware register details and bitmap orientation, also see the [SRA board LED matrix API](../components/sra-board-component/include/led_matrix.h).

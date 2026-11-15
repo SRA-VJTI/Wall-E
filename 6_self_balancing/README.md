@@ -94,10 +94,12 @@ Integral Term = ki*(Integral_Error)
 2. Calculate “Error Rate” and “Cumulative Error(Integral)” Terms.
 3. Calculate Correction Speed Using PID Equation.
 4. Threshold Correction Speed to MAX and MIN PWM.
-5. Direction in which bot should move:
-    1. If Error > 1 (Bot-front is down) : bot_forward(pwm)
-    2. If Error <-1 (Bot-front is up) : bot_backward(pwm)
+5. Direction in which bot should move (Error = setpoint - pitch):
+    1. If Error > 1 (Bot-front is up) : bot_backward(pwm)
+    2. If Error < -1 (Bot-front is down) : bot_forward(pwm)
     3. else (bot is balanced) : bot_stop()
+
+    > **Note:** Which way counts as "up" depends on how the MPU-6050 is mounted. If your bot drives the wrong way and falls faster, swap the directions.
 6. Go to Step 1.
 
 ## Description of the functions

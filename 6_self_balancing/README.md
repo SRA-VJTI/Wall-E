@@ -10,6 +10,7 @@
         * [Intergral Term](#integral-term)
 * [Formula for calucation of pitch-correction](#formula-for-calculation-of-pitch-correction)
 * [Algorithm](#algorithm)
+* [Code flowchart](#code-flowchart)
 * [Description of the Functions](#Description-of-the-functions)
 
 
@@ -94,11 +95,57 @@ Integral Term = ki*(Integral_Error)
 2. Calculate “Error Rate” and “Cumulative Error(Integral)” Terms.
 3. Calculate Correction Speed Using PID Equation.
 4. Threshold Correction Speed to MAX and MIN PWM.
-5. Direction in which bot should move:
-    1. If Error > 1 (Bot-front is down) : bot_forward(pwm)
-    2. If Error <-1 (Bot-front is up) : bot_backward(pwm)
+5. Direction in which bot should move (Error = setpoint - pitch):
+    1. If Error > 1 (Bot-front is up) : bot_backward(pwm)
+    2. If Error < -1 (Bot-front is down) : bot_forward(pwm)
     3. else (bot is balanced) : bot_stop()
+
+    > **Note:** Which way counts as "up" depends on how the MPU-6050 is mounted. If your bot drives the wrong way and falls faster, swap the directions.
 6. Go to Step 1.
+
+## Code flowchart
+
+This chart follows the actual task creation, PID loop and graph queue in [`main/self_balancing.c`](main/self_balancing.c). GitHub renders the Mermaid diagram directly.
+
+```mermaid
+flowchart TD
+    A[app_main] --> B[Create plot graph queue]
+    B --> C[Start WebSocket tuning server]
+    C --> D[Create plot_graph_task on core 1]
+    D --> E[Create balance_task on core 0]
+
+    subgraph BalanceTask [balance_task]
+        B0[Initialise OLED, if enabled] --> B1{enable_mpu6050 successful?}
+        B1 -- No --> B2[Delete task]
+        B1 -- Yes --> B3[Enable motor drivers A0 and A1]
+        B3 --> B4[Read fused pitch and roll]
+        B4 --> B5{Read OK?}
+        B5 -- No --> B4
+        B5 -- Yes --> B6["error = setpoint - pitch"]
+        B6 --> B7[PID: P + I + D terms]
+        B7 --> B8[Clamp correction to 60-80 PWM]
+        B8 --> B9{error?}
+        B9 -- "> 1" --> B10[Both motors backward]
+        B9 -- "< -1" --> B11[Both motors forward]
+        B9 -- "between -1 and 1" --> B12[Stop both motors]
+        B10 --> B13[Log values; update OLED if enabled and PID changed]
+        B11 --> B13
+        B12 --> B13
+        B13 --> B14[Delay 10 ms]
+        B14 --> B4
+    end
+
+    subgraph GraphTask [plot_graph_task]
+        G1{Queue item received?} -- Yes --> G2[Send P, I, D, correction and error to browser]
+        G1 -- No --> G3[Delay 10 ms]
+        G2 --> G3
+        G3 --> G1
+    end
+
+    E -.-> B0
+    D -.-> G1
+    B7 -.->|PID terms| G1
+```
 
 ## Description of the functions
 

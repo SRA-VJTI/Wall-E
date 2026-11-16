@@ -86,7 +86,7 @@ esac
     pushd "$HOME"/esp || (echo "Error: Cannot Make Directory" && exit 1)
 
     # Clone ESP-IDF Repository
-    git clone -b release/v5.1 --recursive https://github.com/espressif/esp-idf.git --depth 1
+    git clone -b release/v6.1 --recursive https://github.com/espressif/esp-idf.git --depth 1
     cd $HOME/esp/esp-idf
     ./install.sh esp32
 

@@ -7,7 +7,7 @@ jobs:
     name: Test Build of Wall-E
     runs-on: ubuntu-latest
     container:
-      image: espressif/idf:release-v5.1
+      image: espressif/idf:release-v6.1
     strategy:
       fail-fast: false
       matrix:

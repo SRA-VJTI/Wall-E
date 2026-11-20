@@ -52,7 +52,7 @@
   <tr>
     <td width="33%" align="center"><a href="documentation/images/v2.8/self-balancing.mp4"><img src="documentation/images/v2.8/self-balancing.gif" width="100%" alt="Wall-E Bot Self-Balancing"></a></td>
     <td width="33%" align="center"><a href="documentation/images/v2.8/oled.mp4"><img src="documentation/images/v2.8/oled.gif" width="100%" alt="Wall-E Bot with OLED Display"></a></td>
-    <td width="33%" align="center"><a href="documentation/images/v2.8/led-matrix.jpeg"><img src="documentation/images/v2.8/led-matrix-preview.jpg" width="100%" alt="Wall-E Bot with LED Matrix"></a></td>
+    <td width="33%" align="center"><a href="documentation/images/v2.8/led-matrix.mp4"><img src="documentation/images/v2.8/led-matrix.gif" width="100%" alt="Wall-E Bot with LED Matrix"></a></td>
   </tr>
   <tr>
     <td align="center">Wall-E Bot Self-Balancing</td>

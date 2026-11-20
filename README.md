@@ -2,9 +2,9 @@
 <p align="center">
   <img src="documentation/images/logo.png"/>
   
-  <h3 align="center"> Wall-E version 2.7 </h3>
+  <h3 align="center"> Wall-E version 2.8 </h3>
   <p align="center">
-    Code repository for <a href="https://github.com/SRA-VJTI/Wall-E">Wall-E_v2.7</a>
+    Code repository for <a href="https://github.com/SRA-VJTI/Wall-E">Wall-E_v2.8</a>
     <br />
     <br />
     <a href="https://github.com/SRA-VJTI/Wall-E/issues">Report Bug</a>
@@ -42,27 +42,34 @@
 
 ## About the Workshop
 <p align="center">
-  <img width = 600 src="documentation/images/walle_v2.7.jpeg"/>
+  <img width="550" alt="Wall-E v2.8 robot" src="documentation/images/v2.8/wall-e.png"/>
   <a href="https://github.com/SRA-VJTI/Wall-E-Sim">
   <h3 align="center"> Wall-E </h3>
   </a>
 </p>
 
-<p align="center">
+<table width="100%" align="center">
+  <tr>
+    <td width="33%" align="center"><a href="documentation/images/v2.8/self-balancing.mp4"><img src="documentation/images/v2.8/self-balancing.gif" width="100%" alt="Wall-E Bot Self-Balancing"></a></td>
+    <td width="33%" align="center"><a href="documentation/images/v2.8/oled.mp4"><img src="documentation/images/v2.8/oled.gif" width="100%" alt="Wall-E Bot with OLED Display"></a></td>
+    <td width="33%" align="center"><a href="documentation/images/v2.8/led-matrix.jpeg"><img src="documentation/images/v2.8/led-matrix-preview.jpg" width="100%" alt="Wall-E Bot with LED Matrix"></a></td>
+  </tr>
+  <tr>
+    <td align="center">Wall-E Bot Self-Balancing</td>
+    <td align="center">Wall-E Bot with OLED Display</td>
+    <td align="center">Wall-E Bot with LED Matrix</td>
+  </tr>
+</table>
 
-| <img height="350" src="documentation/images/self_balancing.gif"> | <img height="350" src="documentation/images/oled.jpg"> | <img height="350" src="documentation/images/led_matrix.gif"> |
-:-------------------------:|:-------------------------:|:-------------------------:
-Wall-E Bot Self-Balancing | Wall-E Bot with OLED Display | Wall-E Bot with LED Matrix
-
-Wall-E is a two-wheeled educational **self balancing** and **line following** robot developed by **SRA-VJTI**, designed to teach embedded robotics concepts such as  **control theory (PID)**, and **embedded communication**. The brain of the robot is an **ESP32** microcontroller paired with a custom-made SRA development board.
+Wall-E is a two-wheeled educational **self balancing** and **line following** robot developed by **SRA-VJTI**, designed to teach embedded robotics concepts such as  **control theory (PID)**, and **embedded communication**. The brain of the robot is an **ESP32-S3** microcontroller paired with a custom-made SRA development board.
 
 This repository hosts the firmware, demo projects, and study material used in SRA VJTI's Wall-E workshop. With features like inbuilt Wi-Fi support and BLE, and extensive application in several domains like IoT, RF, etc, The workshop entails various essential concepts such as PID Control, Embedded Communication Protocols, PWM, Filters, RTOS, etc. and gives its attendees (first-year students) a general idea about the world of robotics and embedded hardware.
 
 ## Architecture
 
 ### Hardware  
-- **ESP32 Microcontroller**: central processing, sensor reading, control loops  
-- **SRA Development Board**: custom PCB that connects ESP32 to sensors, motor drivers, power supply, etc.
+- **ESP32-S3 Microcontroller**: central processing, sensor reading, control loops  
+- **SRA Development Board**: custom PCB that connects ESP32-S3 to sensors, motor drivers, power supply, etc.
 - **Sensors** 
   - MPU6050 IMU (gyro + accelerometer) for self balancing  
   - Light Sensor Array (LSA) for line following  
@@ -81,13 +88,13 @@ This repository hosts the firmware, demo projects, and study material used in SR
 ## Installation
 
 - For Installation, please refer to [these instructions](Installations.md)
-- You can also refer to [Step-by-Step official guide by espressif](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/#installation-step-by-step)
+- You can also refer to [Step-by-Step official guide by espressif](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/get-started/#installation-step-by-step)
 
 ## Examples
 
 |                  TOPIC                  |                                                        Link                                                         |                                          Description                                           |
 | :-------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
-|                LED Matrix                |              [LED_Matrix](https://github.com/SRA-VJTI/Wall-E/blob/master/1_led_matrix/README.md)               |                     Performing LED Blink by connecting the LED with esp32                      |
+|                LED Matrix                |              [LED_Matrix](https://github.com/SRA-VJTI/Wall-E/blob/master/1_led_matrix/README.md)               |                     Performing LED Blink by connecting the LED with ESP32-S3                      |
 |           Light Sensing Array           |                    [LSA](https://github.com/SRA-VJTI/Wall-E/blob/master/2_LSA/README.md)                     |        Sensing Array that uses different Light Sensors, majorly used for Line-Following        |
 |                 MPU6050                 |                    [MPU](https://github.com/SRA-VJTI/Wall-E/blob/master/3_MPU/README.md)                     |           Motion controlled MPU measures angles with respect to 6 Degrees of Freedom           |
 |         Pulse Width Modulation          |                    [PWM](https://github.com/SRA-VJTI/Wall-E/blob/master/5_PWM/README.md)                     |                    Calculate average voltage and controls speed accordingly                    |
@@ -108,7 +115,7 @@ Opens the ESP-IDF configuration menu where you can set project options, enable f
 idf.py menuconfig
 ```
 ### 3. Build and Flash
-Builds the project, flashes it to the ESP32, and starts the serial monitor to view real-time logs.
+Builds the project, flashes it to the ESP32-S3, and starts the serial monitor to view real-time logs.
 ```bash
 idf.py build
 idf.py flash
@@ -120,7 +127,7 @@ idf.py monitor
 - Please visit and look at our [Custom-made SRA development board](https://github.com/SRA-VJTI/sra-board-hardware-design)
 - Visit ESP-IDF SRA board [Components](https://github.com/SRA-VJTI/sra-board-hardware-design) to have a detailed information about the components of SRA board 
 <p align="center">
-  <img src="documentation/images/board_v2.7.jpeg"/>
+  <img src="documentation/images/v2.8/board-render.png" alt="3D render of the Wall-E v2.8 development board"/>
   <h3 align="center"> SRA development board </h3>
   </p>
 
@@ -154,7 +161,3 @@ Contributions are what make the open source community such an amazing place to b
 [issues-url]: https://github.com/SRA-VJTI/Wall-E/issues
 [license-shield]: https://img.shields.io/github/license/SRA-VJTI/Wall-E
 [license-url]: https://github.com/SRA-VJTI/Wall-E/blob/master/LICENSE
-
-
-
-
